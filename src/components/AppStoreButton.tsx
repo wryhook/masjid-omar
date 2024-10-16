@@ -8,7 +8,7 @@ const AppStoreButton = ({ dark }: { dark?: boolean }) => {
         <a href={ctaDetails.appStoreUrl}>
             <button
                 type="button"
-                className={clsx("flex items-center justify-center mt-3 px-6 h-14 rounded-full w-full sm:w-fit", { "text-white bg-foreground": dark, "text-foreground bg-white": !dark })}
+                className={clsx("flex items-center justify-center min-w-[205px] mt-3 px-6 h-14 rounded-full w-full sm:w-fit", { "text-white bg-foreground": dark, "text-foreground bg-white": !dark })}
             >
                 <div className="mr-3">
                     <svg viewBox="0 0 384 512" width="30">
