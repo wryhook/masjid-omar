@@ -15,7 +15,7 @@ interface Props {
 const containerVariants: Variants = {
     offscreen: {
         opacity: 0,
-        y: 200
+        y: 100
     },
     onscreen: {
         opacity: 1,
@@ -23,7 +23,7 @@ const containerVariants: Variants = {
         transition: {
             type: "spring",
             bounce: 0.2,
-            duration: 0.8,
+            duration: 0.9,
             delayChildren: 0.2,
             staggerChildren: 0.1,
         }
@@ -56,7 +56,7 @@ const BenefitSection: React.FC<Props> = ({ benefit, imageAtRight }: Props) => {
                 variants={containerVariants}
                 initial="offscreen"
                 whileInView="onscreen"
-                viewport={{ once: true, amount: 0.8 }}
+                viewport={{ once: true }}
             >
                 <div
                     className={clsx("flex flex-wrap items-center w-full max-w-lg", { "justify-start": imageAtRight, "lg:order-1 justify-end": !imageAtRight })}
