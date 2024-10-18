@@ -1,3 +1,5 @@
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fnexi-launch%2Ffinwise-landing-page)
+
 # Next.js + Tailwind Landing Page Template
 
 This is a **Next.js**, **Tailwind CSS** landing page template that's **lightweight** and easily **configurable** and **customizable**.
