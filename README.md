@@ -32,6 +32,7 @@ Please check out the documentation below to get started.
 - Pricing
 - Testimonials
 - FAQ
+- Statistics
 - CTA
 - Footer
 
