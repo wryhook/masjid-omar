@@ -1,14 +1,14 @@
 'use client';
 
+import { Transition } from '@headlessui/react';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { Transition } from '@headlessui/react';
-import { HiOutlineXMark, HiBars3 } from 'react-icons/hi2';
 import { FaFingerprint } from 'react-icons/fa';
+import { HiBars3, HiOutlineXMark } from 'react-icons/hi2';
 
-import Container from './Container';
-import { siteDetails } from '@/data/siteDetails';
 import { menuItems } from '@/data/menuItems';
+import { siteDetails } from '@/data/siteDetails';
+import Container from './Container';
 
 const Header: React.FC = () => {
     const [isOpen, setIsOpen] = useState(false);
@@ -18,7 +18,7 @@ const Header: React.FC = () => {
     };
 
     return (
-        <header className="bg-transparent fixed top-0 left-0 right-0 md:absolute z-50 mx-auto w-full">
+        <header className="bg-amber-50 fixed top-0 left-0 right-0 md:absolute z-50 mx-auto w-full">
             <Container className="!px-0">
                 <nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-10">
                     {/* Logo */}
@@ -39,8 +39,8 @@ const Header: React.FC = () => {
                             </li>
                         ))}
                         <li>
-                            <Link href="#cta" className="text-black bg-primary hover:bg-primary-accent px-8 py-3 rounded-full transition-colors">
-                                Download
+                            <Link href="#cta" className="text-white bg-primary hover:bg-primary-accent px-8 py-3 rounded-full transition-colors">
+                                Donate
                             </Link>
                         </li>
                     </ul>
