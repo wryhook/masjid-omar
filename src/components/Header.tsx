@@ -1,7 +1,7 @@
 'use client';
 
 import { siteDetails } from '@/data/siteDetails';
-import { Menu, Transition } from '@headlessui/react';
+import { Menu, MenuButton, MenuItem, MenuItems, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
@@ -37,26 +37,28 @@ const Header: React.FC = () => {
 					{/* Desktop Menu */}
 					<ul className="hidden md:flex space-x-10 items-center">
 						<Menu as="li" className="relative">
-							<Menu.Button className="text-foreground hover:text-foreground-accent transition-colors inline-flex items-center">
+							<MenuButton className="text-foreground hover:text-foreground-accent transition-colors inline-flex items-center">
 								Prayer Times
 								<HiChevronDown className="ml-1 h-4 w-4" aria-hidden="true" />
-							</Menu.Button>
-							<Menu.Items className="absolute left-0 mt-2 w-48 origin-top-right bg-foreground">
+							</MenuButton>
+							<MenuItems
+								className="absolute left-0 mt-2 w-48 z-50 origin-top-right bg-foreground"
+								transition
+								anchor="bottom start"
+							>
 								<div className="py-1">
 									{dropdownItems.map((item) => (
-										<Menu.Item key={item.text}>
-											{({ active }) => (
-												<Link
-													href={item.url}
-													className="text-white transition-colors block px-4 py-2"
-												>
-													{item.text}
-												</Link>
-											)}
-										</Menu.Item>
+										<MenuItem key={item.text}>
+											<Link
+												href={item.url}
+												className="text-white transition-colors block px-4 py-2 hover:bg-white/10 rounded-lg"
+											>
+												{item.text}
+											</Link>
+										</MenuItem>
 									))}
 								</div>
-							</Menu.Items>
+							</MenuItems>
 						</Menu>
 						{menuItems.map(item => (
 							<li key={item.text}>
