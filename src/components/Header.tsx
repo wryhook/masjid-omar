@@ -1,11 +1,11 @@
 'use client';
 
 import { siteDetails } from '@/data/siteDetails';
-import { Transition } from '@headlessui/react';
+import { Menu, Transition } from '@headlessui/react';
 import Image from 'next/image';
 import Link from 'next/link';
 import React, { useState } from 'react';
-import { HiBars3, HiOutlineXMark } from 'react-icons/hi2';
+import { HiBars3, HiChevronDown, HiOutlineXMark } from 'react-icons/hi2';
 import Container from './Container';
 
 const Header: React.FC = () => {
@@ -18,19 +18,46 @@ const Header: React.FC = () => {
 	const menuItems = [
 		{ text: 'Programs', url: '/#programs' },
 		{ text: 'About', url: '/#about' },
-	]
+	];
+
+	const dropdownItems = [
+		{ text: 'Daily Prayer Times', url: 'https://awqat.net/Masjids/BCOmar/omar.html' },
+		{ text: 'Ramadan Calendar', url: '/images/ramadan-calendar.jpg' },
+	];
 
 	return (
 		<header className="bg-background fixed top-0 left-0 right-0 md:absolute z-50 mx-auto w-full">
 			<Container className="!px-0">
-				<nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-4">
+				<nav className="mx-auto flex justify-between items-center py-2 px-5 md:py-4">
 					{/* Logo */}
 					<Link href="/" className="flex items-center gap-2">
 						<Image src="/images/logo.png" alt={siteDetails.siteName} width={120} height={120} />
 					</Link>
 
 					{/* Desktop Menu */}
-					<ul className="hidden md:flex space-x-10">
+					<ul className="hidden md:flex space-x-10 items-center">
+						<Menu as="li" className="relative">
+							<Menu.Button className="text-foreground hover:text-foreground-accent transition-colors inline-flex items-center">
+								Prayer Times
+								<HiChevronDown className="ml-1 h-4 w-4" aria-hidden="true" />
+							</Menu.Button>
+							<Menu.Items className="absolute left-0 mt-2 w-48 origin-top-right bg-foreground">
+								<div className="py-1">
+									{dropdownItems.map((item) => (
+										<Menu.Item key={item.text}>
+											{({ active }) => (
+												<Link
+													href={item.url}
+													className="text-white transition-colors block px-4 py-2"
+												>
+													{item.text}
+												</Link>
+											)}
+										</Menu.Item>
+									))}
+								</div>
+							</Menu.Items>
+						</Menu>
 						{menuItems.map(item => (
 							<li key={item.text}>
 								<Link href={item.url} className="text-foreground hover:text-foreground-accent transition-colors">
@@ -53,7 +80,7 @@ const Header: React.FC = () => {
 						<button
 							onClick={toggleMenu}
 							type="button"
-							className="bg-primary text-black focus:outline-none rounded-full w-10 h-10 flex items-center justify-center"
+							className=" focus:outline-none rounded-full w-10 h-10 flex items-center justify-center"
 							aria-controls="mobile-menu"
 							aria-expanded={isOpen}
 						>
@@ -78,8 +105,24 @@ const Header: React.FC = () => {
 				leaveFrom="opacity-100 scale-100"
 				leaveTo="opacity-0 scale-95"
 			>
-				<div id="mobile-menu" className="md:hidden bg-white shadow-lg">
-					<ul className="flex flex-col space-y-4 pt-1 pb-6 px-6">
+				<div id="mobile-menu" className="md:hidden bg-background">
+					<ul className="flex flex-col space-y-4 pt-4 pb-8 px-6">
+						<li className="space-y-2">
+							<p className="text-foreground font-medium">Prayer Times</p>
+							<ul className="pl-4 space-y-2">
+								{dropdownItems.map((item) => (
+									<li key={item.text}>
+										<Link
+											href={item.url}
+											className="text-foreground hover:text-primary block"
+											onClick={toggleMenu}
+										>
+											{item.text}
+										</Link>
+									</li>
+								))}
+							</ul>
+						</li>
 						{menuItems.map(item => (
 							<li key={item.text}>
 								<Link href={item.url} className="text-foreground hover:text-primary block" onClick={toggleMenu}>
@@ -87,9 +130,11 @@ const Header: React.FC = () => {
 								</Link>
 							</li>
 						))}
-						<li>
-							<Link href="#cta" className="text-black bg-primary hover:bg-primary-accent px-5 py-2 rounded-full block w-fit" onClick={toggleMenu}>
-								Get Started
+						<li className="pt-4">
+							<Link href="https://donate.stripe.com/4gwcQdaxNavW9c4aEF"
+								className=" text-white font-medium bg-primary border-2 border-primary hover:border-primary hover:bg-transparent hover:text-primary px-5 py-2 transition-colors" onClick={toggleMenu}
+							>
+								Donate
 							</Link>
 						</li>
 					</ul>
