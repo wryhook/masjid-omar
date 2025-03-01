@@ -1,12 +1,12 @@
 export const siteDetails = {
-    siteName: 'Finwise',
-    siteUrl: 'https://finwise-omega.vercel.app/',
+    siteName: 'Masjid Omar Al-Farooq',
+    siteUrl: 'https://www.masjidomar.ca/',
     metadata: {
-        title: 'Finwise - Next.js and Tailwind CSS Landing Page Template',
+        title: 'Masjid Omar Al-Farooq',
         description: 'Finwise empowers businesses with cutting-edge technology solutions to drive success and efficiency.',
     },
-    language: 'en-us',
-    locale: 'en-US',
+    language: 'en-ca',
+    locale: 'en-CA',
     siteLogo: `${process.env.BASE_PATH || ''}/images/logo.png`, // or use a string for the logo e.g. "TechStartup"
     googleAnalyticsId: '', // e.g. G-XXXXXXX,
 }

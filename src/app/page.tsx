@@ -1,19 +1,19 @@
-import Hero from "@/components/Hero";
-import Testimonials from "@/components/Testimonials";
-import Pricing from "@/components/Pricing/Pricing";
-import FAQ from "@/components/FAQ";
-import Logos from "@/components/Logos";
 import Benefits from "@/components/Benefits/Benefits";
 import Container from "@/components/Container";
+import CTA from "@/components/CTA";
+import Donations from "@/components/Donations";
+import FAQ from "@/components/FAQ";
+import Hero from "@/components/Hero";
+import Pricing from "@/components/Pricing/Pricing";
 import Section from "@/components/Section";
 import Stats from "@/components/Stats";
-import CTA from "@/components/CTA";
+import Testimonials from "@/components/Testimonials";
 
 const HomePage: React.FC = () => {
   return (
     <>
       <Hero />
-      <Logos />
+      <Donations />
       <Container>
         <Benefits />
 
@@ -36,7 +36,7 @@ const HomePage: React.FC = () => {
         <FAQ />
 
         <Stats />
-        
+
         <CTA />
       </Container>
     </>

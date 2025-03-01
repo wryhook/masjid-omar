@@ -1,13 +1,12 @@
 'use client';
 
-import { Transition } from '@headlessui/react';
-import Link from 'next/link';
-import React, { useState } from 'react';
-import { FaFingerprint } from 'react-icons/fa';
-import { HiBars3, HiOutlineXMark } from 'react-icons/hi2';
-
 import { menuItems } from '@/data/menuItems';
 import { siteDetails } from '@/data/siteDetails';
+import { Transition } from '@headlessui/react';
+import Image from 'next/image';
+import Link from 'next/link';
+import React, { useState } from 'react';
+import { HiBars3, HiOutlineXMark } from 'react-icons/hi2';
 import Container from './Container';
 
 const Header: React.FC = () => {
@@ -18,15 +17,12 @@ const Header: React.FC = () => {
     };
 
     return (
-        <header className="bg-amber-50 fixed top-0 left-0 right-0 md:absolute z-50 mx-auto w-full">
+        <header className="bg-background fixed top-0 left-0 right-0 md:absolute z-50 mx-auto w-full">
             <Container className="!px-0">
-                <nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-10">
+                <nav className="shadow-md md:shadow-none bg-white md:bg-transparent mx-auto flex justify-between items-center py-2 px-5 md:py-4">
                     {/* Logo */}
                     <Link href="/" className="flex items-center gap-2">
-                        <FaFingerprint className="text-foreground min-w-fit w-7 h-7" />
-                        <span className="manrope text-xl font-semibold text-foreground cursor-pointer">
-                            {siteDetails.siteName}
-                        </span>
+                        <Image src="/images/logo.png" alt={siteDetails.siteName} width={120} height={120} />
                     </Link>
 
                     {/* Desktop Menu */}
