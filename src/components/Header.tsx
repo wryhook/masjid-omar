@@ -46,12 +46,12 @@ const Header: React.FC = () => {
 								transition
 								anchor="bottom start"
 							>
-								<div className="py-1">
+								<div>
 									{dropdownItems.map((item) => (
 										<MenuItem key={item.text}>
 											<Link
 												href={item.url}
-												className="text-white transition-colors block px-4 py-2 hover:bg-white/10 rounded-lg"
+												className="text-white transition-colors block px-4 py-2 hover:bg-white/10"
 											>
 												{item.text}
 											</Link>
@@ -69,7 +69,7 @@ const Header: React.FC = () => {
 						))}
 						<li>
 							<Link
-								href="https://donate.stripe.com/4gwcQdaxNavW9c4aEF"
+								href="/donate"
 								className="mt-12 text-white font-medium bg-primary border-2 border-primary hover:border-primary hover:bg-transparent hover:text-primary px-8 py-3 transition-colors"
 							>
 								Donate
