@@ -11,10 +11,10 @@ const monthlyDonations = [
 
 const DonatePage: React.FC = () => (
   <section className="py-32 px-5 flex flex-col items-center justify-center">
-    <h1 className="text-3xl font-bold">Make a Donation</h1>
+    <h1 className="text-3xl font-semibold">Make a Donation</h1>
 
     <div className="mt-12 max-w-3xl">
-      <h3 className="text-2xl text-center font-bold">Monthly Donation</h3>
+      <h3 className="text-2xl text-center font-semibold">Monthly Donation</h3>
       <div
         className="
           grid 
@@ -47,7 +47,7 @@ const DonatePage: React.FC = () => (
     </div>
 
     <div className="mt-12 max-w-3xl flex items-center justify-center flex-col">
-      <h3 className="text-2xl text-center font-bold">One-time Donation</h3>
+      <h3 className="text-2xl text-center font-semibold">One-time Donation</h3>
       <a
         href="https://donate.stripe.com/4gwcQdaxNavW9c4aEF"
         target="_blank"
