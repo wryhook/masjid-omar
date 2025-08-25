@@ -3,7 +3,7 @@ export const siteDetails = {
     siteUrl: 'https://www.masjidomar.ca/',
     metadata: {
         title: 'Masjid Omar Al-Farooq',
-        description: 'Finwise empowers businesses with cutting-edge technology solutions to drive success and efficiency.',
+        description: 'Nurturing our community through authentic knowledge based on the Qur’an, Sunnah, and the way of the Salaf.',
     },
     language: 'en-ca',
     locale: 'en-CA',
