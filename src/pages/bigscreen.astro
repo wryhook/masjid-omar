@@ -99,16 +99,16 @@ const classes = [
             <span id="time-main">12:44</span><span class="bigscreen-time-seconds" id="time-period">PM</span>
           </p>
         </section>
-        <section class="bigscreen-card bigscreen-next-card">
-          <h3 class="bigscreen-next-heading">Time remaining till</h3>
+        <section class="bigscreen-card bigscreen-next-card" id="next-card">
+          <h3 class="bigscreen-next-heading" id="next-heading">Time remaining till</h3>
           <div class="bigscreen-next-body">
             <div class="bigscreen-next-left">
               <span class="bigscreen-next-name" id="next-prayer-name">Dhuhr</span> <span class="bigscreen-next-type" id="next-prayer-type">Adhan</span>
             </div>
-            <div class="bigscreen-next-divider" aria-hidden="true"></div>
-            <div class="bigscreen-next-right">
+            <div class="bigscreen-next-divider" id="next-divider" aria-hidden="true"></div>
+            <div class="bigscreen-next-right" id="next-countdown-wrap">
               <p class="bigscreen-next-time-display">
-                <span class="bigscreen-next-time-main" id="countdown-main">0:45</span><span class="bigscreen-next-time-seconds" id="countdown-seconds">12</span>
+                <span class="bigscreen-next-time-main" id="countdown-main">00:45</span><span class="bigscreen-next-time-seconds" id="countdown-seconds">12</span>
               </p>
             </div>
           </div>
@@ -154,8 +154,8 @@ const classes = [
 
     <section class="bigscreen-prayer-grid">
       {prayerTimes.map((p, i) => (
-        <div class={`bigscreen-prayer-card ${p.isNext ? 'bigscreen-prayer-card--next' : ''}`} id={`prayer-card-${i}`} data-prayer-index={i}>
-          <span class="bigscreen-prayer-next-badge" id={`prayer-next-badge-${i}`} style={p.isNext ? undefined : 'display:none'}>NEXT</span>
+        <div class="bigscreen-prayer-card" id={`prayer-card-${i}`} data-prayer-index={i}>
+          <span class="bigscreen-prayer-next-badge" id={`prayer-next-badge-${i}`} style="display:none" aria-hidden="true">NEXT</span>
           <p class="bigscreen-prayer-name" id={`prayer-name-${i}`}>{p.name.toUpperCase()}</p>
           <p class="bigscreen-prayer-time"><span id={`prayer-time-${i}`}>{timeTo12h(p.time)}</span><span class="bigscreen-prayer-time-period" id={`prayer-time-period-${i}`} aria-hidden="true">{timeToPeriod(p.time)}</span></p>
           <p class="bigscreen-prayer-iqama" id={`prayer-iqama-${i}`} style={p.iqama ? undefined : 'display:none'}>{p.iqama ? (<><span class="bigscreen-prayer-iqama-label">Iqama </span><span class="bigscreen-prayer-iqama-time" id={`prayer-iqama-time-${i}`}>{timeTo12h(p.iqama)}</span></>) : ''}</p>
@@ -211,11 +211,15 @@ const classes = [
         var timePeriod = document.getElementById('time-period');
         var gregorianDate = document.getElementById('gregorian-date');
         var islamicDateEl = document.getElementById('islamic-date');
+        var nextCardEl = document.getElementById('next-card');
+        var nextHeadingEl = document.getElementById('next-heading');
         var nextPrayerNameEl = document.getElementById('next-prayer-name');
         var nextPrayerTypeEl = document.getElementById('next-prayer-type');
+        var nextDividerEl = document.getElementById('next-divider');
+        var countdownWrapEl = document.getElementById('next-countdown-wrap');
         var countdownMainEl = document.getElementById('countdown-main');
         var countdownSecondsEl = document.getElementById('countdown-seconds');
-        if (!timeMain || !timePeriod || !gregorianDate || !islamicDateEl || !nextPrayerNameEl || !nextPrayerTypeEl || !countdownMainEl || !countdownSecondsEl) return;
+        if (!timeMain || !timePeriod || !gregorianDate || !islamicDateEl || !nextCardEl || !nextHeadingEl || !nextPrayerNameEl || !nextPrayerTypeEl || !nextDividerEl || !countdownWrapEl || !countdownMainEl || !countdownSecondsEl) return;
 
         var data = JSON.parse(prayerTimesDataJson || '{}');
         var dates = Object.keys(data);
@@ -276,6 +280,31 @@ const classes = [
           return null;
         }
 
+        function getOngoingPrayer(now) {
+          var fiveMinMs = 5 * 60 * 1000;
+          for (var i = 0; i < prayers.length; i++) {
+            var p = prayers[i];
+            if (p.name === 'Sunrise' || !p.iqama) continue;
+            var iqama = p.iqama.split(':').map(Number);
+            var iqamaDate = new Date(now);
+            iqamaDate.setHours(iqama[0], iqama[1], 0, 0);
+            var endOngoing = iqamaDate.getTime() + fiveMinMs;
+            if (now.getTime() >= iqamaDate.getTime() && now.getTime() < endOngoing) {
+              return { name: p.name };
+            }
+          }
+          return null;
+        }
+
+        function getPreviewOngoingPrayer() {
+          if (document.location.search.indexOf('preview=ongoing') === -1) return null;
+          for (var i = 0; i < prayers.length; i++) {
+            var p = prayers[i];
+            if (p.name !== 'Sunrise' && p.iqama) return { name: p.name };
+          }
+          return { name: 'Dhuhr' };
+        }
+
         function updateStrip() {
           var next = getNextTarget(new Date());
           var nextName = next ? next.name : null;
@@ -287,8 +316,7 @@ const classes = [
             var periodEl = document.getElementById('prayer-time-period-' + i);
             var iqamaEl = document.getElementById('prayer-iqama-' + i);
             var badgeEl = document.getElementById('prayer-next-badge-' + i);
-            if (card) card.classList.toggle('bigscreen-prayer-card--next', prayers[i].isNext);
-            if (badgeEl) badgeEl.style.display = prayers[i].isNext ? '' : 'none';
+            if (badgeEl) badgeEl.style.display = 'none';
             if (nameEl) nameEl.textContent = prayers[i].name.toUpperCase();
             if (timeEl) timeEl.textContent = formatTime12h(prayers[i].time);
             if (periodEl) periodEl.textContent = formatPeriod(prayers[i].time);
@@ -319,30 +347,40 @@ const classes = [
           var h = d.getHours();
           var m = d.getMinutes();
           var h12 = h % 12 || 12;
-          timeMain.textContent = h12 + ':' + pad(m);
+          timeMain.textContent = pad(h12) + ':' + pad(m);
           timePeriod.textContent = h >= 12 ? 'PM' : 'AM';
           gregorianDate.textContent = d.toLocaleDateString('en-CA', dateOptions);
           islamicDateEl.textContent = formatHijri(d);
 
-          var next = getNextTarget(d);
-          if (next) {
-            nextPrayerNameEl.textContent = next.name;
-            nextPrayerTypeEl.textContent = next.type;
-            nextPrayerTypeEl.style.display = next.type ? '' : 'none';
-            var diff = next.target - d;
-            if (diff <= 0) {
-              countdownMainEl.textContent = '0';
-              countdownSecondsEl.textContent = '00';
-            } else {
-              var totalSecs = Math.floor(diff / 1000);
-              var hours = Math.floor(totalSecs / 3600);
-              var mins = Math.floor((totalSecs % 3600) / 60);
-              var secs = totalSecs % 60;
-              if (hours > 0) {
-                countdownMainEl.textContent = hours + ':' + pad(mins);
-                countdownSecondsEl.textContent = pad(secs);
+          var ongoing = getPreviewOngoingPrayer() || getOngoingPrayer(d);
+          if (ongoing) {
+            nextCardEl.classList.add('bigscreen-next-card--ongoing');
+            nextHeadingEl.textContent = 'Ongoing';
+            nextPrayerNameEl.textContent = ongoing.name;
+            nextPrayerTypeEl.textContent = 'Jamaah';
+            nextPrayerTypeEl.style.display = '';
+            nextDividerEl.style.display = 'none';
+            countdownWrapEl.style.display = 'none';
+          } else {
+            nextCardEl.classList.remove('bigscreen-next-card--ongoing');
+            var next = getNextTarget(d);
+            nextHeadingEl.textContent = 'Time remaining till';
+            nextDividerEl.style.display = '';
+            if (next) {
+              nextPrayerNameEl.textContent = next.name;
+              nextPrayerTypeEl.textContent = next.type;
+              nextPrayerTypeEl.style.display = next.type ? '' : 'none';
+              countdownWrapEl.style.display = '';
+              var diff = next.target - d;
+              if (diff <= 0) {
+                countdownMainEl.textContent = '00:00';
+                countdownSecondsEl.textContent = '00';
               } else {
-                countdownMainEl.textContent = String(mins);
+                var totalSecs = Math.floor(diff / 1000);
+                var hours = Math.floor(totalSecs / 3600);
+                var mins = Math.floor((totalSecs % 3600) / 60);
+                var secs = totalSecs % 60;
+                countdownMainEl.textContent = pad(hours) + ':' + pad(mins);
                 countdownSecondsEl.textContent = pad(secs);
               }
             }
@@ -607,6 +645,34 @@ const classes = [
     margin: 0;
   }
 
+  .bigscreen-next-card--ongoing {
+    background: var(--bigscreen-accent);
+    color: #0a0e1a;
+  }
+
+  .bigscreen-next-card--ongoing .bigscreen-next-heading {
+    display: inline-block;
+    font-size: clamp(1rem, 1.6vw, 1.2rem);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: #0a0e1a;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.25em 0.6em;
+    border-radius: 0.5rem;
+    margin: 0 0 0.5em;
+  }
+
+  .bigscreen-next-card--ongoing .bigscreen-next-name,
+  .bigscreen-next-card--ongoing .bigscreen-next-type {
+    font-size: clamp(2.5rem, 4.5vw, 3.75rem);
+    color: #0a0e1a;
+  }
+
+  .bigscreen-next-card--ongoing .bigscreen-next-type {
+    color: rgba(10, 14, 26, 0.85);
+  }
+
   .bigscreen-next-divider {
     width: 0.0625rem;
     min-height: 1.5em;
@@ -749,11 +815,6 @@ const classes = [
     min-height: 0;
   }
 
-  .bigscreen-prayer-card--next {
-    background: var(--bigscreen-accent);
-    color: #0a0e1a;
-  }
-
   .bigscreen-prayer-next-badge {
     position: absolute;
     top: 0.5rem;
@@ -791,14 +852,6 @@ const classes = [
     line-height: 1;
   }
 
-  .bigscreen-prayer-card--next .bigscreen-prayer-time-period {
-    color: rgba(61, 41, 20, 0.75);
-  }
-
-  .bigscreen-prayer-card--next .bigscreen-prayer-time {
-    color: #0a0e1a;
-  }
-
   .bigscreen-prayer-iqama {
     margin: 0.05rem 0 0;
   }
@@ -814,13 +867,5 @@ const classes = [
     font-weight: 600;
     color: var(--bigscreen-accent);
     margin-left: 0.15em;
-  }
-
-  .bigscreen-prayer-card--next .bigscreen-prayer-iqama-label {
-    color: #3d2914;
-  }
-
-  .bigscreen-prayer-card--next .bigscreen-prayer-iqama-time {
-    color: #3d2914;
   }
 </style>
