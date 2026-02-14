@@ -1,17 +1,51 @@
 ---
 import { siteDetails } from '@/data/siteDetails';
+import prayerTimesData from '@/data/prayer-times-feb-2026.json';
 
-// Mock data for TV display
-const islamicDate = '14th Ramadan, 1445 AH';
+const PRAYER_KEYS = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
+const PRAYER_NAMES: Record<(typeof PRAYER_KEYS)[number], string> = {
+  fajr: 'Fajr',
+  sunrise: 'Sunrise',
+  dhuhr: 'Dhuhr',
+  asr: 'Asr',
+  maghrib: 'Maghrib',
+  isha: 'Isha',
+};
 
-const prayerTimes = [
-  { name: 'Fajr', time: '05:12', iqama: '05:45', isNext: false },
-  { name: 'Sunrise', time: '06:34', iqama: null, isNext: false },
-  { name: 'Dhuhr', time: '01:15', iqama: '01:30', isNext: true },
-  { name: 'Asr', time: '04:45', iqama: '05:15', isNext: false },
-  { name: 'Maghrib', time: '07:22', iqama: '07:27', isNext: false },
-  { name: 'Isha', time: '08:45', iqama: '09:15', isNext: false },
-];
+/** Convert 12h afternoon times (asr, maghrib, isha) to 24h when hour is 1–7 */
+function to24h(timeStr: string, key: string): string {
+  const [h, m] = timeStr.split(':').map(Number);
+  if (['asr', 'maghrib', 'isha'].includes(key) && h >= 1 && h <= 7) {
+    return `${h + 12}:${String(m).padStart(2, '0')}`;
+  }
+  return timeStr;
+}
+
+type DayData = Record<string, { start: string; iqama?: string }>;
+
+function dayDataToPrayerTimes(dayData: DayData): { name: string; time: string; iqama: string | null; isNext: boolean }[] {
+  return PRAYER_KEYS.map((key) => {
+    const slot = dayData[key];
+    if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqama: null, isNext: false };
+    const time = to24h(slot.start, key);
+    const iqama = slot.iqama ? to24h(slot.iqama, key) : null;
+    return { name: PRAYER_NAMES[key], time, iqama, isNext: false };
+  });
+}
+
+function getTodayKey(): string {
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
+}
+
+const dates = Object.keys(prayerTimesData) as string[];
+const todayKey = getTodayKey();
+const lookupKey = (prayerTimesData as Record<string, DayData>)[todayKey] ? todayKey : dates[0] ?? todayKey;
+const dayData = (prayerTimesData as Record<string, DayData>)[lookupKey] ?? {};
+const prayerTimes = dayDataToPrayerTimes(dayData);
 
 function timeTo12h(t) {
   if (!t) return '';
@@ -38,8 +72,7 @@ const classes = [
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="icon" type="image/png" href="/images/logo.png" />
   </head>
   <body class="bigscreen-page">
     <header class="bigscreen-header">
@@ -48,7 +81,7 @@ const classes = [
         <h1 class="bigscreen-masjid-name">{siteDetails.metadata.title}</h1>
       </div>
       <div class="bigscreen-header-right">
-        <p class="bigscreen-islamic-date">{islamicDate}</p>
+        <p class="bigscreen-islamic-date" id="islamic-date">—</p>
         <p class="bigscreen-gregorian-date" id="gregorian-date">—</p>
       </div>
     </header>
@@ -61,7 +94,7 @@ const classes = [
           </p>
         </section>
         <section class="bigscreen-card bigscreen-next-card">
-          <h3 class="bigscreen-next-heading">Next prayer</h3>
+          <h3 class="bigscreen-next-heading">Time remaining till</h3>
           <div class="bigscreen-next-body">
             <div class="bigscreen-next-left">
               <span class="bigscreen-next-name" id="next-prayer-name">Dhuhr</span> <span class="bigscreen-next-type" id="next-prayer-type">Adhan</span>
@@ -77,6 +110,7 @@ const classes = [
       </aside>
 
       <div class="bigscreen-right">
+        <!-- Class schedule list (commented out for now)
         <section class="bigscreen-card bigscreen-classes-card">
           <h3 class="bigscreen-next-heading">Today's Classes</h3>
           <ul class="bigscreen-classes-list">
@@ -92,36 +126,114 @@ const classes = [
             ))}
           </ul>
         </section>
+        -->
+        <section class="bigscreen-card bigscreen-qr-card">
+          <div class="bigscreen-qr-row">
+            <h3 class="bigscreen-next-heading bigscreen-qr-heading">Donations</h3>
+            <a href="/donate" class="bigscreen-qr-link" aria-label="Scan to open donations page">
+              <img src="/images/donation-qr-code.png" alt="Donations QR code" class="bigscreen-qr-img" width="120" height="120" />
+            </a>
+          </div>
+        </section>
+        <section class="bigscreen-card bigscreen-qr-card">
+          <div class="bigscreen-qr-row">
+            <h3 class="bigscreen-next-heading bigscreen-qr-heading">Weekly class schedule</h3>
+            <a href="/class-schedule" class="bigscreen-qr-link" aria-label="Scan to open weekly class schedule">
+              <img src="/images/class-schedule-qr-code.png" alt="Class schedule QR code" class="bigscreen-qr-img" width="120" height="120" />
+            </a>
+          </div>
+        </section>
       </div>
     </main>
 
     <section class="bigscreen-prayer-grid">
-      {prayerTimes.map((p) => (
-        <div class={`bigscreen-prayer-card ${p.isNext ? 'bigscreen-prayer-card--next' : ''}`}>
-          {p.isNext && <span class="bigscreen-prayer-next-badge">NEXT</span>}
-          <p class="bigscreen-prayer-name">{p.name.toUpperCase()}</p>
-          <p class="bigscreen-prayer-time">{timeTo12h(p.time)}</p>
-          {p.iqama && <p class="bigscreen-prayer-iqama">Iqama {timeTo12h(p.iqama)}</p>}
+      {prayerTimes.map((p, i) => (
+        <div class={`bigscreen-prayer-card ${p.isNext ? 'bigscreen-prayer-card--next' : ''}`} id={`prayer-card-${i}`} data-prayer-index={i}>
+          <span class="bigscreen-prayer-next-badge" id={`prayer-next-badge-${i}`} style={p.isNext ? undefined : 'display:none'}>NEXT</span>
+          <p class="bigscreen-prayer-name" id={`prayer-name-${i}`}>{p.name.toUpperCase()}</p>
+          <p class="bigscreen-prayer-time" id={`prayer-time-${i}`}>{timeTo12h(p.time)}</p>
+          <p class="bigscreen-prayer-iqama" id={`prayer-iqama-${i}`} style={p.iqama ? undefined : 'display:none'}>{p.iqama ? (<><span class="bigscreen-prayer-iqama-label">Iqama </span><span class="bigscreen-prayer-iqama-time" id={`prayer-iqama-time-${i}`}>{timeTo12h(p.iqama)}</span></>) : ''}</p>
         </div>
       ))}
     </section>
 
-    <script define:vars={{ prayerTimesJson: JSON.stringify(prayerTimes) }}>
+    <script define:vars={{ prayerTimesDataJson: JSON.stringify(prayerTimesData) }}>
       (function () {
         function pad(n) {
           return String(n).padStart(2, '0');
         }
+        function to24h(timeStr, key) {
+          var parts = timeStr.split(':').map(Number);
+          var h = parts[0], m = parts[1];
+          if (['asr', 'maghrib', 'isha'].indexOf(key) !== -1 && h >= 1 && h <= 7) {
+            return (h + 12) + ':' + pad(m);
+          }
+          return timeStr;
+        }
+        var PRAYER_KEYS = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
+        var PRAYER_NAMES = { fajr: 'Fajr', sunrise: 'Sunrise', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha' };
+        function dayDataToPrayerTimes(dayData) {
+          return PRAYER_KEYS.map(function (key) {
+            var slot = dayData[key];
+            if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqama: null, isNext: false };
+            return {
+              name: PRAYER_NAMES[key],
+              time: to24h(slot.start, key),
+              iqama: slot.iqama ? to24h(slot.iqama, key) : null,
+              isNext: false
+            };
+          });
+        }
+        function getTodayKey() {
+          var d = new Date();
+          return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+        }
+        function formatTime12h(timeStr) {
+          if (!timeStr) return '';
+          var parts = timeStr.split(':').map(Number);
+          var h = parts[0], m = parts[1];
+          var h12 = h % 12 || 12;
+          return h12 + ':' + pad(m);
+        }
+
         var timeMain = document.getElementById('time-main');
         var timePeriod = document.getElementById('time-period');
         var gregorianDate = document.getElementById('gregorian-date');
+        var islamicDateEl = document.getElementById('islamic-date');
         var nextPrayerNameEl = document.getElementById('next-prayer-name');
         var nextPrayerTypeEl = document.getElementById('next-prayer-type');
         var countdownMainEl = document.getElementById('countdown-main');
         var countdownSecondsEl = document.getElementById('countdown-seconds');
-        if (!timeMain || !timePeriod || !gregorianDate || !nextPrayerNameEl || !nextPrayerTypeEl || !countdownMainEl || !countdownSecondsEl) return;
+        if (!timeMain || !timePeriod || !gregorianDate || !islamicDateEl || !nextPrayerNameEl || !nextPrayerTypeEl || !countdownMainEl || !countdownSecondsEl) return;
 
-        var prayers = JSON.parse(prayerTimesJson || '[]');
+        var data = JSON.parse(prayerTimesDataJson || '{}');
+        var dates = Object.keys(data);
+        var todayKey = getTodayKey();
+        var lookupKey = data[todayKey] ? todayKey : (dates[0] || todayKey);
+        var dayData = data[lookupKey] || {};
+        var prayers = dayDataToPrayerTimes(dayData);
         var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var hijriFormatter = new Intl.DateTimeFormat('en-CA', { calendar: 'islamic-umalqura', day: 'numeric', month: 'long', year: 'numeric' });
+
+        function ordinalDay(n) {
+          var v = n % 100;
+          return n + (v >= 11 && v <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] || 'th'));
+        }
+
+        function formatHijri(date) {
+          try {
+            var parts = hijriFormatter.formatToParts(date);
+            var day = '', month = '', year = '';
+            for (var i = 0; i < parts.length; i++) {
+              if (parts[i].type === 'day') day = parts[i].value;
+              if (parts[i].type === 'month') month = parts[i].value;
+              if (parts[i].type === 'year') year = parts[i].value;
+            }
+            return ordinalDay(parseInt(day, 10)) + ' ' + month + ', ' + year + ' AH';
+          } catch (e) {
+            return '—';
+          }
+        }
 
         function getNextTarget(now) {
           var i;
@@ -131,7 +243,7 @@ const classes = [
             var adhanDate = new Date(now);
             adhanDate.setHours(adhan[0], adhan[1], 0, 0);
             if (now < adhanDate) {
-              return { name: p.name, type: 'Adhan', target: adhanDate };
+              return { name: p.name, type: p.name === 'Sunrise' ? '' : 'Adhan', target: adhanDate };
             }
             if (p.iqama) {
               var iqama = p.iqama.split(':').map(Number);
@@ -153,19 +265,57 @@ const classes = [
           return null;
         }
 
+        function updateStrip() {
+          var next = getNextTarget(new Date());
+          var nextName = next ? next.name : null;
+          for (var i = 0; i < prayers.length; i++) {
+            prayers[i].isNext = prayers[i].name === nextName;
+            var card = document.getElementById('prayer-card-' + i);
+            var nameEl = document.getElementById('prayer-name-' + i);
+            var timeEl = document.getElementById('prayer-time-' + i);
+            var iqamaEl = document.getElementById('prayer-iqama-' + i);
+            var badgeEl = document.getElementById('prayer-next-badge-' + i);
+            if (card) card.classList.toggle('bigscreen-prayer-card--next', prayers[i].isNext);
+            if (badgeEl) badgeEl.style.display = prayers[i].isNext ? '' : 'none';
+            if (nameEl) nameEl.textContent = prayers[i].name.toUpperCase();
+            if (timeEl) timeEl.textContent = formatTime12h(prayers[i].time);
+            if (iqamaEl) {
+              if (prayers[i].iqama) {
+                var iqamaTimeEl = document.getElementById('prayer-iqama-time-' + i);
+                if (iqamaTimeEl) iqamaTimeEl.textContent = formatTime12h(prayers[i].iqama);
+                iqamaEl.style.display = '';
+              } else {
+                iqamaEl.style.display = 'none';
+              }
+            }
+          }
+        }
+
+        var lastDateKey = lookupKey;
+        updateStrip();
+
         function tick() {
           var d = new Date();
+          var todayKeyNow = getTodayKey();
+          if (todayKeyNow !== lastDateKey && data[todayKeyNow]) {
+            lastDateKey = todayKeyNow;
+            dayData = data[todayKeyNow];
+            prayers = dayDataToPrayerTimes(dayData);
+            updateStrip();
+          }
           var h = d.getHours();
           var m = d.getMinutes();
           var h12 = h % 12 || 12;
           timeMain.textContent = h12 + ':' + pad(m);
           timePeriod.textContent = h >= 12 ? 'PM' : 'AM';
           gregorianDate.textContent = d.toLocaleDateString('en-CA', dateOptions);
+          islamicDateEl.textContent = formatHijri(d);
 
           var next = getNextTarget(d);
           if (next) {
             nextPrayerNameEl.textContent = next.name;
             nextPrayerTypeEl.textContent = next.type;
+            nextPrayerTypeEl.style.display = next.type ? '' : 'none';
             var diff = next.target - d;
             if (diff <= 0) {
               countdownMainEl.textContent = '0';
@@ -259,7 +409,7 @@ const classes = [
     width: clamp(3.5rem, 7vw, 5.25rem);
     height: auto;
     display: block;
-    border-radius: 12px;
+    border-radius: 0.5rem;
   }
 
   .bigscreen-masjid-name {
@@ -271,19 +421,25 @@ const classes = [
 
   .bigscreen-header-right {
     text-align: right;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    line-height: 1.2;
   }
 
   .bigscreen-islamic-date {
     font-size: clamp(1.2rem, 2.1vw, 1.5rem);
     color: #e2e8f0;
     margin: 0;
+    line-height: 1.2;
   }
 
   .bigscreen-gregorian-date {
     font-size: clamp(1.25rem, 2.2vw, 1.75rem);
     font-weight: 600;
     color: #fff;
-    margin: 0.05em 0 0;
+    margin: 0;
+    line-height: 1.2;
   }
 
   .bigscreen-main {
@@ -295,7 +451,7 @@ const classes = [
     overflow: hidden;
   }
 
-  @media (max-width: 900px) {
+  @media (max-width: 56.25em) {
     .bigscreen-main {
       grid-template-columns: 1fr;
     }
@@ -317,7 +473,7 @@ const classes = [
 
   .bigscreen-card {
     background: var(--bigscreen-card);
-    border-radius: 12px;
+    border-radius: 1rem;
     padding: clamp(0.75rem, 1.5vw, 1.25rem);
     display: flex;
     flex-direction: column;
@@ -338,6 +494,38 @@ const classes = [
   .bigscreen-classes-card .bigscreen-next-heading {
     text-align: left;
     margin: 0 0 0.75em;
+  }
+
+  .bigscreen-qr-card {
+    justify-content: center;
+  }
+
+  .bigscreen-qr-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: clamp(1rem, 2vw, 1.5rem);
+    width: 100%;
+  }
+
+  .bigscreen-qr-card .bigscreen-qr-heading {
+    font-size: clamp(1.35rem, 2.25vw, 1.7rem);
+    text-align: center;
+    margin: 0;
+    flex: 1;
+  }
+
+  .bigscreen-qr-link {
+    flex-shrink: 0;
+    display: block;
+    line-height: 0;
+  }
+
+  .bigscreen-qr-img {
+    display: block;
+    width: clamp(6.5rem, 16vw, 10.5rem);
+    height: auto;
+    border-radius: 0.5rem;
   }
 
   .bigscreen-time-display {
@@ -407,7 +595,7 @@ const classes = [
   }
 
   .bigscreen-next-divider {
-    width: 1px;
+    width: 0.0625rem;
     min-height: 1.5em;
     background: rgba(148, 163, 184, 0.35);
     flex-shrink: 0;
@@ -467,7 +655,7 @@ const classes = [
     align-items: center;
     gap: 1rem;
     padding: 0.5em 0;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    border-bottom: 0.0625rem solid rgba(255, 255, 255, 0.08);
   }
 
   .bigscreen-class-row:last-child {
@@ -480,7 +668,7 @@ const classes = [
     color: var(--bigscreen-accent);
     background: rgba(201, 169, 89, 0.2);
     padding: 0.25em 0.5em;
-    border-radius: 6px;
+    border-radius: 0.625rem;
     white-space: nowrap;
   }
 
@@ -507,7 +695,7 @@ const classes = [
     color: var(--bigscreen-muted);
     background: rgba(148, 163, 184, 0.2);
     padding: 0.2em 0.5em;
-    border-radius: 4px;
+    border-radius: 0.5rem;
     white-space: nowrap;
   }
 
@@ -520,17 +708,17 @@ const classes = [
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     gap: clamp(0.3rem, 0.6vw, 0.5rem);
-    flex: 0 0 min(24vh, 28%);
+    flex: 0 0 min(27vh, 31%);
     min-height: 0;
   }
 
-  @media (max-width: 1000px) {
+  @media (max-width: 62.5em) {
     .bigscreen-prayer-grid {
       grid-template-columns: repeat(3, 1fr);
     }
   }
 
-  @media (max-width: 500px) {
+  @media (max-width: 31.25em) {
     .bigscreen-prayer-grid {
       grid-template-columns: repeat(2, 1fr);
     }
@@ -538,7 +726,7 @@ const classes = [
 
   .bigscreen-prayer-card {
     background: var(--bigscreen-card);
-    border-radius: 10px;
+    border-radius: 0.875rem;
     padding: clamp(0.5rem, 0.9vw, 0.85rem);
     text-align: center;
     position: relative;
@@ -561,7 +749,7 @@ const classes = [
     font-weight: 500;
     background: rgba(0, 0, 0, 0.2);
     padding: 0.15em 0.4em;
-    border-radius: 4px;
+    border-radius: 0.5rem;
   }
 
   .bigscreen-prayer-name {
@@ -569,11 +757,11 @@ const classes = [
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin: 0 0 0.15em;
+    margin: 0 0 0.4rem;
   }
 
   .bigscreen-prayer-time {
-    font-size: clamp(1.7rem, 2.7vw, 2.4rem);
+    font-size: clamp(2rem, 3.2vw, 2.85rem);
     font-weight: 600;
     margin: 0;
   }
@@ -583,13 +771,26 @@ const classes = [
   }
 
   .bigscreen-prayer-iqama {
-    font-size: clamp(1.45rem, 2.2vw, 1.85rem);
-    font-weight: 600;
-    color: var(--bigscreen-accent);
-    margin: 0.1em 0 0;
+    margin: 0.05rem 0 0;
   }
 
-  .bigscreen-prayer-card--next .bigscreen-prayer-iqama {
+  .bigscreen-prayer-iqama-label {
+    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    font-weight: 500;
+    color: var(--bigscreen-muted);
+  }
+
+  .bigscreen-prayer-iqama-time {
+    font-size: clamp(1.7rem, 2.6vw, 2.2rem);
+    font-weight: 600;
+    color: var(--bigscreen-accent);
+  }
+
+  .bigscreen-prayer-card--next .bigscreen-prayer-iqama-label {
+    color: #3d2914;
+  }
+
+  .bigscreen-prayer-card--next .bigscreen-prayer-iqama-time {
     color: #3d2914;
   }
 </style>
