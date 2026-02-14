@@ -87,7 +87,7 @@ function timeToPeriod(t: string) {
           <div class="bigscreen-next-divider" aria-hidden="true"></div>
           <div class="bigscreen-next-right">
             <p class="bigscreen-next-time-display">
-              <span class="bigscreen-next-time-main" id="countdown-main">0:45</span>
+              <span class="bigscreen-next-time-main" id="countdown-main">00:45</span>
               <span class="bigscreen-next-time-seconds" id="countdown-seconds">12</span>
             </p>
           </div>
@@ -290,20 +290,15 @@ function timeToPeriod(t: string) {
             nextPrayerTypeEl.style.display = next.type ? '' : 'none';
             var diff = next.target - d;
             if (diff <= 0) {
-              countdownMainEl.textContent = '0';
+              countdownMainEl.textContent = '00:00';
               countdownSecondsEl.textContent = '00';
             } else {
               var totalSecs = Math.floor(diff / 1000);
               var hours = Math.floor(totalSecs / 3600);
               var mins = Math.floor((totalSecs % 3600) / 60);
               var secs = totalSecs % 60;
-              if (hours > 0) {
-                countdownMainEl.textContent = hours + ':' + pad(mins);
-                countdownSecondsEl.textContent = pad(secs);
-              } else {
-                countdownMainEl.textContent = String(mins);
-                countdownSecondsEl.textContent = pad(secs);
-              }
+              countdownMainEl.textContent = pad(hours) + ':' + pad(mins);
+              countdownSecondsEl.textContent = pad(secs);
             }
           }
         }

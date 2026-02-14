@@ -361,11 +361,24 @@ const classes = [
             nextPrayerTypeEl.style.display = '';
             nextDividerEl.style.display = 'none';
             countdownWrapEl.style.display = 'none';
+            for (var i = 0; i < prayers.length; i++) {
+              var card = document.getElementById('prayer-card-' + i);
+              var badge = document.getElementById('prayer-next-badge-' + i);
+              if (card) card.classList.remove('bigscreen-prayer-card--next');
+              if (badge) badge.style.display = 'none';
+            }
           } else {
             nextCardEl.classList.remove('bigscreen-next-card--ongoing');
             var next = getNextTarget(d);
             nextHeadingEl.textContent = 'Time remaining till';
             nextDividerEl.style.display = '';
+            for (var i = 0; i < prayers.length; i++) {
+              var card = document.getElementById('prayer-card-' + i);
+              var badge = document.getElementById('prayer-next-badge-' + i);
+              var isNext = next && prayers[i].name === next.name;
+              if (card) card.classList.toggle('bigscreen-prayer-card--next', isNext);
+              if (badge) badge.style.display = isNext ? '' : 'none';
+            }
             if (next) {
               nextPrayerNameEl.textContent = next.name;
               nextPrayerTypeEl.textContent = next.type;
@@ -815,6 +828,11 @@ const classes = [
     min-height: 0;
   }
 
+  .bigscreen-prayer-card--next {
+    background: var(--bigscreen-accent);
+    color: #0a0e1a;
+  }
+
   .bigscreen-prayer-next-badge {
     position: absolute;
     top: 0.5rem;
@@ -852,6 +870,14 @@ const classes = [
     line-height: 1;
   }
 
+  .bigscreen-prayer-card--next .bigscreen-prayer-time-period {
+    color: rgba(61, 41, 20, 0.75);
+  }
+
+  .bigscreen-prayer-card--next .bigscreen-prayer-time {
+    color: #0a0e1a;
+  }
+
   .bigscreen-prayer-iqama {
     margin: 0.05rem 0 0;
   }
@@ -867,5 +893,13 @@ const classes = [
     font-weight: 600;
     color: var(--bigscreen-accent);
     margin-left: 0.15em;
+  }
+
+  .bigscreen-prayer-card--next .bigscreen-prayer-iqama-label {
+    color: #3d2914;
+  }
+
+  .bigscreen-prayer-card--next .bigscreen-prayer-iqama-time {
+    color: #3d2914;
   }
 </style>
