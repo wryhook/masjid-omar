@@ -73,6 +73,10 @@ function timeToPeriod(t: string) {
   </head>
   <body class="daily-times-page">
     <main class="daily-times-main">
+      <div class="daily-times-dates">
+        <p class="bigscreen-islamic-date daily-times-islamic-date" id="islamic-date">—</p>
+        <p class="bigscreen-gregorian-date daily-times-gregorian-date" id="gregorian-date">—</p>
+      </div>
       <section class="daily-times-next-card bigscreen-card bigscreen-next-card">
         <h2 class="bigscreen-next-heading">Time remaining till</h2>
         <div class="bigscreen-next-body">
@@ -169,7 +173,30 @@ function timeToPeriod(t: string) {
         var nextPrayerTypeEl = document.getElementById('next-prayer-type');
         var countdownMainEl = document.getElementById('countdown-main');
         var countdownSecondsEl = document.getElementById('countdown-seconds');
-        if (!nextPrayerNameEl || !nextPrayerTypeEl || !countdownMainEl || !countdownSecondsEl) return;
+        var gregorianDateEl = document.getElementById('gregorian-date');
+        var islamicDateEl = document.getElementById('islamic-date');
+        if (!nextPrayerNameEl || !nextPrayerTypeEl || !countdownMainEl || !countdownSecondsEl || !gregorianDateEl || !islamicDateEl) return;
+
+        var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var hijriFormatter = new Intl.DateTimeFormat('en-CA', { calendar: 'islamic-umalqura', day: 'numeric', month: 'long', year: 'numeric' });
+        function ordinalDay(n) {
+          var v = n % 100;
+          return n + (v >= 11 && v <= 13 ? 'th' : (['th', 'st', 'nd', 'rd'][n % 10] || 'th'));
+        }
+        function formatHijri(date) {
+          try {
+            var parts = hijriFormatter.formatToParts(date);
+            var day = '', month = '', year = '';
+            for (var i = 0; i < parts.length; i++) {
+              if (parts[i].type === 'day') day = parts[i].value;
+              if (parts[i].type === 'month') month = parts[i].value;
+              if (parts[i].type === 'year') year = parts[i].value;
+            }
+            return ordinalDay(parseInt(day, 10)) + ' ' + month + ', ' + year + ' AH';
+          } catch (e) {
+            return '—';
+          }
+        }
 
         var data = JSON.parse(prayerTimesDataJson || '{}');
         var dates = Object.keys(data);
@@ -247,6 +274,8 @@ function timeToPeriod(t: string) {
 
         function tick() {
           var d = new Date();
+          gregorianDateEl.textContent = d.toLocaleDateString('en-CA', dateOptions);
+          islamicDateEl.textContent = formatHijri(d);
           var todayKeyNow = getTodayKey();
           if (todayKeyNow !== lastDateKey && data[todayKeyNow]) {
             lastDateKey = todayKeyNow;
@@ -296,7 +325,7 @@ function timeToPeriod(t: string) {
   html.daily-times-html body {
     margin: 0;
     padding: 0;
-    min-height: 100%;
+    height: 100%;
     min-height: 100dvh;
     width: 100%;
     max-width: 100vw;
@@ -315,8 +344,11 @@ function timeToPeriod(t: string) {
   .daily-times-page {
     margin: 0;
     font-family: 'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
     min-height: 100dvh;
+    height: 100%;
     width: 100%;
     max-width: 100vw;
     background-color: var(--bigscreen-bg);
@@ -341,7 +373,7 @@ function timeToPeriod(t: string) {
   }
 
   .bigscreen-next-heading {
-    font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+    font-size: clamp(1.3rem, 2.1vw, 1.7rem);
     font-weight: 500;
     color: var(--bigscreen-muted);
     text-transform: uppercase;
@@ -369,14 +401,14 @@ function timeToPeriod(t: string) {
   }
 
   .bigscreen-next-name {
-    font-size: clamp(1.95rem, 3.5vw, 2.85rem);
+    font-size: clamp(2.3rem, 4.2vw, 3.4rem);
     font-weight: 500;
     color: #fff;
     margin: 0;
   }
 
   .bigscreen-next-type {
-    font-size: clamp(1.95rem, 3.5vw, 2.85rem);
+    font-size: clamp(2.3rem, 4.2vw, 3.4rem);
     font-weight: 500;
     color: var(--bigscreen-muted);
     margin: 0;
@@ -402,7 +434,7 @@ function timeToPeriod(t: string) {
     align-items: baseline;
     justify-content: center;
     gap: 0.08em;
-    font-size: clamp(3rem, 6.5vw, 5rem);
+    font-size: clamp(3.5rem, 7.5vw, 6rem);
     font-weight: 500;
     margin: 0;
     line-height: 1;
@@ -437,7 +469,7 @@ function timeToPeriod(t: string) {
   }
 
   .bigscreen-prayer-name {
-    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    font-size: clamp(1.2rem, 1.8vw, 1.55rem);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -453,7 +485,7 @@ function timeToPeriod(t: string) {
     align-items: baseline;
     justify-content: center;
     gap: 0.08em;
-    font-size: clamp(2rem, 3.2vw, 2.85rem);
+    font-size: clamp(2.4rem, 3.8vw, 3.4rem);
     font-weight: 500;
     margin: 0;
     line-height: 1;
@@ -479,13 +511,13 @@ function timeToPeriod(t: string) {
   }
 
   .bigscreen-prayer-iqama-label {
-    font-size: clamp(1rem, 1.4vw, 1.2rem);
+    font-size: clamp(1.2rem, 1.7vw, 1.45rem);
     font-weight: 500;
     color: var(--bigscreen-muted);
   }
 
   .bigscreen-prayer-iqama-time {
-    font-size: clamp(1.7rem, 2.6vw, 2.2rem);
+    font-size: clamp(2rem, 3.1vw, 2.6rem);
     font-weight: 500;
     color: var(--bigscreen-accent);
     margin-left: 0.35em;
@@ -502,38 +534,69 @@ function timeToPeriod(t: string) {
   .daily-times-main {
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    flex: 1;
+    min-height: 0;
+    gap: clamp(0.75rem, 2dvh, 1.25rem);
     max-width: 32rem;
     margin: 0 auto;
-    padding: 1rem clamp(1rem, 4vw, 1.5rem) 2rem;
+    width: 100%;
+    padding: clamp(0.75rem, 2dvh, 1.25rem) clamp(1rem, 4vw, 1.5rem);
+  }
+
+  .daily-times-dates {
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+    line-height: 1.2;
+    text-align: center;
+  }
+
+  .daily-times-islamic-date {
+    font-size: clamp(0.95rem, 1.75vw, 1.25rem);
+    color: var(--bigscreen-muted);
+    margin: 0;
+  }
+
+  .daily-times-gregorian-date {
+    font-size: clamp(1.05rem, 1.9vw, 1.4rem);
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 0;
   }
 
   .daily-times-next-card {
     flex-shrink: 0;
-    padding: 1.25rem 1.25rem;
+    padding: clamp(1rem, 2.5dvh, 1.5rem) 1.25rem;
   }
 
   .daily-times-next-card .bigscreen-next-heading {
-    font-size: clamp(0.85rem, 1.5vw, 1.05rem);
+    font-size: clamp(0.85rem, 1.4vw, 1.15rem);
   }
 
   .daily-times-next-card .bigscreen-next-name,
   .daily-times-next-card .bigscreen-next-type {
-    font-size: clamp(1.5rem, 5vw, 2rem);
+    font-size: clamp(1.8rem, 6vw, 3.5dvh);
   }
 
   .daily-times-next-card .bigscreen-next-time-display {
-    font-size: clamp(2.25rem, 8vw, 3rem);
+    font-size: clamp(2.75rem, 9.5vw, 6dvh);
   }
 
   .daily-times-table-wrap {
+    flex: 1;
+    min-height: 0;
+    display: flex;
+    flex-direction: column;
     padding: 0;
   }
 
   .daily-times-table {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    flex: 1;
+    min-height: 0;
+    gap: clamp(0.35rem, 1dvh, 0.6rem);
   }
 
   .daily-times-row {
@@ -541,12 +604,13 @@ function timeToPeriod(t: string) {
     grid-template-columns: 2fr 1fr 1fr;
     gap: 1rem 1.5rem;
     align-items: center;
-    padding: 0.75rem clamp(1rem, 4vw, 1.5rem);
+    padding: clamp(0.6rem, 1.2dvh, 1rem) clamp(1rem, 4vw, 1.5rem);
     min-height: 0;
   }
 
   .daily-times-header {
-    font-size: 0.95rem;
+    flex-shrink: 0;
+    font-size: clamp(1rem, 1.5dvh, 1.2rem);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -561,10 +625,12 @@ function timeToPeriod(t: string) {
   .daily-times-header .daily-times-cell-adhan,
   .daily-times-header .daily-times-cell-iqamah {
     text-align: right;
-    font-size: 0.95rem !important;
+    font-size: 1.15rem !important;
   }
 
   .daily-times-data-row {
+    flex: 1;
+    min-height: 2.5rem;
     background: var(--bigscreen-card);
     border-radius: 0.75rem;
   }
@@ -605,7 +671,7 @@ function timeToPeriod(t: string) {
   }
 
   .daily-times-table .daily-times-cell-name .bigscreen-prayer-name {
-    font-size: clamp(0.95rem, 2.2vw, 1.1rem);
+    font-size: clamp(1.15rem, 2.6vw, min(1.6rem, 2.6dvh));
     font-weight: 300 !important;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -623,7 +689,7 @@ function timeToPeriod(t: string) {
   .daily-times-cell-adhan,
   .daily-times-cell-iqamah {
     text-align: right;
-    font-size: clamp(1.5rem, 4vw, 1.9rem);
+    font-size: clamp(1.8rem, 4.8vw, min(2.65rem, 3.8dvh));
     font-weight: 500;
     min-width: 0;
     padding-right: 0.15em;
@@ -631,7 +697,7 @@ function timeToPeriod(t: string) {
 
   .daily-times-table .daily-times-header .daily-times-cell-adhan,
   .daily-times-table .daily-times-header .daily-times-cell-iqamah {
-    font-size: 1rem !important;
+    font-size: 1.2rem !important;
   }
 
   .daily-times-cell-iqamah {
