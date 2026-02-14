@@ -537,10 +537,12 @@ function timeToPeriod(t: string) {
     flex: 1;
     min-height: 0;
     gap: clamp(0.75rem, 2dvh, 1.25rem);
-    max-width: 32rem;
+    max-width: 38rem;
     margin: 0 auto;
     width: 100%;
-    padding: clamp(0.75rem, 2dvh, 1.25rem) clamp(1rem, 4vw, 1.5rem);
+    padding: clamp(0.75rem, 2dvh, 1.25rem) clamp(0.75rem, 3vw, 1.25rem);
+    box-sizing: border-box;
+    min-width: 0;
   }
 
   .daily-times-dates {
@@ -553,13 +555,13 @@ function timeToPeriod(t: string) {
   }
 
   .daily-times-islamic-date {
-    font-size: clamp(0.95rem, 1.75vw, 1.25rem);
+    font-size: clamp(1.05rem, 2vw, 1.4rem);
     color: var(--bigscreen-muted);
     margin: 0;
   }
 
   .daily-times-gregorian-date {
-    font-size: clamp(1.05rem, 1.9vw, 1.4rem);
+    font-size: clamp(1.15rem, 2.2vw, 1.55rem);
     font-weight: 600;
     color: #e2e8f0;
     margin: 0;
@@ -571,7 +573,7 @@ function timeToPeriod(t: string) {
   }
 
   .daily-times-next-card .bigscreen-next-heading {
-    font-size: clamp(0.85rem, 1.4vw, 1.15rem);
+    font-size: clamp(0.95rem, 1.6vw, 1.3rem);
   }
 
   .daily-times-next-card .bigscreen-next-name,
@@ -601,11 +603,12 @@ function timeToPeriod(t: string) {
 
   .daily-times-row {
     display: grid;
-    grid-template-columns: 2fr 1fr 1fr;
-    gap: 1rem 1.5rem;
+    grid-template-columns: 1fr minmax(4.5rem, auto) minmax(4.5rem, auto);
+    gap: 0.75rem 1.25rem;
     align-items: center;
-    padding: clamp(0.6rem, 1.2dvh, 1rem) clamp(1rem, 4vw, 1.5rem);
+    padding: clamp(0.6rem, 1.2dvh, 1rem) clamp(0.75rem, 3vw, 1.25rem);
     min-height: 0;
+    min-width: 0;
   }
 
   .daily-times-header {
@@ -668,6 +671,8 @@ function timeToPeriod(t: string) {
 
   .daily-times-cell-name {
     position: relative;
+    min-width: 0;
+    overflow: hidden;
   }
 
   .daily-times-table .daily-times-cell-name .bigscreen-prayer-name {
@@ -693,6 +698,8 @@ function timeToPeriod(t: string) {
     font-weight: 500;
     min-width: 0;
     padding-right: 0.15em;
+    overflow: visible;
+    white-space: nowrap;
   }
 
   .daily-times-table .daily-times-header .daily-times-cell-adhan,
