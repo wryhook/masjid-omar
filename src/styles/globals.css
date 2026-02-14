@@ -20,6 +20,7 @@ html {
 body {
   @apply text-lg;
 
+  font-family: 'Source Sans 3', sans-serif;
   color: var(--foreground);
   background: var(--background);
   font-optical-sizing: auto;
@@ -30,11 +31,6 @@ body {
   .text-balance {
     text-wrap: balance;
   }
-}
-
-.manrope {
-  font-optical-sizing: auto;
-  font-style: normal;
 }
 
 h1,
