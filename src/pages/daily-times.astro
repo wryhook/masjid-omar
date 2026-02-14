@@ -73,9 +73,16 @@ function timeToPeriod(t: string) {
   </head>
   <body class="daily-times-page">
     <main class="daily-times-main">
-      <div class="daily-times-dates">
-        <p class="bigscreen-islamic-date daily-times-islamic-date" id="islamic-date">—</p>
-        <p class="bigscreen-gregorian-date daily-times-gregorian-date" id="gregorian-date">—</p>
+      <div class="daily-times-dates-row">
+        <div class="daily-times-clock" aria-label="Current time">
+          <p class="bigscreen-time-display daily-times-time-display">
+            <span id="time-main">12:00</span><span class="bigscreen-time-seconds" id="time-period">PM</span>
+          </p>
+        </div>
+        <div class="daily-times-dates">
+          <p class="bigscreen-islamic-date daily-times-islamic-date" id="islamic-date">—</p>
+          <p class="bigscreen-gregorian-date daily-times-gregorian-date" id="gregorian-date">—</p>
+        </div>
       </div>
       <section class="daily-times-next-card bigscreen-card bigscreen-next-card">
         <h2 class="bigscreen-next-heading">Time remaining till</h2>
@@ -169,6 +176,8 @@ function timeToPeriod(t: string) {
           return h >= 12 ? 'PM' : 'AM';
         }
 
+        var timeMainEl = document.getElementById('time-main');
+        var timePeriodEl = document.getElementById('time-period');
         var nextPrayerNameEl = document.getElementById('next-prayer-name');
         var nextPrayerTypeEl = document.getElementById('next-prayer-type');
         var countdownMainEl = document.getElementById('countdown-main');
@@ -274,6 +283,13 @@ function timeToPeriod(t: string) {
 
         function tick() {
           var d = new Date();
+          if (timeMainEl && timePeriodEl) {
+            var h = d.getHours();
+            var m = d.getMinutes();
+            var h12 = h % 12 || 12;
+            timeMainEl.textContent = pad(h12) + ':' + pad(m);
+            timePeriodEl.textContent = h >= 12 ? 'PM' : 'AM';
+          }
           gregorianDateEl.textContent = d.toLocaleDateString('en-CA', dateOptions);
           islamicDateEl.textContent = formatHijri(d);
           var todayKeyNow = getTodayKey();
@@ -430,7 +446,7 @@ function timeToPeriod(t: string) {
     justify-content: center;
     gap: 0.08em;
     font-size: clamp(3.5rem, 7.5vw, 6rem);
-    font-weight: 500;
+    font-weight: 600;
     margin: 0;
     line-height: 1;
     letter-spacing: -0.02em;
@@ -540,13 +556,43 @@ function timeToPeriod(t: string) {
     min-width: 0;
   }
 
+  .daily-times-dates-row {
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    width: 100%;
+  }
+
+  .daily-times-clock {
+    flex-shrink: 0;
+  }
+
+  .daily-times-time-display {
+    display: flex;
+    align-items: baseline;
+    gap: 0.08em;
+    font-size: clamp(2rem, 6vw, 3.5rem);
+    font-weight: 600;
+    color: #e2e8f0;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .daily-times-time-display .bigscreen-time-seconds {
+    font-size: 0.5em;
+    color: var(--bigscreen-muted);
+  }
+
   .daily-times-dates {
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
     gap: 0.1rem;
     line-height: 1.2;
-    text-align: center;
+    text-align: right;
   }
 
   .daily-times-islamic-date {
@@ -690,7 +736,7 @@ function timeToPeriod(t: string) {
   .daily-times-cell-iqamah {
     text-align: right;
     font-size: clamp(1.8rem, 4.8vw, min(2.65rem, 3.8dvh));
-    font-weight: 500;
+    font-weight: 600;
     min-width: 0;
     padding-right: 0.15em;
     overflow: visible;
@@ -709,12 +755,13 @@ function timeToPeriod(t: string) {
   .daily-times-cell-adhan .bigscreen-prayer-time-period,
   .daily-times-period {
     font-size: 0.65em;
-    font-weight: 500;
+    font-weight: 600;
     color: var(--bigscreen-muted);
   }
 
   .daily-times-cell-iqamah .bigscreen-prayer-iqama-time {
     font-size: 1em;
+    font-weight: 600;
     color: inherit;
   }
 
