@@ -22,7 +22,7 @@ const Header: React.FC = () => {
 
 	return (
 		<header className="bg-background fixed top-0 left-0 right-0 md:absolute z-50 mx-auto w-full">
-			<div className="px-5 w-full max-w-7xl mx-auto !px-0">
+			<div className="px-5 w-full max-w-7xl mx-auto">
 				<nav className="mx-auto flex justify-between items-center py-2 px-5 md:py-4">
 					<a href="/" className="flex items-center gap-2">
 						<img src="/images/logo.png" alt={siteDetails.siteName} width={120} height={120} />

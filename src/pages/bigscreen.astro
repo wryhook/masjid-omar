@@ -1,0 +1,595 @@
+---
+import { siteDetails } from '@/data/siteDetails';
+
+// Mock data for TV display
+const islamicDate = '14th Ramadan, 1445 AH';
+
+const prayerTimes = [
+  { name: 'Fajr', time: '05:12', iqama: '05:45', isNext: false },
+  { name: 'Sunrise', time: '06:34', iqama: null, isNext: false },
+  { name: 'Dhuhr', time: '01:15', iqama: '01:30', isNext: true },
+  { name: 'Asr', time: '04:45', iqama: '05:15', isNext: false },
+  { name: 'Maghrib', time: '07:22', iqama: '07:27', isNext: false },
+  { name: 'Isha', time: '08:45', iqama: '09:15', isNext: false },
+];
+
+function timeTo12h(t) {
+  if (!t) return '';
+  const [h, m] = t.split(':').map(Number);
+  const h12 = h % 12 || 12;
+  return `${h12}:${String(m).padStart(2, '0')}`;
+}
+
+const classes = [
+  { start: '5:00', title: 'Quran Tajweed', detail: 'Brother Ahmed Al-Masri • Main Hall', tag: 'DAILY', tagHighlight: false },
+  { start: '7:00', title: 'Youth Halaqa', detail: 'Sheikh Omar Suleiman • Room B', tag: 'STARTING SOON', tagHighlight: true },
+  { start: '8:30', title: 'Fiqh of Fasting', detail: 'Imam Zaid • Library', tag: 'SPECIAL', tagHighlight: false },
+  { start: '9:45', title: 'Taraweeh Prayers', detail: 'Led by Qari Youssef • Main Prayer Hall', tag: 'RAMADAN', tagHighlight: false },
+];
+
+---
+
+<!doctype html>
+<html lang="en" class="bigscreen-html">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Big Screen | {siteDetails.metadata.title}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+  </head>
+  <body class="bigscreen-page">
+    <header class="bigscreen-header">
+      <div class="bigscreen-header-left">
+        <img src="/images/logo-white-bg.webp" alt="" class="bigscreen-header-icon" />
+        <h1 class="bigscreen-masjid-name">{siteDetails.metadata.title}</h1>
+      </div>
+      <div class="bigscreen-header-right">
+        <p class="bigscreen-islamic-date">{islamicDate}</p>
+        <p class="bigscreen-gregorian-date" id="gregorian-date">—</p>
+      </div>
+    </header>
+
+    <main class="bigscreen-main">
+      <aside class="bigscreen-left">
+        <section class="bigscreen-card bigscreen-time-card">
+          <p class="bigscreen-time-display">
+            <span id="time-main">12:44</span><span class="bigscreen-time-seconds" id="time-period">PM</span>
+          </p>
+        </section>
+        <section class="bigscreen-card bigscreen-next-card">
+          <h3 class="bigscreen-next-heading">Next prayer</h3>
+          <div class="bigscreen-next-body">
+            <div class="bigscreen-next-left">
+              <span class="bigscreen-next-name" id="next-prayer-name">Dhuhr</span> <span class="bigscreen-next-type" id="next-prayer-type">Adhan</span>
+            </div>
+            <div class="bigscreen-next-divider" aria-hidden="true"></div>
+            <div class="bigscreen-next-right">
+              <p class="bigscreen-next-time-display">
+                <span class="bigscreen-next-time-main" id="countdown-main">0:45</span><span class="bigscreen-next-time-seconds" id="countdown-seconds">12</span>
+              </p>
+            </div>
+          </div>
+        </section>
+      </aside>
+
+      <div class="bigscreen-right">
+        <section class="bigscreen-card bigscreen-classes-card">
+          <h3 class="bigscreen-next-heading">Today's Classes</h3>
+          <ul class="bigscreen-classes-list">
+            {classes.map((c) => (
+              <li class="bigscreen-class-row">
+                <span class="bigscreen-class-time">{c.start}</span>
+                <div class="bigscreen-class-info">
+                  <span class="bigscreen-class-title">{c.title}</span>
+                  <span class="bigscreen-class-detail">{c.detail}</span>
+                </div>
+                <span class={`bigscreen-class-tag ${c.tagHighlight ? 'bigscreen-class-tag--highlight' : ''}`}>{c.tag}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      </div>
+    </main>
+
+    <section class="bigscreen-prayer-grid">
+      {prayerTimes.map((p) => (
+        <div class={`bigscreen-prayer-card ${p.isNext ? 'bigscreen-prayer-card--next' : ''}`}>
+          {p.isNext && <span class="bigscreen-prayer-next-badge">NEXT</span>}
+          <p class="bigscreen-prayer-name">{p.name.toUpperCase()}</p>
+          <p class="bigscreen-prayer-time">{timeTo12h(p.time)}</p>
+          {p.iqama && <p class="bigscreen-prayer-iqama">Iqama {timeTo12h(p.iqama)}</p>}
+        </div>
+      ))}
+    </section>
+
+    <script define:vars={{ prayerTimesJson: JSON.stringify(prayerTimes) }}>
+      (function () {
+        function pad(n) {
+          return String(n).padStart(2, '0');
+        }
+        var timeMain = document.getElementById('time-main');
+        var timePeriod = document.getElementById('time-period');
+        var gregorianDate = document.getElementById('gregorian-date');
+        var nextPrayerNameEl = document.getElementById('next-prayer-name');
+        var nextPrayerTypeEl = document.getElementById('next-prayer-type');
+        var countdownMainEl = document.getElementById('countdown-main');
+        var countdownSecondsEl = document.getElementById('countdown-seconds');
+        if (!timeMain || !timePeriod || !gregorianDate || !nextPrayerNameEl || !nextPrayerTypeEl || !countdownMainEl || !countdownSecondsEl) return;
+
+        var prayers = JSON.parse(prayerTimesJson || '[]');
+        var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+
+        function getNextTarget(now) {
+          var i;
+          for (i = 0; i < prayers.length; i++) {
+            var p = prayers[i];
+            var adhan = p.time.split(':').map(Number);
+            var adhanDate = new Date(now);
+            adhanDate.setHours(adhan[0], adhan[1], 0, 0);
+            if (now < adhanDate) {
+              return { name: p.name, type: 'Adhan', target: adhanDate };
+            }
+            if (p.iqama) {
+              var iqama = p.iqama.split(':').map(Number);
+              var iqamaDate = new Date(now);
+              iqamaDate.setHours(iqama[0], iqama[1], 0, 0);
+              if (now < iqamaDate) {
+                return { name: p.name, type: 'Iqama', target: iqamaDate };
+              }
+            }
+          }
+          var first = prayers[0];
+          if (first) {
+            var adhan = first.time.split(':').map(Number);
+            var next = new Date(now);
+            next.setHours(adhan[0], adhan[1], 0, 0);
+            next.setDate(next.getDate() + 1);
+            return { name: first.name, type: 'Adhan', target: next };
+          }
+          return null;
+        }
+
+        function tick() {
+          var d = new Date();
+          var h = d.getHours();
+          var m = d.getMinutes();
+          var h12 = h % 12 || 12;
+          timeMain.textContent = h12 + ':' + pad(m);
+          timePeriod.textContent = h >= 12 ? 'PM' : 'AM';
+          gregorianDate.textContent = d.toLocaleDateString('en-CA', dateOptions);
+
+          var next = getNextTarget(d);
+          if (next) {
+            nextPrayerNameEl.textContent = next.name;
+            nextPrayerTypeEl.textContent = next.type;
+            var diff = next.target - d;
+            if (diff <= 0) {
+              countdownMainEl.textContent = '0';
+              countdownSecondsEl.textContent = '00';
+            } else {
+              var totalSecs = Math.floor(diff / 1000);
+              var hours = Math.floor(totalSecs / 3600);
+              var mins = Math.floor((totalSecs % 3600) / 60);
+              var secs = totalSecs % 60;
+              if (hours > 0) {
+                countdownMainEl.textContent = hours + ':' + pad(mins);
+                countdownSecondsEl.textContent = pad(secs);
+              } else {
+                countdownMainEl.textContent = String(mins);
+                countdownSecondsEl.textContent = pad(secs);
+              }
+            }
+          }
+        }
+
+        tick();
+        var intervalId = setInterval(tick, 1000);
+        function cleanup() {
+          clearInterval(intervalId);
+        }
+        window.addEventListener('beforeunload', cleanup);
+        window.addEventListener('pagehide', cleanup);
+      })();
+    </script>
+  </body>
+</html>
+
+<style is:global>
+  html.bigscreen-html,
+  html.bigscreen-html body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    max-width: 100vw;
+    overflow: hidden;
+    box-sizing: border-box;
+  }
+</style>
+
+<style>
+  .bigscreen-page {
+    margin: 0;
+    font-family: 'Source Sans 3', ui-sans-serif, system-ui, sans-serif;
+    height: 100%;
+    min-height: 100vh;
+    min-height: 100dvh;
+    width: 100%;
+    max-width: 100vw;
+    background-color: #0a0e1a;
+    color: #e2e8f0;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    padding: clamp(0.75rem, 1.5vw, 1.5rem);
+    gap: clamp(0.5rem, 1.2vw, 1rem);
+    overflow: hidden;
+  }
+
+  :root {
+    --bigscreen-bg: #0a0e1a;
+    --bigscreen-card: #111827;
+    --bigscreen-accent: #c9a959;
+    --bigscreen-accent-dim: #8b6914;
+    --bigscreen-muted: #94a3b8;
+  }
+
+  .bigscreen-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    flex-shrink: 0;
+  }
+
+  .bigscreen-header-left {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+  }
+
+  .bigscreen-header-icon {
+    width: clamp(3.5rem, 7vw, 5.25rem);
+    height: auto;
+    display: block;
+    border-radius: 12px;
+  }
+
+  .bigscreen-masjid-name {
+    font-size: clamp(1.5rem, 3vw, 2.2rem);
+    font-weight: 600;
+    margin: 0;
+    color: #fff;
+  }
+
+  .bigscreen-header-right {
+    text-align: right;
+  }
+
+  .bigscreen-islamic-date {
+    font-size: clamp(1.2rem, 2.1vw, 1.5rem);
+    color: #e2e8f0;
+    margin: 0;
+  }
+
+  .bigscreen-gregorian-date {
+    font-size: clamp(1.25rem, 2.2vw, 1.75rem);
+    font-weight: 600;
+    color: #fff;
+    margin: 0.05em 0 0;
+  }
+
+  .bigscreen-main {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: clamp(0.75rem, 1.5vw, 1.25rem);
+    flex: 1;
+    min-height: 0;
+    overflow: hidden;
+  }
+
+  @media (max-width: 900px) {
+    .bigscreen-main {
+      grid-template-columns: 1fr;
+    }
+  }
+
+  .bigscreen-left {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 1.2vw, 1rem);
+    min-height: 0;
+  }
+
+  .bigscreen-right {
+    display: flex;
+    flex-direction: column;
+    gap: clamp(0.5rem, 1.2vw, 1rem);
+    min-height: 0;
+  }
+
+  .bigscreen-card {
+    background: var(--bigscreen-card);
+    border-radius: 12px;
+    padding: clamp(0.75rem, 1.5vw, 1.25rem);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    flex: 1;
+    min-height: 0;
+    overflow: auto;
+  }
+
+  .bigscreen-time-card {
+    align-items: center;
+  }
+
+  .bigscreen-classes-card {
+    justify-content: flex-start;
+  }
+
+  .bigscreen-classes-card .bigscreen-next-heading {
+    text-align: left;
+    margin: 0 0 0.75em;
+  }
+
+  .bigscreen-time-display {
+    display: flex;
+    align-items: baseline;
+    gap: 0.08em;
+    font-size: clamp(5.5rem, 14vw, 9rem);
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .bigscreen-time-seconds {
+    font-size: 0.5em;
+    color: var(--bigscreen-accent);
+    line-height: 1;
+  }
+
+  .bigscreen-next-card {
+    align-items: center;
+    justify-content: center;
+    gap: 0.5em;
+  }
+
+  .bigscreen-next-heading {
+    font-size: clamp(1.1rem, 1.8vw, 1.45rem);
+    font-weight: 500;
+    color: var(--bigscreen-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.4em;
+    text-align: center;
+  }
+
+  .bigscreen-next-body {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+    gap: 0;
+    width: 100%;
+    min-height: 0;
+  }
+
+  .bigscreen-next-left {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: clamp(0.5rem, 1vw, 0.85rem);
+    flex: 1;
+    padding-right: clamp(0.5rem, 1vw, 1rem);
+  }
+
+  .bigscreen-next-name {
+    font-size: clamp(1.95rem, 3.5vw, 2.85rem);
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+  }
+
+  .bigscreen-next-type {
+    font-size: clamp(1.95rem, 3.5vw, 2.85rem);
+    font-weight: 500;
+    color: var(--bigscreen-muted);
+    margin: 0;
+  }
+
+  .bigscreen-next-divider {
+    width: 1px;
+    min-height: 1.5em;
+    background: rgba(148, 163, 184, 0.35);
+    flex-shrink: 0;
+  }
+
+  .bigscreen-next-right {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding-left: clamp(0.5rem, 1vw, 1rem);
+  }
+
+  .bigscreen-next-time-display {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.08em;
+    font-size: clamp(3rem, 6.5vw, 5rem);
+    font-weight: 600;
+    margin: 0;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .bigscreen-next-time-main {
+    color: #fff;
+  }
+
+  .bigscreen-next-time-seconds {
+    font-size: 0.5em;
+    color: var(--bigscreen-accent);
+    line-height: 1;
+  }
+
+  .bigscreen-card-title {
+    font-size: clamp(1.1rem, 1.8vw, 1.35rem);
+    font-weight: 500;
+    color: #fff;
+    text-transform: uppercase;
+    letter-spacing: 0.03em;
+    margin: 0 0 0.75em;
+  }
+
+  .bigscreen-classes-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.6em;
+  }
+
+  .bigscreen-class-row {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.5em 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .bigscreen-class-row:last-child {
+    border-bottom: none;
+  }
+
+  .bigscreen-class-time {
+    font-size: clamp(1.35rem, 2.1vw, 1.7rem);
+    font-weight: 600;
+    color: var(--bigscreen-accent);
+    background: rgba(201, 169, 89, 0.2);
+    padding: 0.25em 0.5em;
+    border-radius: 6px;
+    white-space: nowrap;
+  }
+
+  .bigscreen-class-info {
+    display: flex;
+    flex-direction: column;
+    gap: 0.1em;
+  }
+
+  .bigscreen-class-title {
+    font-size: clamp(1.15rem, 1.8vw, 1.4rem);
+    font-weight: 600;
+    color: #fff;
+  }
+
+  .bigscreen-class-detail {
+    font-size: clamp(1rem, 1.4vw, 1.15rem);
+    color: var(--bigscreen-muted);
+  }
+
+  .bigscreen-class-tag {
+    font-size: clamp(0.85rem, 1.2vw, 1rem);
+    font-weight: 500;
+    color: var(--bigscreen-muted);
+    background: rgba(148, 163, 184, 0.2);
+    padding: 0.2em 0.5em;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .bigscreen-class-tag--highlight {
+    color: var(--bigscreen-accent);
+    background: rgba(201, 169, 89, 0.25);
+  }
+
+  .bigscreen-prayer-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: clamp(0.3rem, 0.6vw, 0.5rem);
+    flex: 0 0 min(24vh, 28%);
+    min-height: 0;
+  }
+
+  @media (max-width: 1000px) {
+    .bigscreen-prayer-grid {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  @media (max-width: 500px) {
+    .bigscreen-prayer-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  .bigscreen-prayer-card {
+    background: var(--bigscreen-card);
+    border-radius: 10px;
+    padding: clamp(0.5rem, 0.9vw, 0.85rem);
+    text-align: center;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    min-height: 0;
+  }
+
+  .bigscreen-prayer-card--next {
+    background: var(--bigscreen-accent);
+    color: #0a0e1a;
+  }
+
+  .bigscreen-prayer-next-badge {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: clamp(0.9rem, 1.4vw, 1.1rem);
+    font-weight: 500;
+    background: rgba(0, 0, 0, 0.2);
+    padding: 0.15em 0.4em;
+    border-radius: 4px;
+  }
+
+  .bigscreen-prayer-name {
+    font-size: clamp(1rem, 1.5vw, 1.3rem);
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin: 0 0 0.15em;
+  }
+
+  .bigscreen-prayer-time {
+    font-size: clamp(1.7rem, 2.7vw, 2.4rem);
+    font-weight: 600;
+    margin: 0;
+  }
+
+  .bigscreen-prayer-card--next .bigscreen-prayer-time {
+    color: #0a0e1a;
+  }
+
+  .bigscreen-prayer-iqama {
+    font-size: clamp(1.45rem, 2.2vw, 1.85rem);
+    font-weight: 600;
+    color: var(--bigscreen-accent);
+    margin: 0.1em 0 0;
+  }
+
+  .bigscreen-prayer-card--next .bigscreen-prayer-iqama {
+    color: #3d2914;
+  }
+</style>
