@@ -505,7 +505,7 @@ function timeToPeriod(t: string) {
     gap: 1rem;
     max-width: 32rem;
     margin: 0 auto;
-    padding: 1rem 1rem 2rem;
+    padding: 1rem clamp(1rem, 4vw, 1.5rem) 2rem;
   }
 
   .daily-times-next-card {
@@ -541,7 +541,7 @@ function timeToPeriod(t: string) {
     grid-template-columns: 2fr 1fr 1fr;
     gap: 1rem 1.5rem;
     align-items: center;
-    padding: 0.75rem 1.25rem;
+    padding: 0.75rem clamp(1rem, 4vw, 1.5rem);
     min-height: 0;
   }
 
@@ -626,11 +626,16 @@ function timeToPeriod(t: string) {
     font-size: clamp(1.5rem, 4vw, 1.9rem);
     font-weight: 500;
     min-width: 0;
+    padding-right: 0.15em;
   }
 
   .daily-times-table .daily-times-header .daily-times-cell-adhan,
   .daily-times-table .daily-times-header .daily-times-cell-iqamah {
     font-size: 1rem !important;
+  }
+
+  .daily-times-cell-iqamah {
+    padding-right: 0.35em;
   }
 
   .daily-times-cell-adhan .bigscreen-prayer-time-period,
