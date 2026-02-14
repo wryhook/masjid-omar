@@ -16,7 +16,7 @@ const Header: React.FC = () => {
 	];
 
 	const dropdownItems = [
-		{ text: 'Daily Prayer Times', url: 'https://www.awqat.net/masjid/masjid-omar-al-farooq' },
+		{ text: 'Daily Prayer Times', url: '/daily-times' },
 		{ text: 'Ramadan Calendar', url: '/images/ramadan-calendar.jpg' },
 	];
 
