@@ -54,6 +54,12 @@ function timeTo12h(t) {
   return `${h12}:${String(m).padStart(2, '0')}`;
 }
 
+function timeToPeriod(t) {
+  if (!t) return '';
+  const [h] = t.split(':').map(Number);
+  return h >= 12 ? 'PM' : 'AM';
+}
+
 const classes = [
   { start: '5:00', title: 'Quran Tajweed', detail: 'Brother Ahmed Al-Masri • Main Hall', tag: 'DAILY', tagHighlight: false },
   { start: '7:00', title: 'Youth Halaqa', detail: 'Sheikh Omar Suleiman • Room B', tag: 'STARTING SOON', tagHighlight: true },
@@ -151,7 +157,7 @@ const classes = [
         <div class={`bigscreen-prayer-card ${p.isNext ? 'bigscreen-prayer-card--next' : ''}`} id={`prayer-card-${i}`} data-prayer-index={i}>
           <span class="bigscreen-prayer-next-badge" id={`prayer-next-badge-${i}`} style={p.isNext ? undefined : 'display:none'}>NEXT</span>
           <p class="bigscreen-prayer-name" id={`prayer-name-${i}`}>{p.name.toUpperCase()}</p>
-          <p class="bigscreen-prayer-time" id={`prayer-time-${i}`}>{timeTo12h(p.time)}</p>
+          <p class="bigscreen-prayer-time"><span id={`prayer-time-${i}`}>{timeTo12h(p.time)}</span><span class="bigscreen-prayer-time-period" id={`prayer-time-period-${i}`} aria-hidden="true">{timeToPeriod(p.time)}</span></p>
           <p class="bigscreen-prayer-iqama" id={`prayer-iqama-${i}`} style={p.iqama ? undefined : 'display:none'}>{p.iqama ? (<><span class="bigscreen-prayer-iqama-label">Iqama </span><span class="bigscreen-prayer-iqama-time" id={`prayer-iqama-time-${i}`}>{timeTo12h(p.iqama)}</span></>) : ''}</p>
         </div>
       ))}
@@ -194,6 +200,11 @@ const classes = [
           var h = parts[0], m = parts[1];
           var h12 = h % 12 || 12;
           return h12 + ':' + pad(m);
+        }
+        function formatPeriod(timeStr) {
+          if (!timeStr) return '';
+          var h = parseInt(timeStr.split(':')[0], 10);
+          return h >= 12 ? 'PM' : 'AM';
         }
 
         var timeMain = document.getElementById('time-main');
@@ -273,12 +284,14 @@ const classes = [
             var card = document.getElementById('prayer-card-' + i);
             var nameEl = document.getElementById('prayer-name-' + i);
             var timeEl = document.getElementById('prayer-time-' + i);
+            var periodEl = document.getElementById('prayer-time-period-' + i);
             var iqamaEl = document.getElementById('prayer-iqama-' + i);
             var badgeEl = document.getElementById('prayer-next-badge-' + i);
             if (card) card.classList.toggle('bigscreen-prayer-card--next', prayers[i].isNext);
             if (badgeEl) badgeEl.style.display = prayers[i].isNext ? '' : 'none';
             if (nameEl) nameEl.textContent = prayers[i].name.toUpperCase();
             if (timeEl) timeEl.textContent = formatTime12h(prayers[i].time);
+            if (periodEl) periodEl.textContent = formatPeriod(prayers[i].time);
             if (iqamaEl) {
               if (prayers[i].iqama) {
                 var iqamaTimeEl = document.getElementById('prayer-iqama-time-' + i);
@@ -757,13 +770,29 @@ const classes = [
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
-    margin: 0 0 0.4rem;
+    margin: 0 0 0.9rem;
   }
 
   .bigscreen-prayer-time {
+    display: flex;
+    align-items: baseline;
+    justify-content: center;
+    gap: 0.08em;
     font-size: clamp(2rem, 3.2vw, 2.85rem);
     font-weight: 600;
     margin: 0;
+    line-height: 1;
+  }
+
+  .bigscreen-prayer-time-period {
+    font-size: 0.5em;
+    font-weight: 500;
+    color: var(--bigscreen-muted);
+    line-height: 1;
+  }
+
+  .bigscreen-prayer-card--next .bigscreen-prayer-time-period {
+    color: rgba(61, 41, 20, 0.75);
   }
 
   .bigscreen-prayer-card--next .bigscreen-prayer-time {
@@ -784,6 +813,7 @@ const classes = [
     font-size: clamp(1.7rem, 2.6vw, 2.2rem);
     font-weight: 600;
     color: var(--bigscreen-accent);
+    margin-left: 0.15em;
   }
 
   .bigscreen-prayer-card--next .bigscreen-prayer-iqama-label {
