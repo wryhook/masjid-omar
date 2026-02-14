@@ -155,7 +155,6 @@ const classes = [
     <section class="bigscreen-prayer-grid">
       {prayerTimes.map((p, i) => (
         <div class="bigscreen-prayer-card" id={`prayer-card-${i}`} data-prayer-index={i}>
-          <span class="bigscreen-prayer-next-badge" id={`prayer-next-badge-${i}`} style="display:none" aria-hidden="true">NEXT</span>
           <p class="bigscreen-prayer-name" id={`prayer-name-${i}`}>{p.name.toUpperCase()}</p>
           <p class="bigscreen-prayer-time"><span id={`prayer-time-${i}`}>{timeTo12h(p.time)}</span><span class="bigscreen-prayer-time-period" id={`prayer-time-period-${i}`} aria-hidden="true">{timeToPeriod(p.time)}</span></p>
           <p class="bigscreen-prayer-iqama" id={`prayer-iqama-${i}`} style={p.iqama ? undefined : 'display:none'}>{p.iqama ? (<><span class="bigscreen-prayer-iqama-label">Iqama </span><span class="bigscreen-prayer-iqama-time" id={`prayer-iqama-time-${i}`}>{timeTo12h(p.iqama)}</span></>) : ''}</p>
@@ -315,8 +314,6 @@ const classes = [
             var timeEl = document.getElementById('prayer-time-' + i);
             var periodEl = document.getElementById('prayer-time-period-' + i);
             var iqamaEl = document.getElementById('prayer-iqama-' + i);
-            var badgeEl = document.getElementById('prayer-next-badge-' + i);
-            if (badgeEl) badgeEl.style.display = 'none';
             if (nameEl) nameEl.textContent = prayers[i].name.toUpperCase();
             if (timeEl) timeEl.textContent = formatTime12h(prayers[i].time);
             if (periodEl) periodEl.textContent = formatPeriod(prayers[i].time);
@@ -363,9 +360,7 @@ const classes = [
             countdownWrapEl.style.display = 'none';
             for (var i = 0; i < prayers.length; i++) {
               var card = document.getElementById('prayer-card-' + i);
-              var badge = document.getElementById('prayer-next-badge-' + i);
               if (card) card.classList.remove('bigscreen-prayer-card--next');
-              if (badge) badge.style.display = 'none';
             }
           } else {
             nextCardEl.classList.remove('bigscreen-next-card--ongoing');
@@ -374,10 +369,8 @@ const classes = [
             nextDividerEl.style.display = '';
             for (var i = 0; i < prayers.length; i++) {
               var card = document.getElementById('prayer-card-' + i);
-              var badge = document.getElementById('prayer-next-badge-' + i);
               var isNext = next && prayers[i].name === next.name;
               if (card) card.classList.toggle('bigscreen-prayer-card--next', isNext);
-              if (badge) badge.style.display = isNext ? '' : 'none';
             }
             if (next) {
               nextPrayerNameEl.textContent = next.name;
@@ -477,7 +470,7 @@ const classes = [
   }
 
   .bigscreen-masjid-name {
-    font-size: clamp(1.8rem, 4vw, 5rem);
+    font-size: clamp(1.6rem, 3.6vw, 4.5rem);
     font-weight: 600;
     margin: 0;
     color: #fff;
@@ -492,14 +485,14 @@ const classes = [
   }
 
   .bigscreen-islamic-date {
-    font-size: clamp(1.45rem, 2.8vw, 3.2rem);
+    font-size: clamp(1.3rem, 2.5vw, 2.9rem);
     color: #e2e8f0;
     margin: 0;
     line-height: 1.2;
   }
 
   .bigscreen-gregorian-date {
-    font-size: clamp(1.5rem, 2.8vw, 3.5rem);
+    font-size: clamp(1.35rem, 2.5vw, 3.15rem);
     font-weight: 600;
     color: #fff;
     margin: 0;
@@ -573,7 +566,7 @@ const classes = [
   }
 
   .bigscreen-qr-card .bigscreen-qr-heading {
-    font-size: clamp(1.6rem, 3vw, 3.5rem);
+    font-size: clamp(1.45rem, 2.7vw, 3.15rem);
     text-align: center;
     margin: 0;
     flex: 1;
@@ -596,7 +589,7 @@ const classes = [
     display: flex;
     align-items: baseline;
     gap: 0.08em;
-    font-size: clamp(6.6rem, 17vw, 11rem);
+    font-size: clamp(5.95rem, 15.3vw, 9.9rem);
     font-weight: 600;
     color: #fff;
     margin: 0;
@@ -617,7 +610,7 @@ const classes = [
   }
 
   .bigscreen-next-heading {
-    font-size: clamp(1.35rem, 2.5vw, 3rem);
+    font-size: clamp(1.1rem, 2vw, 2.4rem);
     font-weight: 500;
     color: var(--bigscreen-muted);
     text-transform: uppercase;
@@ -645,14 +638,14 @@ const classes = [
   }
 
   .bigscreen-next-name {
-    font-size: clamp(2.35rem, 5vw, 6rem);
+    font-size: clamp(1.9rem, 4vw, 4.85rem);
     font-weight: 600;
     color: #fff;
     margin: 0;
   }
 
   .bigscreen-next-type {
-    font-size: clamp(2.35rem, 5vw, 6rem);
+    font-size: clamp(1.9rem, 4vw, 4.85rem);
     font-weight: 500;
     color: var(--bigscreen-muted);
     margin: 0;
@@ -665,7 +658,7 @@ const classes = [
 
   .bigscreen-next-card--ongoing .bigscreen-next-heading {
     display: inline-block;
-    font-size: clamp(1.2rem, 2.2vw, 2.5rem);
+    font-size: clamp(1rem, 1.8vw, 2rem);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -678,7 +671,7 @@ const classes = [
 
   .bigscreen-next-card--ongoing .bigscreen-next-name,
   .bigscreen-next-card--ongoing .bigscreen-next-type {
-    font-size: clamp(3rem, 6vw, 7.5rem);
+    font-size: clamp(2.4rem, 4.85vw, 6rem);
     color: #0a0e1a;
   }
 
@@ -706,7 +699,7 @@ const classes = [
     align-items: baseline;
     justify-content: center;
     gap: 0.08em;
-    font-size: clamp(3.6rem, 8vw, 9rem);
+    font-size: clamp(2.9rem, 6.5vw, 7.25rem);
     font-weight: 600;
     margin: 0;
     line-height: 1;
@@ -724,7 +717,7 @@ const classes = [
   }
 
   .bigscreen-card-title {
-    font-size: clamp(1.35rem, 2.5vw, 2.75rem);
+    font-size: clamp(1.2rem, 2.25vw, 2.5rem);
     font-weight: 500;
     color: #fff;
     text-transform: uppercase;
@@ -755,7 +748,7 @@ const classes = [
   }
 
   .bigscreen-class-time {
-    font-size: clamp(1.6rem, 2.8vw, 3.25rem);
+    font-size: clamp(1.45rem, 2.5vw, 2.9rem);
     font-weight: 600;
     color: var(--bigscreen-accent);
     background: rgba(201, 169, 89, 0.2);
@@ -771,18 +764,18 @@ const classes = [
   }
 
   .bigscreen-class-title {
-    font-size: clamp(1.4rem, 2.5vw, 2.75rem);
+    font-size: clamp(1.25rem, 2.25vw, 2.5rem);
     font-weight: 600;
     color: #fff;
   }
 
   .bigscreen-class-detail {
-    font-size: clamp(1.2rem, 2vw, 2.25rem);
+    font-size: clamp(1.1rem, 1.8vw, 2rem);
     color: var(--bigscreen-muted);
   }
 
   .bigscreen-class-tag {
-    font-size: clamp(1rem, 1.7vw, 2rem);
+    font-size: clamp(0.9rem, 1.55vw, 1.8rem);
     font-weight: 500;
     color: var(--bigscreen-muted);
     background: rgba(148, 163, 184, 0.2);
@@ -833,19 +826,8 @@ const classes = [
     color: #0a0e1a;
   }
 
-  .bigscreen-prayer-next-badge {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    font-size: clamp(1.1rem, 2vw, 2.25rem);
-    font-weight: 500;
-    background: rgba(0, 0, 0, 0.2);
-    padding: 0.15em 0.4em;
-    border-radius: 0.5rem;
-  }
-
   .bigscreen-prayer-name {
-    font-size: clamp(1.2rem, 2.2vw, 2.5rem);
+    font-size: clamp(1rem, 1.8vw, 2rem);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -857,7 +839,7 @@ const classes = [
     align-items: baseline;
     justify-content: center;
     gap: 0.08em;
-    font-size: clamp(2.8rem, 5.5vw, 6.5rem);
+    font-size: clamp(1.95rem, 3.5vw, 4.05rem);
     font-weight: 600;
     margin: 0;
     line-height: 1;
@@ -883,13 +865,13 @@ const classes = [
   }
 
   .bigscreen-prayer-iqama-label {
-    font-size: clamp(1.2rem, 2vw, 2.25rem);
+    font-size: clamp(1.1rem, 1.8vw, 2rem);
     font-weight: 500;
     color: var(--bigscreen-muted);
   }
 
   .bigscreen-prayer-iqama-time {
-    font-size: clamp(2.5rem, 4.2vw, 5rem);
+    font-size: clamp(1.6rem, 2.8vw, 3.15rem);
     font-weight: 600;
     color: var(--bigscreen-accent);
     margin-left: 0.15em;
