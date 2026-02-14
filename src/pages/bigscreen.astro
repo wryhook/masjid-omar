@@ -21,15 +21,15 @@ function to24h(timeStr: string, key: string): string {
   return timeStr;
 }
 
-type DayData = Record<string, { start: string; iqama?: string }>;
+type DayData = Record<string, { start: string; iqamah?: string }>;
 
-function dayDataToPrayerTimes(dayData: DayData): { name: string; time: string; iqama: string | null; isNext: boolean }[] {
+function dayDataToPrayerTimes(dayData: DayData): { name: string; time: string; iqamah: string | null; isNext: boolean }[] {
   return PRAYER_KEYS.map((key) => {
     const slot = dayData[key];
-    if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqama: null, isNext: false };
+    if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqamah: null, isNext: false };
     const time = to24h(slot.start, key);
-    const iqama = slot.iqama ? to24h(slot.iqama, key) : null;
-    return { name: PRAYER_NAMES[key], time, iqama, isNext: false };
+    const iqamah = slot.iqamah ? to24h(slot.iqamah, key) : null;
+    return { name: PRAYER_NAMES[key], time, iqamah, isNext: false };
   });
 }
 
@@ -157,7 +157,7 @@ const classes = [
         <div class="bigscreen-prayer-card" id={`prayer-card-${i}`} data-prayer-index={i}>
           <p class="bigscreen-prayer-name" id={`prayer-name-${i}`}>{p.name.toUpperCase()}</p>
           <p class="bigscreen-prayer-time"><span id={`prayer-time-${i}`}>{timeTo12h(p.time)}</span><span class="bigscreen-prayer-time-period" id={`prayer-time-period-${i}`} aria-hidden="true">{timeToPeriod(p.time)}</span></p>
-          <p class="bigscreen-prayer-iqama" id={`prayer-iqama-${i}`} style={p.iqama ? undefined : 'display:none'}>{p.iqama ? (<><span class="bigscreen-prayer-iqama-label">Iqama </span><span class="bigscreen-prayer-iqama-time" id={`prayer-iqama-time-${i}`}>{timeTo12h(p.iqama)}</span></>) : ''}</p>
+          <p class="bigscreen-prayer-iqamah" id={`prayer-iqamah-${i}`} style={p.iqamah ? undefined : 'display:none'}>{p.iqamah ? (<><span class="bigscreen-prayer-iqamah-label">Iqamah </span><span class="bigscreen-prayer-iqamah-time" id={`prayer-iqamah-time-${i}`}>{timeTo12h(p.iqamah)}</span></>) : ''}</p>
         </div>
       ))}
     </section>
@@ -180,11 +180,11 @@ const classes = [
         function dayDataToPrayerTimes(dayData) {
           return PRAYER_KEYS.map(function (key) {
             var slot = dayData[key];
-            if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqama: null, isNext: false };
+            if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqamah: null, isNext: false };
             return {
               name: PRAYER_NAMES[key],
               time: to24h(slot.start, key),
-              iqama: slot.iqama ? to24h(slot.iqama, key) : null,
+              iqamah: slot.iqamah ? to24h(slot.iqamah, key) : null,
               isNext: false
             };
           });
@@ -259,12 +259,12 @@ const classes = [
             if (now < adhanDate) {
               return { name: p.name, type: p.name === 'Sunrise' ? '' : 'Adhan', target: adhanDate };
             }
-            if (p.iqama) {
-              var iqama = p.iqama.split(':').map(Number);
-              var iqamaDate = new Date(now);
-              iqamaDate.setHours(iqama[0], iqama[1], 0, 0);
-              if (now < iqamaDate) {
-                return { name: p.name, type: 'Iqama', target: iqamaDate };
+            if (p.iqamah) {
+              var iqamah = p.iqamah.split(':').map(Number);
+              var iqamahDate = new Date(now);
+              iqamahDate.setHours(iqamah[0], iqamah[1], 0, 0);
+              if (now < iqamahDate) {
+                return { name: p.name, type: 'Iqamah', target: iqamahDate };
               }
             }
           }
@@ -283,12 +283,12 @@ const classes = [
           var fiveMinMs = 5 * 60 * 1000;
           for (var i = 0; i < prayers.length; i++) {
             var p = prayers[i];
-            if (p.name === 'Sunrise' || !p.iqama) continue;
-            var iqama = p.iqama.split(':').map(Number);
-            var iqamaDate = new Date(now);
-            iqamaDate.setHours(iqama[0], iqama[1], 0, 0);
-            var endOngoing = iqamaDate.getTime() + fiveMinMs;
-            if (now.getTime() >= iqamaDate.getTime() && now.getTime() < endOngoing) {
+            if (p.name === 'Sunrise' || !p.iqamah) continue;
+            var iqamah = p.iqamah.split(':').map(Number);
+            var iqamahDate = new Date(now);
+            iqamahDate.setHours(iqamah[0], iqamah[1], 0, 0);
+            var endOngoing = iqamahDate.getTime() + fiveMinMs;
+            if (now.getTime() >= iqamahDate.getTime() && now.getTime() < endOngoing) {
               return { name: p.name };
             }
           }
@@ -299,7 +299,7 @@ const classes = [
           if (document.location.search.indexOf('preview=ongoing') === -1) return null;
           for (var i = 0; i < prayers.length; i++) {
             var p = prayers[i];
-            if (p.name !== 'Sunrise' && p.iqama) return { name: p.name };
+            if (p.name !== 'Sunrise' && p.iqamah) return { name: p.name };
           }
           return { name: 'Dhuhr' };
         }
@@ -313,17 +313,17 @@ const classes = [
             var nameEl = document.getElementById('prayer-name-' + i);
             var timeEl = document.getElementById('prayer-time-' + i);
             var periodEl = document.getElementById('prayer-time-period-' + i);
-            var iqamaEl = document.getElementById('prayer-iqama-' + i);
+            var iqamahEl = document.getElementById('prayer-iqamah-' + i);
             if (nameEl) nameEl.textContent = prayers[i].name.toUpperCase();
             if (timeEl) timeEl.textContent = formatTime12h(prayers[i].time);
             if (periodEl) periodEl.textContent = formatPeriod(prayers[i].time);
-            if (iqamaEl) {
-              if (prayers[i].iqama) {
-                var iqamaTimeEl = document.getElementById('prayer-iqama-time-' + i);
-                if (iqamaTimeEl) iqamaTimeEl.textContent = formatTime12h(prayers[i].iqama);
-                iqamaEl.style.display = '';
+            if (iqamahEl) {
+              if (prayers[i].iqamah) {
+                var iqamahTimeEl = document.getElementById('prayer-iqamah-time-' + i);
+                if (iqamahTimeEl) iqamahTimeEl.textContent = formatTime12h(prayers[i].iqamah);
+                iqamahEl.style.display = '';
               } else {
-                iqamaEl.style.display = 'none';
+                iqamahEl.style.display = 'none';
               }
             }
           }
@@ -860,28 +860,28 @@ const classes = [
     color: #0a0e1a;
   }
 
-  .bigscreen-prayer-iqama {
+  .bigscreen-prayer-iqamah {
     margin: 0.05rem 0 0;
   }
 
-  .bigscreen-prayer-iqama-label {
+  .bigscreen-prayer-iqamah-label {
     font-size: clamp(1.1rem, 1.8vw, 2rem);
     font-weight: 500;
     color: var(--bigscreen-muted);
   }
 
-  .bigscreen-prayer-iqama-time {
+  .bigscreen-prayer-iqamah-time {
     font-size: clamp(1.6rem, 2.8vw, 3.15rem);
     font-weight: 600;
     color: var(--bigscreen-accent);
     margin-left: 0.15em;
   }
 
-  .bigscreen-prayer-card--next .bigscreen-prayer-iqama-label {
+  .bigscreen-prayer-card--next .bigscreen-prayer-iqamah-label {
     color: #3d2914;
   }
 
-  .bigscreen-prayer-card--next .bigscreen-prayer-iqama-time {
+  .bigscreen-prayer-card--next .bigscreen-prayer-iqamah-time {
     color: #3d2914;
   }
 </style>

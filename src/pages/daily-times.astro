@@ -20,15 +20,15 @@ function to24h(timeStr: string, key: string): string {
   return timeStr;
 }
 
-type DayData = Record<string, { start: string; iqama?: string }>;
+type DayData = Record<string, { start: string; iqamah?: string }>;
 
-function dayDataToPrayerTimes(dayData: DayData): { name: string; time: string; iqama: string | null; isNext: boolean }[] {
+function dayDataToPrayerTimes(dayData: DayData): { name: string; time: string; iqamah: string | null; isNext: boolean }[] {
   return PRAYER_KEYS.map((key) => {
     const slot = dayData[key];
-    if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqama: null, isNext: false };
+    if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqamah: null, isNext: false };
     const time = to24h(slot.start, key);
-    const iqama = slot.iqama ? to24h(slot.iqama, key) : null;
-    return { name: PRAYER_NAMES[key], time, iqama, isNext: false };
+    const iqamah = slot.iqamah ? to24h(slot.iqamah, key) : null;
+    return { name: PRAYER_NAMES[key], time, iqamah, isNext: false };
   });
 }
 
@@ -109,7 +109,7 @@ function timeToPeriod(t: string) {
             <span class="daily-times-cell daily-times-cell-iqamah" role="columnheader">Iqamah</span>
           </div>
           {prayerTimes.map((p, i) => (
-            <div class={`daily-times-row daily-times-data-row ${p.isNext ? 'bigscreen-prayer-card--next' : ''} ${!p.iqama ? 'daily-times-row--no-iqamah' : ''}`} id={`prayer-card-${i}`} data-prayer-index={i} role="row">
+            <div class={`daily-times-row daily-times-data-row ${p.isNext ? 'bigscreen-prayer-card--next' : ''} ${!p.iqamah ? 'daily-times-row--no-iqamah' : ''}`} id={`prayer-card-${i}`} data-prayer-index={i} role="row">
               <span class="daily-times-cell daily-times-cell-name" data-label="">
                 <span class="bigscreen-prayer-name" id={`prayer-name-${i}`}>{p.name}</span>
               </span>
@@ -120,11 +120,11 @@ function timeToPeriod(t: string) {
                 </span>
               </span>
               <span class="daily-times-cell daily-times-cell-iqamah" data-label="Iqamah">
-                <span class="daily-times-iqamah" id={`prayer-iqama-${i}`} style={p.iqama ? undefined : 'display:none'}>
-                  <span class="bigscreen-prayer-iqama-time" id={`prayer-iqama-time-${i}`}>{p.iqama ? timeTo12h(p.iqama) : ''}</span>
-                  <span class="daily-times-period" id={`prayer-iqama-period-${i}`} aria-hidden="true">{p.iqama ? timeToPeriod(p.iqama) : ''}</span>
+                <span class="daily-times-iqamah" id={`prayer-iqamah-${i}`} style={p.iqamah ? undefined : 'display:none'}>
+                  <span class="bigscreen-prayer-iqamah-time" id={`prayer-iqamah-time-${i}`}>{p.iqamah ? timeTo12h(p.iqamah) : ''}</span>
+                  <span class="daily-times-period" id={`prayer-iqamah-period-${i}`} aria-hidden="true">{p.iqamah ? timeToPeriod(p.iqamah) : ''}</span>
                 </span>
-                <span class="daily-times-no-iqamah" id={`prayer-iqama-fallback-${i}`} style={p.iqama ? 'display:none' : undefined} aria-hidden="true">—</span>
+                <span class="daily-times-no-iqamah" id={`prayer-iqamah-fallback-${i}`} style={p.iqamah ? 'display:none' : undefined} aria-hidden="true">—</span>
               </span>
             </div>
           ))}
@@ -150,11 +150,11 @@ function timeToPeriod(t: string) {
         function dayDataToPrayerTimes(dayData) {
           return PRAYER_KEYS.map(function (key) {
             var slot = dayData[key];
-            if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqama: null, isNext: false };
+            if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqamah: null, isNext: false };
             return {
               name: PRAYER_NAMES[key],
               time: to24h(slot.start, key),
-              iqama: slot.iqama ? to24h(slot.iqama, key) : null,
+              iqamah: slot.iqamah ? to24h(slot.iqamah, key) : null,
               isNext: false
             };
           });
@@ -224,12 +224,12 @@ function timeToPeriod(t: string) {
             if (now < adhanDate) {
               return { name: p.name, type: p.name === 'Sunrise' ? '' : 'Adhan', target: adhanDate };
             }
-            if (p.iqama) {
-              var iqama = p.iqama.split(':').map(Number);
-              var iqamaDate = new Date(now);
-              iqamaDate.setHours(iqama[0], iqama[1], 0, 0);
-              if (now < iqamaDate) {
-                return { name: p.name, type: 'Iqama', target: iqamaDate };
+            if (p.iqamah) {
+              var iqamah = p.iqamah.split(':').map(Number);
+              var iqamahDate = new Date(now);
+              iqamahDate.setHours(iqamah[0], iqamah[1], 0, 0);
+              if (now < iqamahDate) {
+                return { name: p.name, type: 'Iqamah', target: iqamahDate };
               }
             }
           }
@@ -253,26 +253,26 @@ function timeToPeriod(t: string) {
             var nameEl = document.getElementById('prayer-name-' + i);
             var timeEl = document.getElementById('prayer-time-' + i);
             var periodEl = document.getElementById('prayer-time-period-' + i);
-            var iqamaEl = document.getElementById('prayer-iqama-' + i);
+            var iqamahEl = document.getElementById('prayer-iqamah-' + i);
             if (card) {
               card.classList.toggle('bigscreen-prayer-card--next', prayers[i].isNext);
-              card.classList.toggle('daily-times-row--no-iqamah', !prayers[i].iqama);
+              card.classList.toggle('daily-times-row--no-iqamah', !prayers[i].iqamah);
             }
             if (nameEl) nameEl.textContent = prayers[i].name.toUpperCase();
             if (timeEl) timeEl.textContent = formatTime12h(prayers[i].time);
             if (periodEl) periodEl.textContent = formatPeriod(prayers[i].time);
-            if (iqamaEl) {
-              var iqamaFallbackEl = document.getElementById('prayer-iqama-fallback-' + i);
-              if (prayers[i].iqama) {
-                var iqamaTimeEl = document.getElementById('prayer-iqama-time-' + i);
-                var iqamaPeriodEl = document.getElementById('prayer-iqama-period-' + i);
-                if (iqamaTimeEl) iqamaTimeEl.textContent = formatTime12h(prayers[i].iqama);
-                if (iqamaPeriodEl) iqamaPeriodEl.textContent = formatPeriod(prayers[i].iqama);
-                iqamaEl.style.display = '';
-                if (iqamaFallbackEl) iqamaFallbackEl.style.display = 'none';
+            if (iqamahEl) {
+              var iqamahFallbackEl = document.getElementById('prayer-iqamah-fallback-' + i);
+              if (prayers[i].iqamah) {
+                var iqamahTimeEl = document.getElementById('prayer-iqamah-time-' + i);
+                var iqamahPeriodEl = document.getElementById('prayer-iqamah-period-' + i);
+                if (iqamahTimeEl) iqamahTimeEl.textContent = formatTime12h(prayers[i].iqamah);
+                if (iqamahPeriodEl) iqamahPeriodEl.textContent = formatPeriod(prayers[i].iqamah);
+                iqamahEl.style.display = '';
+                if (iqamahFallbackEl) iqamahFallbackEl.style.display = 'none';
               } else {
-                iqamaEl.style.display = 'none';
-                if (iqamaFallbackEl) iqamaFallbackEl.style.display = '';
+                iqamahEl.style.display = 'none';
+                if (iqamahFallbackEl) iqamahFallbackEl.style.display = '';
               }
             }
           }
@@ -517,28 +517,28 @@ function timeToPeriod(t: string) {
     color: #0a0e1a;
   }
 
-  .bigscreen-prayer-iqama {
+  .bigscreen-prayer-iqamah {
     margin: 0.05rem 0 0;
   }
 
-  .bigscreen-prayer-iqama-label {
+  .bigscreen-prayer-iqamah-label {
     font-size: clamp(1.2rem, 1.7vw, 1.45rem);
     font-weight: 500;
     color: var(--bigscreen-muted);
   }
 
-  .bigscreen-prayer-iqama-time {
+  .bigscreen-prayer-iqamah-time {
     font-size: clamp(2rem, 3.1vw, 2.6rem);
     font-weight: 500;
     color: var(--bigscreen-accent);
     margin-left: 0.35em;
   }
 
-  .bigscreen-prayer-card--next .bigscreen-prayer-iqama-label {
+  .bigscreen-prayer-card--next .bigscreen-prayer-iqamah-label {
     color: #3d2914;
   }
 
-  .bigscreen-prayer-card--next .bigscreen-prayer-iqama-time {
+  .bigscreen-prayer-card--next .bigscreen-prayer-iqamah-time {
     color: #3d2914;
   }
 
@@ -706,7 +706,7 @@ function timeToPeriod(t: string) {
     color: rgba(61, 41, 20, 0.75);
   }
 
-  .daily-times-data-row.bigscreen-prayer-card--next .bigscreen-prayer-iqama-time {
+  .daily-times-data-row.bigscreen-prayer-card--next .bigscreen-prayer-iqamah-time {
     color: #0a0e1a;
   }
 
@@ -759,7 +759,7 @@ function timeToPeriod(t: string) {
     color: var(--bigscreen-muted);
   }
 
-  .daily-times-cell-iqamah .bigscreen-prayer-iqama-time {
+  .daily-times-cell-iqamah .bigscreen-prayer-iqamah-time {
     font-size: 1em;
     font-weight: 600;
     color: inherit;
