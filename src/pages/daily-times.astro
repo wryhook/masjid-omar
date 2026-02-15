@@ -404,7 +404,7 @@ function timeToPeriod(t: string) {
 
   .bigscreen-card {
     background: var(--bigscreen-card);
-    border-radius: 1rem;
+    border-radius: clamp(0.75rem, 2vmin, 1.5rem);
     padding: clamp(0.75rem, 1.5vw, 1.25rem);
     display: flex;
     flex-direction: column;
@@ -498,7 +498,7 @@ function timeToPeriod(t: string) {
 
   .bigscreen-prayer-card {
     background: var(--bigscreen-card);
-    border-radius: 0.875rem;
+    border-radius: clamp(0.65rem, 1.75vmin, 1.25rem);
     padding: clamp(0.5rem, 0.9vw, 0.85rem);
     text-align: center;
     position: relative;
@@ -582,7 +582,7 @@ function timeToPeriod(t: string) {
     flex: 1;
     min-height: 0;
     gap: clamp(0.75rem, 2dvh, 1.25rem);
-    max-width: 38rem;
+    max-width: 52rem;
     margin: 0 auto;
     width: 100%;
     padding: clamp(0.75rem, 2dvh, 1.25rem) clamp(0.75rem, 3vw, 1.25rem);
@@ -653,11 +653,11 @@ function timeToPeriod(t: string) {
 
   .daily-times-next-card .bigscreen-next-name,
   .daily-times-next-card .bigscreen-next-type {
-    font-size: clamp(1.8rem, 6vw, 3.5dvh);
+    font-size: clamp(1.8rem, 6vw, 3.5rem);
   }
 
   .daily-times-next-card .bigscreen-next-time-display {
-    font-size: clamp(2.75rem, 9.5vw, 6dvh);
+    font-size: clamp(2.75rem, 9.5vw, 6rem);
   }
 
   .daily-times-table-wrap {
@@ -688,7 +688,7 @@ function timeToPeriod(t: string) {
 
   .daily-times-header {
     flex-shrink: 0;
-    font-size: clamp(1rem, 1.5dvh, 1.2rem);
+    font-size: clamp(1rem, 1.5vw, 1.2rem);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -710,7 +710,7 @@ function timeToPeriod(t: string) {
     flex: 1;
     min-height: 2.5rem;
     background: var(--bigscreen-card);
-    border-radius: 0.75rem;
+    border-radius: clamp(0.5rem, 1.5vmin, 1.1rem);
   }
 
   .daily-times-row--no-iqamah .daily-times-cell-adhan {
@@ -751,7 +751,7 @@ function timeToPeriod(t: string) {
   }
 
   .daily-times-table .daily-times-cell-name .bigscreen-prayer-name {
-    font-size: clamp(1.15rem, 2.6vw, min(1.6rem, 2.6dvh));
+    font-size: clamp(1.15rem, 2.6vw, 1.6rem);
     font-weight: 300 !important;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -769,7 +769,7 @@ function timeToPeriod(t: string) {
   .daily-times-cell-adhan,
   .daily-times-cell-iqamah {
     text-align: right;
-    font-size: clamp(1.8rem, 4.8vw, min(2.65rem, 3.8dvh));
+    font-size: clamp(1.8rem, 4.8vw, 2.65rem);
     font-weight: 600;
     min-width: 0;
     padding-right: 0.15em;
@@ -807,5 +807,68 @@ function timeToPeriod(t: string) {
   .daily-times-no-iqamah {
     color: var(--bigscreen-muted);
     font-weight: 500;
+  }
+
+  /* Larger fonts on big screens / TVs (mobile unchanged) */
+  @media (min-width: 1024px), (min-height: 800px) {
+    .bigscreen-next-heading {
+      font-size: clamp(1.5rem, 2.5vw, 2.2rem);
+    }
+    .bigscreen-next-name,
+    .bigscreen-next-type {
+      font-size: clamp(2.6rem, 5vw, 4.5rem);
+    }
+    .bigscreen-next-time-display {
+      font-size: clamp(4rem, 8vw, 7.5rem);
+    }
+    .bigscreen-prayer-name {
+      font-size: clamp(1.4rem, 2.2vw, 2rem);
+    }
+    .bigscreen-prayer-time {
+      font-size: clamp(2.8rem, 4.5vw, 4.25rem);
+    }
+    .bigscreen-prayer-iqamah-label {
+      font-size: clamp(1.4rem, 2vw, 1.9rem);
+    }
+    .bigscreen-prayer-iqamah-time {
+      font-size: clamp(2.4rem, 3.5vw, 3.25rem);
+    }
+    .daily-times-time-display {
+      font-size: clamp(2.5rem, 6vw, 4.5rem);
+    }
+    .daily-times-islamic-date {
+      font-size: clamp(1.2rem, 2.2vw, 1.75rem);
+    }
+    .daily-times-gregorian-date {
+      font-size: clamp(1.35rem, 2.5vw, 2rem);
+    }
+    .daily-times-next-card .bigscreen-next-heading {
+      font-size: clamp(1.1rem, 1.8vw, 1.65rem);
+    }
+    .daily-times-next-card .bigscreen-next-name,
+    .daily-times-next-card .bigscreen-next-type {
+      font-size: clamp(2.2rem, 6.5vw, 4.5rem);
+    }
+    .daily-times-next-card .bigscreen-next-time-display {
+      font-size: clamp(3.25rem, 10vw, 7.5rem);
+    }
+    .daily-times-header {
+      font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+    }
+    .daily-times-header .daily-times-cell-adhan,
+    .daily-times-header .daily-times-cell-iqamah {
+      font-size: clamp(1.25rem, 1.8vw, 1.6rem) !important;
+    }
+    .daily-times-table .daily-times-header .daily-times-cell-adhan,
+    .daily-times-table .daily-times-header .daily-times-cell-iqamah {
+      font-size: clamp(1.3rem, 1.9vw, 1.7rem) !important;
+    }
+    .daily-times-table .daily-times-cell-name .bigscreen-prayer-name {
+      font-size: clamp(1.35rem, 2.8vw, 2rem);
+    }
+    .daily-times-cell-adhan,
+    .daily-times-cell-iqamah {
+      font-size: clamp(2rem, 5.2vw, 3.5rem);
+    }
   }
 </style>
