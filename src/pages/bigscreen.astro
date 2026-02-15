@@ -24,13 +24,27 @@ function to24h(timeStr: string, key: string): string {
 type DayData = Record<string, { start: string; iqamah?: string }>;
 
 function dayDataToPrayerTimes(dayData: DayData): { name: string; time: string; iqamah: string | null; isNext: boolean }[] {
-  return PRAYER_KEYS.map((key) => {
+  const list = PRAYER_KEYS.map((key) => {
     const slot = dayData[key];
     if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqamah: null, isNext: false };
     const time = to24h(slot.start, key);
     const iqamah = slot.iqamah ? to24h(slot.iqamah, key) : null;
     return { name: PRAYER_NAMES[key], time, iqamah, isNext: false };
   });
+  const now = new Date();
+  let currentName: string | null = null;
+  for (let i = 0; i < list.length; i++) {
+    const [h, m] = list[i].time.split(':').map(Number);
+    const adhanDate = new Date(now);
+    adhanDate.setHours(h, m, 0, 0);
+    if (now >= adhanDate) currentName = list[i].name;
+    else break;
+  }
+  if (!currentName && list.length) currentName = list[list.length - 1].name;
+  if (currentName) {
+    for (let i = 0; i < list.length; i++) list[i].isNext = list[i].name === currentName;
+  }
+  return list;
 }
 
 function getTodayKey(): string {
@@ -279,6 +293,24 @@ const classes = [
           return null;
         }
 
+        function getCurrentPrayer(now) {
+          if (prayers.length === 0) return null;
+          var lastPassed = null;
+          for (var i = 0; i < prayers.length; i++) {
+            var p = prayers[i];
+            var adhan = p.time.split(':').map(Number);
+            var adhanDate = new Date(now);
+            adhanDate.setHours(adhan[0], adhan[1], 0, 0);
+            if (now >= adhanDate) {
+              lastPassed = p;
+            } else {
+              break;
+            }
+          }
+          if (!lastPassed) lastPassed = prayers[prayers.length - 1];
+          return lastPassed ? { name: lastPassed.name } : null;
+        }
+
         function getOngoingPrayer(now) {
           var fiveMinMs = 5 * 60 * 1000;
           for (var i = 0; i < prayers.length; i++) {
@@ -305,10 +337,10 @@ const classes = [
         }
 
         function updateStrip() {
-          var next = getNextTarget(new Date());
-          var nextName = next ? next.name : null;
+          var current = getCurrentPrayer(new Date());
+          var currentName = current ? current.name : null;
           for (var i = 0; i < prayers.length; i++) {
-            prayers[i].isNext = prayers[i].name === nextName;
+            prayers[i].isNext = prayers[i].name === currentName;
             var card = document.getElementById('prayer-card-' + i);
             var nameEl = document.getElementById('prayer-name-' + i);
             var timeEl = document.getElementById('prayer-time-' + i);
@@ -358,19 +390,21 @@ const classes = [
             nextPrayerTypeEl.style.display = '';
             nextDividerEl.style.display = 'none';
             countdownWrapEl.style.display = 'none';
+            var currentName = ongoing.name;
             for (var i = 0; i < prayers.length; i++) {
               var card = document.getElementById('prayer-card-' + i);
-              if (card) card.classList.remove('bigscreen-prayer-card--next');
+              if (card) card.classList.toggle('bigscreen-prayer-card--next', prayers[i].name === currentName);
             }
           } else {
             nextCardEl.classList.remove('bigscreen-next-card--ongoing');
             var next = getNextTarget(d);
             nextHeadingEl.textContent = 'Time remaining till';
             nextDividerEl.style.display = '';
+            var current = getCurrentPrayer(d);
+            var currentName = current ? current.name : null;
             for (var i = 0; i < prayers.length; i++) {
               var card = document.getElementById('prayer-card-' + i);
-              var isNext = next && prayers[i].name === next.name;
-              if (card) card.classList.toggle('bigscreen-prayer-card--next', isNext);
+              if (card) card.classList.toggle('bigscreen-prayer-card--next', prayers[i].name === currentName);
             }
             if (next) {
               nextPrayerNameEl.textContent = next.name;
@@ -638,14 +672,14 @@ const classes = [
   }
 
   .bigscreen-next-name {
-    font-size: clamp(1.9rem, 4vw, 4.85rem);
+    font-size: clamp(1.5rem, 3.2vw, 3.9rem);
     font-weight: 600;
     color: #fff;
     margin: 0;
   }
 
   .bigscreen-next-type {
-    font-size: clamp(1.9rem, 4vw, 4.85rem);
+    font-size: clamp(1.5rem, 3.2vw, 3.9rem);
     font-weight: 500;
     color: var(--bigscreen-muted);
     margin: 0;
@@ -671,7 +705,7 @@ const classes = [
 
   .bigscreen-next-card--ongoing .bigscreen-next-name,
   .bigscreen-next-card--ongoing .bigscreen-next-type {
-    font-size: clamp(2.4rem, 4.85vw, 6rem);
+    font-size: clamp(1.9rem, 3.8vw, 4.5rem);
     color: #0a0e1a;
   }
 
@@ -699,7 +733,7 @@ const classes = [
     align-items: baseline;
     justify-content: center;
     gap: 0.08em;
-    font-size: clamp(2.9rem, 6.5vw, 7.25rem);
+    font-size: clamp(3.2rem, 7.2vw, 8rem);
     font-weight: 600;
     margin: 0;
     line-height: 1;

@@ -23,13 +23,27 @@ function to24h(timeStr: string, key: string): string {
 type DayData = Record<string, { start: string; iqamah?: string }>;
 
 function dayDataToPrayerTimes(dayData: DayData): { name: string; time: string; iqamah: string | null; isNext: boolean }[] {
-  return PRAYER_KEYS.map((key) => {
+  const list = PRAYER_KEYS.map((key) => {
     const slot = dayData[key];
     if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqamah: null, isNext: false };
     const time = to24h(slot.start, key);
     const iqamah = slot.iqamah ? to24h(slot.iqamah, key) : null;
     return { name: PRAYER_NAMES[key], time, iqamah, isNext: false };
   });
+  const now = new Date();
+  let currentName: string | null = null;
+  for (let i = 0; i < list.length; i++) {
+    const [h, m] = list[i].time.split(':').map(Number);
+    const adhanDate = new Date(now);
+    adhanDate.setHours(h, m, 0, 0);
+    if (now >= adhanDate) currentName = list[i].name;
+    else break;
+  }
+  if (!currentName && list.length) currentName = list[list.length - 1].name;
+  if (currentName) {
+    for (let i = 0; i < list.length; i++) list[i].isNext = list[i].name === currentName;
+  }
+  return list;
 }
 
 function getTodayKey(): string {
@@ -244,11 +258,29 @@ function timeToPeriod(t: string) {
           return null;
         }
 
-        function updateStrip() {
-          var next = getNextTarget(new Date());
-          var nextName = next ? next.name : null;
+        function getCurrentPrayer(now) {
+          if (prayers.length === 0) return null;
+          var lastPassed = null;
           for (var i = 0; i < prayers.length; i++) {
-            prayers[i].isNext = prayers[i].name === nextName;
+            var p = prayers[i];
+            var adhan = p.time.split(':').map(Number);
+            var adhanDate = new Date(now);
+            adhanDate.setHours(adhan[0], adhan[1], 0, 0);
+            if (now >= adhanDate) {
+              lastPassed = p;
+            } else {
+              break;
+            }
+          }
+          if (!lastPassed) lastPassed = prayers[prayers.length - 1];
+          return lastPassed ? { name: lastPassed.name } : null;
+        }
+
+        function updateStrip() {
+          var current = getCurrentPrayer(new Date());
+          var currentName = current ? current.name : null;
+          for (var i = 0; i < prayers.length; i++) {
+            prayers[i].isNext = prayers[i].name === currentName;
             var card = document.getElementById('prayer-card-' + i);
             var nameEl = document.getElementById('prayer-name-' + i);
             var timeEl = document.getElementById('prayer-time-' + i);
@@ -297,6 +329,8 @@ function timeToPeriod(t: string) {
             lastDateKey = todayKeyNow;
             dayData = data[todayKeyNow];
             prayers = dayDataToPrayerTimes(dayData);
+            updateStrip();
+          } else {
             updateStrip();
           }
           var next = getNextTarget(d);
