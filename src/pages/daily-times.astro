@@ -276,16 +276,35 @@ function timeToPeriod(t: string) {
           return lastPassed ? { name: lastPassed.name } : null;
         }
 
+        var stripCardEls = [];
+        var stripNameEls = [];
+        var stripTimeEls = [];
+        var stripPeriodEls = [];
+        var stripIqamahEls = [];
+        var stripIqamahFallbackEls = [];
+        var stripIqamahTimeEls = [];
+        var stripIqamahPeriodEls = [];
+        for (var si = 0; si < 6; si++) {
+          stripCardEls.push(document.getElementById('prayer-card-' + si));
+          stripNameEls.push(document.getElementById('prayer-name-' + si));
+          stripTimeEls.push(document.getElementById('prayer-time-' + si));
+          stripPeriodEls.push(document.getElementById('prayer-time-period-' + si));
+          stripIqamahEls.push(document.getElementById('prayer-iqamah-' + si));
+          stripIqamahFallbackEls.push(document.getElementById('prayer-iqamah-fallback-' + si));
+          stripIqamahTimeEls.push(document.getElementById('prayer-iqamah-time-' + si));
+          stripIqamahPeriodEls.push(document.getElementById('prayer-iqamah-period-' + si));
+        }
+
         function updateStrip() {
           var current = getCurrentPrayer(new Date());
           var currentName = current ? current.name : null;
           for (var i = 0; i < prayers.length; i++) {
             prayers[i].isNext = prayers[i].name === currentName;
-            var card = document.getElementById('prayer-card-' + i);
-            var nameEl = document.getElementById('prayer-name-' + i);
-            var timeEl = document.getElementById('prayer-time-' + i);
-            var periodEl = document.getElementById('prayer-time-period-' + i);
-            var iqamahEl = document.getElementById('prayer-iqamah-' + i);
+            var card = stripCardEls[i];
+            var nameEl = stripNameEls[i];
+            var timeEl = stripTimeEls[i];
+            var periodEl = stripPeriodEls[i];
+            var iqamahEl = stripIqamahEls[i];
             if (card) {
               card.classList.toggle('bigscreen-prayer-card--next', prayers[i].isNext);
               card.classList.toggle('daily-times-row--no-iqamah', !prayers[i].iqamah);
@@ -294,10 +313,10 @@ function timeToPeriod(t: string) {
             if (timeEl) timeEl.textContent = formatTime12h(prayers[i].time);
             if (periodEl) periodEl.textContent = formatPeriod(prayers[i].time);
             if (iqamahEl) {
-              var iqamahFallbackEl = document.getElementById('prayer-iqamah-fallback-' + i);
+              var iqamahFallbackEl = stripIqamahFallbackEls[i];
               if (prayers[i].iqamah) {
-                var iqamahTimeEl = document.getElementById('prayer-iqamah-time-' + i);
-                var iqamahPeriodEl = document.getElementById('prayer-iqamah-period-' + i);
+                var iqamahTimeEl = stripIqamahTimeEls[i];
+                var iqamahPeriodEl = stripIqamahPeriodEls[i];
                 if (iqamahTimeEl) iqamahTimeEl.textContent = formatTime12h(prayers[i].iqamah);
                 if (iqamahPeriodEl) iqamahPeriodEl.textContent = formatPeriod(prayers[i].iqamah);
                 iqamahEl.style.display = '';
@@ -312,6 +331,8 @@ function timeToPeriod(t: string) {
 
         var lastDateKey = lookupKey;
         updateStrip();
+
+        var tickTimeoutId = null;
 
         function tick() {
           var d = new Date();
@@ -353,10 +374,22 @@ function timeToPeriod(t: string) {
           }
         }
 
-        tick();
-        var intervalId = setInterval(tick, 1000);
+        function scheduleTick() {
+          var nowMs = Date.now();
+          tick();
+          var delay = 1000 - (nowMs % 1000);
+          if (delay < 50) delay = 1000;
+          tickTimeoutId = setTimeout(function runTick() {
+            tickTimeoutId = null;
+            scheduleTick();
+          }, delay);
+        }
+        scheduleTick();
         function cleanup() {
-          clearInterval(intervalId);
+          if (tickTimeoutId != null) {
+            clearTimeout(tickTimeoutId);
+            tickTimeoutId = null;
+          }
         }
         window.addEventListener('beforeunload', cleanup);
         window.addEventListener('pagehide', cleanup);
