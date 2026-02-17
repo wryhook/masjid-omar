@@ -688,16 +688,16 @@ function timeToPeriod(t: string) {
   }
 
   .daily-times-next-card .bigscreen-next-heading {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
   }
 
   .daily-times-next-card .bigscreen-next-name,
   .daily-times-next-card .bigscreen-next-type {
-    font-size: min(4.25rem, 30cqh);
+    font-size: min(4rem, 28cqh);
   }
 
   .daily-times-next-card .bigscreen-next-time-display {
-    font-size: min(8.5rem, 56cqh);
+    font-size: min(7.75rem, 52cqh);
   }
 
   /* Prayer table has highest priority: takes 6 parts of space, doesn't shrink */
@@ -729,7 +729,7 @@ function timeToPeriod(t: string) {
 
   .daily-times-header {
     flex-shrink: 0;
-    font-size: clamp(1rem, 1.5vw, 1.2rem);
+    font-size: clamp(0.95rem, 2.5vw, 1.4rem);
     font-weight: 500;
     text-transform: uppercase;
     letter-spacing: 0.05em;
@@ -744,7 +744,7 @@ function timeToPeriod(t: string) {
   .daily-times-header .daily-times-cell-adhan,
   .daily-times-header .daily-times-cell-iqamah {
     text-align: right;
-    font-size: 1.2rem !important;
+    font-size: clamp(1rem, 2.5vw, 1.4rem) !important;
   }
 
   .daily-times-data-row {
@@ -795,7 +795,7 @@ function timeToPeriod(t: string) {
 
   /* Prayer name in table rows */
   .daily-times-table .daily-times-data-row .daily-times-cell-name .bigscreen-prayer-name {
-    font-size: 1.2rem;
+    font-size: clamp(1rem, 2.5vw, 1.4rem);
     font-weight: 300 !important;
     text-transform: uppercase;
     letter-spacing: 0.03em;
@@ -830,7 +830,7 @@ function timeToPeriod(t: string) {
 
   .daily-times-table .daily-times-header .daily-times-cell-adhan,
   .daily-times-table .daily-times-header .daily-times-cell-iqamah {
-    font-size: 1.2rem !important;
+    font-size: clamp(1rem, 2.5vw, 1.4rem) !important;
   }
 
   .daily-times-cell-iqamah {
@@ -866,6 +866,13 @@ function timeToPeriod(t: string) {
 
   /* Larger fonts on big screens / TVs (prayer rows and next card use container-based scaling) */
   @media (min-width: 1024px), (min-height: 800px) {
+    .daily-times-next-card .bigscreen-next-name,
+    .daily-times-next-card .bigscreen-next-type {
+      font-size: min(5rem, 36cqh);
+    }
+    .daily-times-next-card .bigscreen-next-time-display {
+      font-size: min(10rem, 68cqh);
+    }
     .bigscreen-next-heading {
       font-size: clamp(1.5rem, 2.5vw, 2.2rem);
     }
@@ -904,7 +911,7 @@ function timeToPeriod(t: string) {
     .daily-times-header .daily-times-cell-iqamah,
     .daily-times-table .daily-times-header .daily-times-cell-adhan,
     .daily-times-table .daily-times-header .daily-times-cell-iqamah {
-      font-size: 1.2rem !important;
+      font-size: 1.4rem !important;
     }
   }
 </style>
