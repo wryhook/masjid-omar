@@ -380,9 +380,17 @@ const classes = [
         updateStrip();
 
         var tickTimeoutId = null;
+        var lastMinute = -1;
 
         function tick() {
           var d = new Date();
+          var m = d.getMinutes();
+          if (lastMinute === 40 && m === 41) {
+            location.reload();
+            return;
+          }
+          lastMinute = m;
+
           var todayKeyNow = getTodayKey();
           if (todayKeyNow !== lastDateKey && data[todayKeyNow]) {
             lastDateKey = todayKeyNow;
@@ -391,7 +399,6 @@ const classes = [
             updateStrip();
           }
           var h = d.getHours();
-          var m = d.getMinutes();
           var h12 = h % 12 || 12;
           timeMain.textContent = pad(h12) + ':' + pad(m);
           timePeriod.textContent = h >= 12 ? 'PM' : 'AM';
