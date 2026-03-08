@@ -67,7 +67,11 @@ function timeTo12h(t: string) {
   return `${h12}:${String(m).padStart(2, '0')}`;
 }
 
-function timeToPeriod(t: string) {
+function timeToPeriod(t: string, prayerName?: string) {
+  if (prayerName) {
+    if (['Fajr', 'Sunrise'].includes(prayerName)) return 'AM';
+    if (['Dhuhr', 'Asr', 'Maghrib', 'Isha'].includes(prayerName)) return 'PM';
+  }
   if (!t) return '';
   const [h] = t.split(':').map(Number);
   return h >= 12 ? 'PM' : 'AM';
@@ -130,13 +134,13 @@ function timeToPeriod(t: string) {
               <span class="daily-times-cell daily-times-cell-adhan" data-label="Adhan">
                 <span class="daily-times-time">
                   <span id={`prayer-time-${i}`}>{timeTo12h(p.time)}</span>
-                  <span class="bigscreen-prayer-time-period" id={`prayer-time-period-${i}`} aria-hidden="true">{timeToPeriod(p.time)}</span>
+                  <span class="bigscreen-prayer-time-period" id={`prayer-time-period-${i}`} aria-hidden="true">{timeToPeriod(p.time, p.name)}</span>
                 </span>
               </span>
               <span class="daily-times-cell daily-times-cell-iqamah" data-label="Iqamah">
                 <span class="daily-times-iqamah" id={`prayer-iqamah-${i}`} style={p.iqamah ? undefined : 'display:none'}>
                   <span class="bigscreen-prayer-iqamah-time" id={`prayer-iqamah-time-${i}`}>{p.iqamah ? timeTo12h(p.iqamah) : ''}</span>
-                  <span class="daily-times-period" id={`prayer-iqamah-period-${i}`} aria-hidden="true">{p.iqamah ? timeToPeriod(p.iqamah) : ''}</span>
+                  <span class="daily-times-period" id={`prayer-iqamah-period-${i}`} aria-hidden="true">{p.iqamah ? timeToPeriod(p.iqamah, p.name) : ''}</span>
                 </span>
                 <span class="daily-times-no-iqamah" id={`prayer-iqamah-fallback-${i}`} style={p.iqamah ? 'display:none' : undefined} aria-hidden="true">—</span>
               </span>
@@ -188,6 +192,11 @@ function timeToPeriod(t: string) {
           if (!timeStr) return '';
           var h = parseInt(timeStr.split(':')[0], 10);
           return h >= 12 ? 'PM' : 'AM';
+        }
+        function periodForPrayerName(name) {
+          if (name === 'Fajr' || name === 'Sunrise') return 'AM';
+          if (name === 'Dhuhr' || name === 'Asr' || name === 'Maghrib' || name === 'Isha') return 'PM';
+          return '';
         }
 
         var timeMainEl = document.getElementById('time-main');
@@ -311,14 +320,14 @@ function timeToPeriod(t: string) {
             }
             if (nameEl) nameEl.textContent = prayers[i].name.toUpperCase();
             if (timeEl) timeEl.textContent = formatTime12h(prayers[i].time);
-            if (periodEl) periodEl.textContent = formatPeriod(prayers[i].time);
+            if (periodEl) periodEl.textContent = periodForPrayerName(prayers[i].name);
             if (iqamahEl) {
               var iqamahFallbackEl = stripIqamahFallbackEls[i];
               if (prayers[i].iqamah) {
                 var iqamahTimeEl = stripIqamahTimeEls[i];
                 var iqamahPeriodEl = stripIqamahPeriodEls[i];
                 if (iqamahTimeEl) iqamahTimeEl.textContent = formatTime12h(prayers[i].iqamah);
-                if (iqamahPeriodEl) iqamahPeriodEl.textContent = formatPeriod(prayers[i].iqamah);
+                if (iqamahPeriodEl) iqamahPeriodEl.textContent = periodForPrayerName(prayers[i].name);
                 iqamahEl.style.display = '';
                 if (iqamahFallbackEl) iqamahFallbackEl.style.display = 'none';
               } else {

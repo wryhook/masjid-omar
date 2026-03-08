@@ -68,7 +68,11 @@ function timeTo12h(t) {
   return `${h12}:${String(m).padStart(2, '0')}`;
 }
 
-function timeToPeriod(t) {
+function timeToPeriod(t: string, prayerName?: string) {
+  if (prayerName) {
+    if (['Fajr', 'Sunrise'].includes(prayerName)) return 'AM';
+    if (['Dhuhr', 'Asr', 'Maghrib', 'Isha'].includes(prayerName)) return 'PM';
+  }
   if (!t) return '';
   const [h] = t.split(':').map(Number);
   return h >= 12 ? 'PM' : 'AM';
@@ -170,7 +174,7 @@ const classes = [
       {prayerTimes.map((p, i) => (
         <div class="bigscreen-prayer-card" id={`prayer-card-${i}`} data-prayer-index={i}>
           <p class="bigscreen-prayer-name" id={`prayer-name-${i}`}>{p.name.toUpperCase()}</p>
-          <p class="bigscreen-prayer-time"><span id={`prayer-time-${i}`}>{timeTo12h(p.time)}</span><span class="bigscreen-prayer-time-period" id={`prayer-time-period-${i}`} aria-hidden="true">{timeToPeriod(p.time)}</span></p>
+          <p class="bigscreen-prayer-time"><span id={`prayer-time-${i}`}>{timeTo12h(p.time)}</span><span class="bigscreen-prayer-time-period" id={`prayer-time-period-${i}`} aria-hidden="true">{timeToPeriod(p.time, p.name)}</span></p>
           <p class="bigscreen-prayer-iqamah" id={`prayer-iqamah-${i}`} style={p.iqamah ? undefined : 'display:none'}>{p.iqamah ? (<><span class="bigscreen-prayer-iqamah-label">Iqamah </span><span class="bigscreen-prayer-iqamah-time" id={`prayer-iqamah-time-${i}`}>{timeTo12h(p.iqamah)}</span></>) : ''}</p>
         </div>
       ))}
@@ -218,6 +222,11 @@ const classes = [
           if (!timeStr) return '';
           var h = parseInt(timeStr.split(':')[0], 10);
           return h >= 12 ? 'PM' : 'AM';
+        }
+        function periodForPrayerName(name) {
+          if (name === 'Fajr' || name === 'Sunrise') return 'AM';
+          if (name === 'Dhuhr' || name === 'Asr' || name === 'Maghrib' || name === 'Isha') return 'PM';
+          return '';
         }
 
         var timeMain = document.getElementById('time-main');
@@ -363,7 +372,7 @@ const classes = [
             var iqamahEl = stripIqamahEls[i];
             if (nameEl) nameEl.textContent = prayers[i].name.toUpperCase();
             if (timeEl) timeEl.textContent = formatTime12h(prayers[i].time);
-            if (periodEl) periodEl.textContent = formatPeriod(prayers[i].time);
+            if (periodEl) periodEl.textContent = periodForPrayerName(prayers[i].name);
             if (iqamahEl) {
               if (prayers[i].iqamah) {
                 var iqamahTimeEl = stripIqamahTimeEls[i];
