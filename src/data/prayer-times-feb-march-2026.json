@@ -1,1477 +1,1452 @@
 {
-  "2026-02-01": {
-    "fajr": {
-      "start": "05:58",
-      "iqamah": "06:30"
-    },
-    "sunrise": {
-      "start": "07:43"
-    },
-    "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
-    },
-    "asr": {
-      "start": "02:48",
-      "iqamah": "03:00"
-    },
-    "maghrib": {
-      "start": "05:12",
-      "iqamah": "05:17"
-    },
-    "isha": {
-      "start": "06:49",
-      "iqamah": "07:30"
-    }
-  },
   "2026-02-02": {
     "fajr": {
-      "start": "05:57",
-      "iqamah": "06:30"
+      "start": "5:57:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:42"
+      "start": "7:42:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "02:49",
-      "iqamah": "03:00"
+      "start": "2:49:00 PM",
+      "iqamah": "3:00:00 PM"
     },
     "maghrib": {
-      "start": "05:13",
-      "iqamah": "05:18"
+      "start": "5:13:00 PM",
+      "iqamah": "5:18:00 PM"
     },
     "isha": {
-      "start": "06:50",
-      "iqamah": "07:30"
+      "start": "6:50:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-03": {
     "fajr": {
-      "start": "05:56",
-      "iqamah": "06:30"
+      "start": "5:56:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:40"
+      "start": "7:40:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "02:50",
-      "iqamah": "03:00"
+      "start": "2:50:00 PM",
+      "iqamah": "3:00:00 PM"
     },
     "maghrib": {
-      "start": "05:15",
-      "iqamah": "05:20"
+      "start": "5:15:00 PM",
+      "iqamah": "5:20:00 PM"
     },
     "isha": {
-      "start": "06:52",
-      "iqamah": "07:30"
+      "start": "6:52:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-04": {
     "fajr": {
-      "start": "05:55",
-      "iqamah": "06:30"
+      "start": "5:55:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:39"
+      "start": "7:39:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "02:52",
-      "iqamah": "03:00"
+      "start": "2:52:00 PM",
+      "iqamah": "3:00:00 PM"
     },
     "maghrib": {
-      "start": "05:17",
-      "iqamah": "05:22"
+      "start": "5:17:00 PM",
+      "iqamah": "5:22:00 PM"
     },
     "isha": {
-      "start": "06:53",
-      "iqamah": "07:30"
+      "start": "6:53:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-05": {
     "fajr": {
-      "start": "05:53",
-      "iqamah": "06:30"
+      "start": "5:53:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:37"
+      "start": "7:37:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "02:53",
-      "iqamah": "03:00"
+      "start": "2:53:00 PM",
+      "iqamah": "3:00:00 PM"
     },
     "maghrib": {
-      "start": "05:19",
-      "iqamah": "05:24"
+      "start": "5:19:00 PM",
+      "iqamah": "5:24:00 PM"
     },
     "isha": {
-      "start": "06:54",
-      "iqamah": "07:30"
+      "start": "6:54:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-06": {
     "fajr": {
-      "start": "05:52",
-      "iqamah": "06:30"
+      "start": "5:52:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:36"
+      "start": "7:36:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "02:54",
-      "iqamah": "03:30"
+      "start": "2:54:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:20",
-      "iqamah": "05:25"
+      "start": "5:20:00 PM",
+      "iqamah": "5:25:00 PM"
     },
     "isha": {
-      "start": "06:56",
-      "iqamah": "07:30"
+      "start": "6:56:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-07": {
     "fajr": {
-      "start": "05:51",
-      "iqamah": "06:30"
+      "start": "5:51:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:34"
+      "start": "7:34:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "02:56",
-      "iqamah": "03:30"
+      "start": "2:56:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:22",
-      "iqamah": "05:27"
+      "start": "5:22:00 PM",
+      "iqamah": "5:27:00 PM"
     },
     "isha": {
-      "start": "06:57",
-      "iqamah": "07:30"
+      "start": "6:57:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-08": {
     "fajr": {
-      "start": "05:49",
-      "iqamah": "06:30"
+      "start": "5:49:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:32"
+      "start": "7:32:00 AM"
     },
     "dhuhr": {
-      "start": "12:34",
-      "iqamah": "12:40"
+      "start": "12:34:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "02:57",
-      "iqamah": "03:30"
+      "start": "2:57:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:24",
-      "iqamah": "05:29"
+      "start": "5:24:00 PM",
+      "iqamah": "5:29:00 PM"
     },
     "isha": {
-      "start": "06:59",
-      "iqamah": "07:30"
+      "start": "6:59:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-09": {
     "fajr": {
-      "start": "05:48",
-      "iqamah": "06:30"
+      "start": "5:48:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:31"
+      "start": "7:31:00 AM"
     },
     "dhuhr": {
-      "start": "12:34",
-      "iqamah": "12:40"
+      "start": "12:34:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "02:58",
-      "iqamah": "03:30"
+      "start": "2:58:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:25",
-      "iqamah": "05:30"
+      "start": "5:25:00 PM",
+      "iqamah": "5:30:00 PM"
     },
     "isha": {
-      "start": "07:00",
-      "iqamah": "07:30"
+      "start": "7:00:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-10": {
     "fajr": {
-      "start": "05:46",
-      "iqamah": "06:30"
+      "start": "5:46:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:29"
+      "start": "7:29:00 AM"
     },
     "dhuhr": {
-      "start": "12:34",
-      "iqamah": "12:40"
+      "start": "12:34:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:00",
-      "iqamah": "03:30"
+      "start": "3:00:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:27",
-      "iqamah": "05:32"
+      "start": "5:27:00 PM",
+      "iqamah": "5:32:00 PM"
     },
     "isha": {
-      "start": "07:02",
-      "iqamah": "07:30"
+      "start": "7:02:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-11": {
     "fajr": {
-      "start": "05:45",
-      "iqamah": "06:30"
+      "start": "5:45:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:27"
+      "start": "7:27:00 AM"
     },
     "dhuhr": {
-      "start": "12:34",
-      "iqamah": "12:40"
+      "start": "12:34:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:01",
-      "iqamah": "03:30"
+      "start": "3:01:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:29",
-      "iqamah": "05:34"
+      "start": "5:29:00 PM",
+      "iqamah": "5:34:00 PM"
     },
     "isha": {
-      "start": "07:03",
-      "iqamah": "07:30"
+      "start": "7:03:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-12": {
     "fajr": {
-      "start": "05:43",
-      "iqamah": "06:30"
+      "start": "5:43:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:26"
+      "start": "7:26:00 AM"
     },
     "dhuhr": {
-      "start": "12:34",
-      "iqamah": "12:40"
+      "start": "12:34:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:03",
-      "iqamah": "03:30"
+      "start": "3:03:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:30",
-      "iqamah": "05:35"
+      "start": "5:30:00 PM",
+      "iqamah": "5:35:00 PM"
     },
     "isha": {
-      "start": "07:05",
-      "iqamah": "07:30"
+      "start": "7:05:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-13": {
     "fajr": {
-      "start": "05:42",
-      "iqamah": "06:00"
+      "start": "5:42:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:24"
+      "start": "7:24:00 AM"
     },
     "dhuhr": {
-      "start": "12:34",
-      "iqamah": "12:40"
+      "start": "12:34:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:04",
-      "iqamah": "03:30"
+      "start": "3:04:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:32",
-      "iqamah": "05:37"
+      "start": "5:32:00 PM",
+      "iqamah": "5:37:00 PM"
     },
     "isha": {
-      "start": "07:06",
-      "iqamah": "07:30"
+      "start": "7:06:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-14": {
     "fajr": {
-      "start": "05:40",
-      "iqamah": "06:00"
+      "start": "5:40:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:22"
+      "start": "7:22:00 AM"
     },
     "dhuhr": {
-      "start": "12:34",
-      "iqamah": "12:40"
+      "start": "12:34:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:05",
-      "iqamah": "03:30"
+      "start": "3:05:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:34",
-      "iqamah": "05:39"
+      "start": "5:34:00 PM",
+      "iqamah": "5:39:00 PM"
     },
     "isha": {
-      "start": "07:08",
-      "iqamah": "07:30"
+      "start": "7:08:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-15": {
     "fajr": {
-      "start": "05:39",
-      "iqamah": "06:00"
+      "start": "5:39:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:21"
+      "start": "7:21:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:06",
-      "iqamah": "03:30"
+      "start": "3:06:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:35",
-      "iqamah": "05:40"
+      "start": "5:35:00 PM",
+      "iqamah": "5:40:00 PM"
     },
     "isha": {
-      "start": "07:09",
-      "iqamah": "07:30"
+      "start": "7:09:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-16": {
     "fajr": {
-      "start": "05:37",
-      "iqamah": "06:00"
+      "start": "5:37:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:19"
+      "start": "7:19:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:08",
-      "iqamah": "03:30"
+      "start": "3:08:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:37",
-      "iqamah": "05:42"
+      "start": "5:37:00 PM",
+      "iqamah": "5:42:00 PM"
     },
     "isha": {
-      "start": "07:11",
-      "iqamah": "07:30"
+      "start": "7:11:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-17": {
     "fajr": {
-      "start": "05:36",
-      "iqamah": "06:00"
+      "start": "5:36:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:17"
+      "start": "7:17:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:09",
-      "iqamah": "03:30"
+      "start": "3:09:00 PM",
+      "iqamah": "3:30:00 PM"
     },
     "maghrib": {
-      "start": "05:39",
-      "iqamah": "05:44"
+      "start": "5:39:00 PM",
+      "iqamah": "5:44:00 PM"
     },
     "isha": {
-      "start": "07:12",
-      "iqamah": "07:30"
+      "start": "7:12:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-18": {
     "fajr": {
-      "start": "05:34",
-      "iqamah": "06:04"
+      "start": "5:34:00 AM",
+      "iqamah": "6:04:00 AM"
     },
     "sunrise": {
-      "start": "07:15"
+      "start": "7:15:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:10",
-      "iqamah": "04:00"
+      "start": "3:10:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:40",
-      "iqamah": "05:50"
+      "start": "5:40:00 PM",
+      "iqamah": "5:50:00 PM"
     },
     "isha": {
-      "start": "07:14",
-      "iqamah": "07:24"
+      "start": "7:14:00 PM",
+      "iqamah": "7:24:00 PM"
     }
   },
   "2026-02-19": {
     "fajr": {
-      "start": "05:32",
-      "iqamah": "06:02"
+      "start": "5:32:00 AM",
+      "iqamah": "6:02:00 AM"
     },
     "sunrise": {
-      "start": "07:13"
+      "start": "7:13:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:12",
-      "iqamah": "04:00"
+      "start": "3:12:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:42",
-      "iqamah": "05:52"
+      "start": "5:42:00 PM",
+      "iqamah": "5:52:00 PM"
     },
     "isha": {
-      "start": "07:15",
-      "iqamah": "07:25"
+      "start": "7:15:00 PM",
+      "iqamah": "7:25:00 PM"
     }
   },
   "2026-02-20": {
     "fajr": {
-      "start": "05:31",
-      "iqamah": "06:01"
+      "start": "5:31:00 AM",
+      "iqamah": "6:01:00 AM"
     },
     "sunrise": {
-      "start": "07:11"
+      "start": "7:11:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:13",
-      "iqamah": "04:00"
+      "start": "3:13:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:44",
-      "iqamah": "05:54"
+      "start": "5:44:00 PM",
+      "iqamah": "5:54:00 PM"
     },
     "isha": {
-      "start": "07:17",
-      "iqamah": "07:27"
+      "start": "7:17:00 PM",
+      "iqamah": "7:27:00 PM"
     }
   },
   "2026-02-21": {
     "fajr": {
-      "start": "05:29",
-      "iqamah": "05:59"
+      "start": "5:29:00 AM",
+      "iqamah": "5:59:00 AM"
     },
     "sunrise": {
-      "start": "07:10"
+      "start": "7:10:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:14",
-      "iqamah": "04:00"
+      "start": "3:14:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:45",
-      "iqamah": "05:55"
+      "start": "5:45:00 PM",
+      "iqamah": "5:55:00 PM"
     },
     "isha": {
-      "start": "07:18",
-      "iqamah": "07:28"
+      "start": "7:18:00 PM",
+      "iqamah": "7:28:00 PM"
     }
   },
   "2026-02-22": {
     "fajr": {
-      "start": "05:27",
-      "iqamah": "05:57"
+      "start": "5:27:00 AM",
+      "iqamah": "5:57:00 AM"
     },
     "sunrise": {
-      "start": "07:08"
+      "start": "7:08:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:15",
-      "iqamah": "04:00"
+      "start": "3:15:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:47",
-      "iqamah": "05:57"
+      "start": "5:47:00 PM",
+      "iqamah": "5:57:00 PM"
     },
     "isha": {
-      "start": "07:20",
-      "iqamah": "07:30"
+      "start": "7:20:00 PM",
+      "iqamah": "7:30:00 PM"
     }
   },
   "2026-02-23": {
     "fajr": {
-      "start": "05:25",
-      "iqamah": "05:55"
+      "start": "5:25:00 AM",
+      "iqamah": "5:55:00 AM"
     },
     "sunrise": {
-      "start": "07:06"
+      "start": "7:06:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:17",
-      "iqamah": "04:00"
+      "start": "3:17:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:49",
-      "iqamah": "05:59"
+      "start": "5:49:00 PM",
+      "iqamah": "5:59:00 PM"
     },
     "isha": {
-      "start": "07:21",
-      "iqamah": "07:31"
+      "start": "7:21:00 PM",
+      "iqamah": "7:31:00 PM"
     }
   },
   "2026-02-24": {
     "fajr": {
-      "start": "05:23",
-      "iqamah": "05:53"
+      "start": "5:23:00 AM",
+      "iqamah": "5:53:00 AM"
     },
     "sunrise": {
-      "start": "07:04"
+      "start": "7:04:00 AM"
     },
     "dhuhr": {
-      "start": "12:33",
-      "iqamah": "12:40"
+      "start": "12:33:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:18",
-      "iqamah": "04:00"
+      "start": "3:18:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:49",
-      "iqamah": "05:59"
+      "start": "5:50:00 PM",
+      "iqamah": "6:00:00 PM"
     },
     "isha": {
-      "start": "07:23",
-      "iqamah": "07:33"
+      "start": "7:23:00 PM",
+      "iqamah": "7:33:00 PM"
     }
   },
   "2026-02-25": {
     "fajr": {
-      "start": "05:22",
-      "iqamah": "05:52"
+      "start": "5:22:00 AM",
+      "iqamah": "5:52:00 AM"
     },
     "sunrise": {
-      "start": "07:02"
+      "start": "7:02:00 AM"
     },
     "dhuhr": {
-      "start": "12:32",
-      "iqamah": "12:40"
+      "start": "12:32:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:19",
-      "iqamah": "04:00"
+      "start": "3:19:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:51",
-      "iqamah": "06:01"
+      "start": "5:52:00 PM",
+      "iqamah": "6:02:00 PM"
     },
     "isha": {
-      "start": "07:24",
-      "iqamah": "07:34"
+      "start": "7:24:00 PM",
+      "iqamah": "7:34:00 PM"
     }
   },
   "2026-02-26": {
     "fajr": {
-      "start": "05:20",
-      "iqamah": "05:50"
+      "start": "5:20:00 AM",
+      "iqamah": "5:50:00 AM"
     },
     "sunrise": {
-      "start": "07:00"
+      "start": "7:00:00 AM"
     },
     "dhuhr": {
-      "start": "12:32",
-      "iqamah": "12:40"
+      "start": "12:32:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:20",
-      "iqamah": "04:00"
+      "start": "3:20:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:52",
-      "iqamah": "06:02"
+      "start": "5:53:00 PM",
+      "iqamah": "6:03:00 PM"
     },
     "isha": {
-      "start": "07:26",
-      "iqamah": "07:36"
+      "start": "7:26:00 PM",
+      "iqamah": "7:36:00 PM"
     }
   },
   "2026-02-27": {
     "fajr": {
-      "start": "05:18",
-      "iqamah": "05:48"
+      "start": "5:18:00 AM",
+      "iqamah": "5:48:00 AM"
     },
     "sunrise": {
-      "start": "06:58"
+      "start": "6:58:00 AM"
     },
     "dhuhr": {
-      "start": "12:32",
-      "iqamah": "12:40"
+      "start": "12:32:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:21",
-      "iqamah": "04:00"
+      "start": "3:21:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:54",
-      "iqamah": "06:04"
+      "start": "5:55:00 PM",
+      "iqamah": "6:05:00 PM"
     },
     "isha": {
-      "start": "07:27",
-      "iqamah": "07:37"
+      "start": "7:27:00 PM",
+      "iqamah": "7:37:00 PM"
     }
   },
   "2026-02-28": {
     "fajr": {
-      "start": "05:16",
-      "iqamah": "05:46"
+      "start": "5:16:00 AM",
+      "iqamah": "5:46:00 AM"
     },
     "sunrise": {
-      "start": "06:56"
+      "start": "6:56:00 AM"
     },
     "dhuhr": {
-      "start": "12:32",
-      "iqamah": "12:40"
+      "start": "12:32:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:23",
-      "iqamah": "04:00"
+      "start": "3:23:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:56",
-      "iqamah": "06:06"
+      "start": "5:57:00 PM",
+      "iqamah": "6:07:00 PM"
     },
     "isha": {
-      "start": "07:29",
-      "iqamah": "07:39"
+      "start": "7:29:00 PM",
+      "iqamah": "7:39:00 PM"
     }
   },
   "2026-03-01": {
     "fajr": {
-      "start": "05:14",
-      "iqamah": "05:44"
+      "start": "5:14:00 AM",
+      "iqamah": "5:44:00 AM"
     },
     "sunrise": {
-      "start": "06:54"
+      "start": "6:54:00 AM"
     },
     "dhuhr": {
-      "start": "12:32",
-      "iqamah": "12:40"
+      "start": "12:32:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:24",
-      "iqamah": "04:00"
+      "start": "3:24:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:57",
-      "iqamah": "06:07"
+      "start": "5:57:00 PM",
+      "iqamah": "6:07:00 PM"
     },
     "isha": {
-      "start": "07:30",
-      "iqamah": "07:40"
+      "start": "7:30:00 PM",
+      "iqamah": "7:40:00 PM"
     }
   },
   "2026-03-02": {
     "fajr": {
-      "start": "05:12",
-      "iqamah": "05:42"
+      "start": "5:12:00 AM",
+      "iqamah": "5:42:00 AM"
     },
     "sunrise": {
-      "start": "06:52"
+      "start": "6:52:00 AM"
     },
     "dhuhr": {
-      "start": "12:31",
-      "iqamah": "12:40"
+      "start": "12:31:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:25",
-      "iqamah": "04:00"
+      "start": "3:25:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "05:59",
-      "iqamah": "06:09"
+      "start": "5:59:00 PM",
+      "iqamah": "6:09:00 PM"
     },
     "isha": {
-      "start": "07:32",
-      "iqamah": "07:42"
+      "start": "7:32:00 PM",
+      "iqamah": "7:42:00 PM"
     }
   },
   "2026-03-03": {
     "fajr": {
-      "start": "05:10",
-      "iqamah": "05:40"
+      "start": "5:10:00 AM",
+      "iqamah": "5:40:00 AM"
     },
     "sunrise": {
-      "start": "06:50"
+      "start": "6:50:00 AM"
     },
     "dhuhr": {
-      "start": "12:31",
-      "iqamah": "12:40"
+      "start": "12:31:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:26",
-      "iqamah": "04:00"
+      "start": "3:26:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "06:01",
-      "iqamah": "06:11"
+      "start": "6:01:00 PM",
+      "iqamah": "6:11:00 PM"
     },
     "isha": {
-      "start": "07:34",
-      "iqamah": "07:44"
+      "start": "7:34:00 PM",
+      "iqamah": "7:44:00 PM"
     }
   },
   "2026-03-04": {
     "fajr": {
-      "start": "05:08",
-      "iqamah": "05:38"
+      "start": "5:08:00 AM",
+      "iqamah": "5:38:00 AM"
     },
     "sunrise": {
-      "start": "06:48"
+      "start": "6:48:00 AM"
     },
     "dhuhr": {
-      "start": "12:31",
-      "iqamah": "12:40"
+      "start": "12:31:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:27",
-      "iqamah": "04:00"
+      "start": "3:27:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "06:02",
-      "iqamah": "06:12"
+      "start": "6:02:00 PM",
+      "iqamah": "6:12:00 PM"
     },
     "isha": {
-      "start": "07:35",
-      "iqamah": "07:45"
+      "start": "7:35:00 PM",
+      "iqamah": "7:45:00 PM"
     }
   },
   "2026-03-05": {
     "fajr": {
-      "start": "05:06",
-      "iqamah": "05:36"
+      "start": "5:06:00 AM",
+      "iqamah": "5:36:00 AM"
     },
     "sunrise": {
-      "start": "06:46"
+      "start": "6:46:00 AM"
     },
     "dhuhr": {
-      "start": "12:31",
-      "iqamah": "12:40"
+      "start": "12:31:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:28",
-      "iqamah": "04:00"
+      "start": "3:28:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "06:04",
-      "iqamah": "06:14"
+      "start": "6:04:00 PM",
+      "iqamah": "6:14:00 PM"
     },
     "isha": {
-      "start": "07:37",
-      "iqamah": "07:47"
+      "start": "7:37:00 PM",
+      "iqamah": "7:47:00 PM"
     }
   },
   "2026-03-06": {
     "fajr": {
-      "start": "05:04",
-      "iqamah": "05:34"
+      "start": "5:04:00 AM",
+      "iqamah": "5:34:00 AM"
     },
     "sunrise": {
-      "start": "06:44"
+      "start": "6:44:00 AM"
     },
     "dhuhr": {
-      "start": "12:31",
-      "iqamah": "12:40"
+      "start": "12:31:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:29",
-      "iqamah": "04:00"
+      "start": "3:29:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "06:05",
-      "iqamah": "06:15"
+      "start": "6:05:00 PM",
+      "iqamah": "6:15:00 PM"
     },
     "isha": {
-      "start": "07:38",
-      "iqamah": "07:48"
+      "start": "7:38:00 PM",
+      "iqamah": "7:48:00 PM"
     }
   },
   "2026-03-07": {
     "fajr": {
-      "start": "05:02",
-      "iqamah": "05:32"
+      "start": "5:02:00 AM",
+      "iqamah": "5:32:00 AM"
     },
     "sunrise": {
-      "start": "06:42"
+      "start": "6:42:00 AM"
     },
     "dhuhr": {
-      "start": "12:30",
-      "iqamah": "12:40"
+      "start": "12:30:00 PM",
+      "iqamah": "12:40:00 PM"
     },
     "asr": {
-      "start": "03:30",
-      "iqamah": "04:00"
+      "start": "3:30:00 PM",
+      "iqamah": "4:00:00 PM"
     },
     "maghrib": {
-      "start": "06:07",
-      "iqamah": "06:17"
+      "start": "6:07:00 PM",
+      "iqamah": "6:17:00 PM"
     },
     "isha": {
-      "start": "07:40",
-      "iqamah": "07:50"
+      "start": "7:40:00 PM",
+      "iqamah": "7:50:00 PM"
     }
   },
   "2026-03-08": {
     "fajr": {
-      "start": "06:00",
-      "iqamah": "06:30"
+      "start": "6:00:00 AM",
+      "iqamah": "6:30:00 AM"
     },
     "sunrise": {
-      "start": "07:40"
+      "start": "7:40:00 AM"
     },
     "dhuhr": {
-      "start": "01:30",
-      "iqamah": "01:40"
+      "start": "1:30:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:31",
-      "iqamah": "05:00"
+      "start": "4:31:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:09",
-      "iqamah": "07:19"
+      "start": "7:09:00 PM",
+      "iqamah": "7:19:00 PM"
     },
     "isha": {
-      "start": "08:41",
-      "iqamah": "08:51"
+      "start": "8:41:00 PM",
+      "iqamah": "8:51:00 PM"
     }
   },
   "2026-03-09": {
     "fajr": {
-      "start": "05:58",
-      "iqamah": "06:28"
+      "start": "5:58:00 AM",
+      "iqamah": "6:28:00 AM"
     },
     "sunrise": {
-      "start": "07:38"
+      "start": "7:38:00 AM"
     },
     "dhuhr": {
-      "start": "01:30",
-      "iqamah": "01:40"
+      "start": "1:30:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:33",
-      "iqamah": "05:00"
+      "start": "4:33:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:10",
-      "iqamah": "07:20"
+      "start": "7:10:00 PM",
+      "iqamah": "7:20:00 PM"
     },
     "isha": {
-      "start": "08:43",
-      "iqamah": "08:53"
+      "start": "8:43:00 PM",
+      "iqamah": "8:53:00 PM"
     }
   },
   "2026-03-10": {
     "fajr": {
-      "start": "05:56",
-      "iqamah": "06:26"
+      "start": "5:56:00 AM",
+      "iqamah": "6:26:00 AM"
     },
     "sunrise": {
-      "start": "07:35"
+      "start": "7:35:00 AM"
     },
     "dhuhr": {
-      "start": "01:30",
-      "iqamah": "01:40"
+      "start": "1:30:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:34",
-      "iqamah": "05:00"
+      "start": "4:34:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:12",
-      "iqamah": "07:22"
+      "start": "7:12:00 PM",
+      "iqamah": "7:22:00 PM"
     },
     "isha": {
-      "start": "08:44",
-      "iqamah": "08:54"
+      "start": "8:44:00 PM",
+      "iqamah": "8:54:00 PM"
     }
   },
   "2026-03-11": {
     "fajr": {
-      "start": "05:54",
-      "iqamah": "06:24"
+      "start": "5:54:00 AM",
+      "iqamah": "6:24:00 AM"
     },
     "sunrise": {
-      "start": "07:33"
+      "start": "7:33:00 AM"
     },
     "dhuhr": {
-      "start": "01:29",
-      "iqamah": "01:40"
+      "start": "1:29:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:35",
-      "iqamah": "05:00"
+      "start": "4:35:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:13",
-      "iqamah": "07:23"
+      "start": "7:13:00 PM",
+      "iqamah": "7:23:00 PM"
     },
     "isha": {
-      "start": "08:46",
-      "iqamah": "08:56"
+      "start": "8:46:00 PM",
+      "iqamah": "8:56:00 PM"
     }
   },
   "2026-03-12": {
     "fajr": {
-      "start": "05:52",
-      "iqamah": "06:22"
+      "start": "5:52:00 AM",
+      "iqamah": "6:22:00 AM"
     },
     "sunrise": {
-      "start": "07:31"
+      "start": "7:31:00 AM"
     },
     "dhuhr": {
-      "start": "01:29",
-      "iqamah": "01:40"
+      "start": "1:29:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:36",
-      "iqamah": "05:00"
+      "start": "4:36:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:15",
-      "iqamah": "07:25"
+      "start": "7:15:00 PM",
+      "iqamah": "7:25:00 PM"
     },
     "isha": {
-      "start": "08:48",
-      "iqamah": "08:58"
+      "start": "8:48:00 PM",
+      "iqamah": "8:58:00 PM"
     }
   },
   "2026-03-13": {
     "fajr": {
-      "start": "05:50",
-      "iqamah": "06:20"
+      "start": "5:50:00 AM",
+      "iqamah": "6:20:00 AM"
     },
     "sunrise": {
-      "start": "07:29"
+      "start": "7:29:00 AM"
     },
     "dhuhr": {
-      "start": "01:29",
-      "iqamah": "01:40"
+      "start": "1:29:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:37",
-      "iqamah": "05:00"
+      "start": "4:37:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:16",
-      "iqamah": "07:26"
+      "start": "7:16:00 PM",
+      "iqamah": "7:26:00 PM"
     },
     "isha": {
-      "start": "08:49",
-      "iqamah": "08:59"
+      "start": "8:49:00 PM",
+      "iqamah": "8:59:00 PM"
     }
   },
   "2026-03-14": {
     "fajr": {
-      "start": "05:48",
-      "iqamah": "06:18"
+      "start": "5:48:00 AM",
+      "iqamah": "6:18:00 AM"
     },
     "sunrise": {
-      "start": "07:27"
+      "start": "7:27:00 AM"
     },
     "dhuhr": {
-      "start": "01:28",
-      "iqamah": "01:40"
+      "start": "1:28:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:38",
-      "iqamah": "05:00"
+      "start": "4:38:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:18",
-      "iqamah": "07:28"
+      "start": "7:18:00 PM",
+      "iqamah": "7:28:00 PM"
     },
     "isha": {
-      "start": "08:51",
-      "iqamah": "09:01"
+      "start": "8:51:00 PM",
+      "iqamah": "9:01:00 PM"
     }
   },
   "2026-03-15": {
     "fajr": {
-      "start": "05:45",
-      "iqamah": "06:15"
+      "start": "5:45:00 AM",
+      "iqamah": "6:15:00 AM"
     },
     "sunrise": {
-      "start": "07:25"
+      "start": "7:25:00 AM"
     },
     "dhuhr": {
-      "start": "01:28",
-      "iqamah": "01:40"
+      "start": "1:28:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:39",
-      "iqamah": "05:00"
+      "start": "4:39:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:19",
-      "iqamah": "07:29"
+      "start": "7:19:00 PM",
+      "iqamah": "7:29:00 PM"
     },
     "isha": {
-      "start": "08:52",
-      "iqamah": "09:02"
+      "start": "8:52:00 PM",
+      "iqamah": "9:02:00 PM"
     }
   },
   "2026-03-16": {
     "fajr": {
-      "start": "05:43",
-      "iqamah": "06:13"
+      "start": "5:43:00 AM",
+      "iqamah": "6:13:00 AM"
     },
     "sunrise": {
-      "start": "07:23"
+      "start": "7:23:00 AM"
     },
     "dhuhr": {
-      "start": "01:28",
-      "iqamah": "01:40"
+      "start": "1:28:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:40",
-      "iqamah": "05:00"
+      "start": "4:40:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:21",
-      "iqamah": "07:31"
+      "start": "7:21:00 PM",
+      "iqamah": "7:31:00 PM"
     },
     "isha": {
-      "start": "08:54",
-      "iqamah": "09:04"
+      "start": "8:54:00 PM",
+      "iqamah": "9:04:00 PM"
     }
   },
   "2026-03-17": {
     "fajr": {
-      "start": "05:41",
-      "iqamah": "06:11"
+      "start": "5:41:00 AM",
+      "iqamah": "6:11:00 AM"
     },
     "sunrise": {
-      "start": "07:21"
+      "start": "7:21:00 AM"
     },
     "dhuhr": {
-      "start": "01:28",
-      "iqamah": "01:40"
+      "start": "1:28:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:40",
-      "iqamah": "05:00"
+      "start": "4:40:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:23",
-      "iqamah": "07:33"
+      "start": "7:23:00 PM",
+      "iqamah": "7:33:00 PM"
     },
     "isha": {
-      "start": "08:56",
-      "iqamah": "09:06"
+      "start": "8:56:00 PM",
+      "iqamah": "9:06:00 PM"
     }
   },
   "2026-03-18": {
     "fajr": {
-      "start": "05:39",
-      "iqamah": "06:09"
+      "start": "5:39:00 AM",
+      "iqamah": "6:09:00 AM"
     },
     "sunrise": {
-      "start": "07:19"
+      "start": "7:19:00 AM"
     },
     "dhuhr": {
-      "start": "01:27",
-      "iqamah": "01:40"
+      "start": "1:27:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:41",
-      "iqamah": "05:00"
+      "start": "4:41:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:24",
-      "iqamah": "07:34"
+      "start": "7:24:00 PM",
+      "iqamah": "7:34:00 PM"
     },
     "isha": {
-      "start": "08:57",
-      "iqamah": "09:07"
+      "start": "8:57:00 PM",
+      "iqamah": "9:07:00 PM"
     }
   },
   "2026-03-19": {
     "fajr": {
-      "start": "05:37",
-      "iqamah": "06:07"
+      "start": "5:37:00 AM",
+      "iqamah": "6:07:00 AM"
     },
     "sunrise": {
-      "start": "07:16"
+      "start": "7:16:00 AM"
     },
     "dhuhr": {
-      "start": "01:27",
-      "iqamah": "01:40"
+      "start": "1:27:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:42",
-      "iqamah": "05:00"
+      "start": "4:42:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:26",
-      "iqamah": "07:36"
+      "start": "7:26:00 PM",
+      "iqamah": "7:36:00 PM"
     },
     "isha": {
-      "start": "08:59",
-      "iqamah": "09:09"
+      "start": "8:59:00 PM",
+      "iqamah": "9:09:00 PM"
     }
   },
   "2026-03-20": {
     "fajr": {
-      "start": "05:34",
-      "iqamah": "06:00"
+      "start": "5:34:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:14"
+      "start": "7:14:00 AM"
     },
     "dhuhr": {
-      "start": "01:27",
-      "iqamah": "01:40"
+      "start": "1:27:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:43",
-      "iqamah": "05:00"
+      "start": "4:43:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:28",
-      "iqamah": "07:33"
+      "start": "7:28:00 PM",
+      "iqamah": "7:33:00 PM"
     },
     "isha": {
-      "start": "09:00",
-      "iqamah": "09:10"
+      "start": "9:00:00 PM",
+      "iqamah": "9:10:00 PM"
     }
   },
   "2026-03-21": {
     "fajr": {
-      "start": "05:32",
-      "iqamah": "06:00"
+      "start": "5:32:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:12"
+      "start": "7:12:00 AM"
     },
     "dhuhr": {
-      "start": "01:26",
-      "iqamah": "01:40"
+      "start": "1:26:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:44",
-      "iqamah": "05:00"
+      "start": "4:44:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:30",
-      "iqamah": "07:35"
+      "start": "7:30:00 PM",
+      "iqamah": "7:35:00 PM"
     },
     "isha": {
-      "start": "09:02",
-      "iqamah": "09:12"
+      "start": "9:02:00 PM",
+      "iqamah": "9:12:00 PM"
     }
   },
   "2026-03-22": {
     "fajr": {
-      "start": "05:30",
-      "iqamah": "06:00"
+      "start": "5:30:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:10"
+      "start": "7:10:00 AM"
     },
     "dhuhr": {
-      "start": "01:26",
-      "iqamah": "01:40"
+      "start": "1:26:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:45",
-      "iqamah": "05:00"
+      "start": "4:45:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:31",
-      "iqamah": "07:36"
+      "start": "7:31:00 PM",
+      "iqamah": "7:36:00 PM"
     },
     "isha": {
-      "start": "09:04",
-      "iqamah": "09:14"
+      "start": "9:04:00 PM",
+      "iqamah": "9:14:00 PM"
     }
   },
   "2026-03-23": {
     "fajr": {
-      "start": "05:28",
-      "iqamah": "06:00"
+      "start": "5:28:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:08"
+      "start": "7:08:00 AM"
     },
     "dhuhr": {
-      "start": "01:26",
-      "iqamah": "01:40"
+      "start": "1:26:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:46",
-      "iqamah": "05:00"
+      "start": "4:46:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:33",
-      "iqamah": "07:38"
+      "start": "7:33:00 PM",
+      "iqamah": "7:38:00 PM"
     },
     "isha": {
-      "start": "09:05",
-      "iqamah": "09:15"
+      "start": "9:05:00 PM",
+      "iqamah": "9:15:00 PM"
     }
   },
   "2026-03-24": {
     "fajr": {
-      "start": "05:25",
-      "iqamah": "06:00"
+      "start": "5:25:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:06"
+      "start": "7:06:00 AM"
     },
     "dhuhr": {
-      "start": "01:26",
-      "iqamah": "01:40"
+      "start": "1:26:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:47",
-      "iqamah": "05:00"
+      "start": "4:47:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:34",
-      "iqamah": "07:39"
+      "start": "7:34:00 PM",
+      "iqamah": "7:39:00 PM"
     },
     "isha": {
-      "start": "09:07",
-      "iqamah": "09:17"
+      "start": "9:07:00 PM",
+      "iqamah": "9:17:00 PM"
     }
   },
   "2026-03-25": {
     "fajr": {
-      "start": "05:23",
-      "iqamah": "06:00"
+      "start": "5:23:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:04"
+      "start": "7:04:00 AM"
     },
     "dhuhr": {
-      "start": "01:25",
-      "iqamah": "01:40"
+      "start": "1:25:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:48",
-      "iqamah": "05:00"
+      "start": "4:48:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:36",
-      "iqamah": "07:41"
+      "start": "7:36:00 PM",
+      "iqamah": "7:41:00 PM"
     },
     "isha": {
-      "start": "09:09",
-      "iqamah": "09:19"
+      "start": "9:09:00 PM",
+      "iqamah": "9:19:00 PM"
     }
   },
   "2026-03-26": {
     "fajr": {
-      "start": "05:21",
-      "iqamah": "06:00"
+      "start": "5:21:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "07:02"
+      "start": "7:02:00 AM"
     },
     "dhuhr": {
-      "start": "01:25",
-      "iqamah": "01:40"
+      "start": "1:25:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:48",
-      "iqamah": "05:00"
+      "start": "4:48:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:37",
-      "iqamah": "07:42"
+      "start": "7:37:00 PM",
+      "iqamah": "7:42:00 PM"
     },
     "isha": {
-      "start": "09:10",
-      "iqamah": "09:20"
+      "start": "9:10:00 PM",
+      "iqamah": "9:20:00 PM"
     }
   },
   "2026-03-27": {
     "fajr": {
-      "start": "05:18",
-      "iqamah": "06:00"
+      "start": "5:18:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "06:59"
+      "start": "6:59:00 AM"
     },
     "dhuhr": {
-      "start": "01:25",
-      "iqamah": "01:40"
+      "start": "1:25:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:49",
-      "iqamah": "05:00"
+      "start": "4:49:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:39",
-      "iqamah": "07:44"
+      "start": "7:39:00 PM",
+      "iqamah": "7:44:00 PM"
     },
     "isha": {
-      "start": "09:12",
-      "iqamah": "09:22"
+      "start": "9:12:00 PM",
+      "iqamah": "9:22:00 PM"
     }
   },
   "2026-03-28": {
     "fajr": {
-      "start": "05:16",
-      "iqamah": "06:00"
+      "start": "5:16:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "06:57"
+      "start": "6:57:00 AM"
     },
     "dhuhr": {
-      "start": "01:24",
-      "iqamah": "01:40"
+      "start": "1:24:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:50",
-      "iqamah": "05:00"
+      "start": "4:50:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:41",
-      "iqamah": "07:46"
+      "start": "7:41:00 PM",
+      "iqamah": "7:46:00 PM"
     },
     "isha": {
-      "start": "09:14",
-      "iqamah": "09:24"
+      "start": "9:14:00 PM",
+      "iqamah": "9:24:00 PM"
     }
   },
   "2026-03-29": {
     "fajr": {
-      "start": "05:14",
-      "iqamah": "06:00"
+      "start": "5:14:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "06:55"
+      "start": "6:55:00 AM"
     },
     "dhuhr": {
-      "start": "01:24",
-      "iqamah": "01:40"
+      "start": "1:24:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:51",
-      "iqamah": "05:00"
+      "start": "4:51:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:42",
-      "iqamah": "07:47"
+      "start": "7:42:00 PM",
+      "iqamah": "7:47:00 PM"
     },
     "isha": {
-      "start": "09:15",
-      "iqamah": "09:25"
+      "start": "9:15:00 PM",
+      "iqamah": "9:25:00 PM"
     }
   },
   "2026-03-30": {
     "fajr": {
-      "start": "05:11",
-      "iqamah": "06:00"
+      "start": "5:11:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "06:53"
+      "start": "6:53:00 AM"
     },
     "dhuhr": {
-      "start": "01:24",
-      "iqamah": "01:40"
+      "start": "1:24:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:52",
-      "iqamah": "05:00"
+      "start": "4:52:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:44",
-      "iqamah": "07:49"
+      "start": "7:44:00 PM",
+      "iqamah": "7:49:00 PM"
     },
     "isha": {
-      "start": "09:17",
-      "iqamah": "09:27"
+      "start": "9:17:00 PM",
+      "iqamah": "9:27:00 PM"
     }
   },
   "2026-03-31": {
     "fajr": {
-      "start": "05:09",
-      "iqamah": "06:00"
+      "start": "5:09:00 AM",
+      "iqamah": "6:00:00 AM"
     },
     "sunrise": {
-      "start": "06:51"
+      "start": "6:51:00 AM"
     },
     "dhuhr": {
-      "start": "01:23",
-      "iqamah": "01:40"
+      "start": "1:23:00 PM",
+      "iqamah": "1:40:00 PM"
     },
     "asr": {
-      "start": "04:52",
-      "iqamah": "05:00"
+      "start": "4:52:00 PM",
+      "iqamah": "5:00:00 PM"
     },
     "maghrib": {
-      "start": "07:45",
-      "iqamah": "07:50"
+      "start": "7:45:00 PM",
+      "iqamah": "7:50:00 PM"
     },
     "isha": {
-      "start": "09:19",
-      "iqamah": "09:29"
+      "start": "9:19:00 PM",
+      "iqamah": "9:29:00 PM"
     }
   }
 }

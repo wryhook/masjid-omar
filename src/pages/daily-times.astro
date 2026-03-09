@@ -13,11 +13,27 @@ const PRAYER_NAMES: Record<(typeof PRAYER_KEYS)[number], string> = {
 };
 
 function to24h(timeStr: string, key: string): string {
-  const [h, m] = timeStr.split(':').map(Number);
-  if (['asr', 'maghrib', 'isha'].includes(key) && h >= 1 && h <= 7) {
-    return `${h + 12}:${String(m).padStart(2, '0')}`;
+  if (!timeStr) return '';
+  const trimmed = timeStr.trim();
+
+  // Handle formats with an explicit period, e.g. "5:57:00 AM" or "5:57 AM"
+  const [timePart, periodRaw] = trimmed.split(' ');
+  const [hStr, mStr] = timePart.split(':');
+  let h = Number(hStr);
+  const m = Number(mStr);
+  const period = periodRaw?.toUpperCase();
+
+  if (period === 'AM' || period === 'PM') {
+    if (period === 'PM' && h !== 12) h += 12;
+    if (period === 'AM' && h === 12) h = 0;
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
   }
-  return timeStr;
+
+  // Fallback for older data without AM/PM (assume early-evening prayers are PM)
+  if (['asr', 'maghrib', 'isha'].includes(key) && h >= 1 && h <= 7) {
+    h += 12;
+  }
+  return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
 }
 
 type DayData = Record<string, { start: string; iqamah?: string }>;
@@ -156,12 +172,25 @@ function timeToPeriod(t: string, prayerName?: string) {
           return String(n).padStart(2, '0');
         }
         function to24h(timeStr, key) {
-          var parts = timeStr.split(':').map(Number);
-          var h = parts[0], m = parts[1];
-          if (['asr', 'maghrib', 'isha'].indexOf(key) !== -1 && h >= 1 && h <= 7) {
-            return (h + 12) + ':' + pad(m);
+          if (!timeStr) return '';
+          var trimmed = String(timeStr).trim();
+          var split = trimmed.split(' ');
+          var timePart = split[0];
+          var period = (split[1] || '').toUpperCase();
+          var timeParts = timePart.split(':');
+          var h = parseInt(timeParts[0], 10);
+          var m = parseInt(timeParts[1], 10);
+
+          if (period === 'AM' || period === 'PM') {
+            if (period === 'PM' && h !== 12) h += 12;
+            if (period === 'AM' && h === 12) h = 0;
+            return pad(h) + ':' + pad(m);
           }
-          return timeStr;
+
+          if (['asr', 'maghrib', 'isha'].indexOf(key) !== -1 && h >= 1 && h <= 7) {
+            h += 12;
+          }
+          return pad(h) + ':' + pad(m);
         }
         var PRAYER_KEYS = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'];
         var PRAYER_NAMES = { fajr: 'Fajr', sunrise: 'Sunrise', dhuhr: 'Dhuhr', asr: 'Asr', maghrib: 'Maghrib', isha: 'Isha' };
