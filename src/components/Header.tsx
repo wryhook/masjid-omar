@@ -127,7 +127,7 @@ const Header: React.FC = () => {
 						))}
 						<li className="pt-4">
 							<a
-								href="https://donate.stripe.com/4gwcQdaxNavW9c4aEF"
+								href="/donate"
 								className=" text-white font-medium bg-primary border-2 border-primary hover:border-primary hover:bg-transparent hover:text-primary px-5 py-2 transition-colors"
 								onClick={toggleMenu}
 							>
