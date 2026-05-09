@@ -371,12 +371,19 @@ function timeToPeriod(t: string, prayerName?: string) {
         updateStrip();
 
         var tickTimeoutId = null;
+        var lastMinute = -1;
 
         function tick() {
           var d = new Date();
+          var m = d.getMinutes();
+          if (lastMinute === 40 && m === 41) {
+            location.reload();
+            return;
+          }
+          lastMinute = m;
+
           if (timeMainEl && timePeriodEl) {
             var h = d.getHours();
-            var m = d.getMinutes();
             var h12 = h % 12 || 12;
             timeMainEl.textContent = pad(h12) + ':' + pad(m);
             timePeriodEl.textContent = h >= 12 ? 'PM' : 'AM';
