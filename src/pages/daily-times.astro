@@ -1,6 +1,6 @@
 ---
 import { siteDetails } from '@/data/siteDetails';
-import prayerTimesData from '@/data/prayer-times-may-2026.json';
+import prayerTimesData from '@/data/prayer-times-june-2026.json';
 
 const PRAYER_KEYS = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
 const PRAYER_NAMES: Record<(typeof PRAYER_KEYS)[number], string> = {
@@ -41,7 +41,7 @@ type DayData = Record<string, { start: string; iqamah?: string }>;
 function dayDataToPrayerTimes(dayData: DayData): { name: string; time: string; iqamah: string | null; isNext: boolean }[] {
   const list = PRAYER_KEYS.map((key) => {
     const slot = dayData[key];
-    if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqamah: null, isNext: false };
+    if (!slot) return { name: PRAYER_NAMES[key], time: '', iqamah: null, isNext: false };
     const time = to24h(slot.start, key);
     const iqamah = slot.iqamah ? to24h(slot.iqamah, key) : null;
     return { name: PRAYER_NAMES[key], time, iqamah, isNext: false };
@@ -49,13 +49,15 @@ function dayDataToPrayerTimes(dayData: DayData): { name: string; time: string; i
   const now = new Date();
   let currentName: string | null = null;
   for (let i = 0; i < list.length; i++) {
+    if (!list[i].time) continue;
     const [h, m] = list[i].time.split(':').map(Number);
     const adhanDate = new Date(now);
     adhanDate.setHours(h, m, 0, 0);
     if (now >= adhanDate) currentName = list[i].name;
     else break;
   }
-  if (!currentName && list.length) currentName = list[list.length - 1].name;
+  const withTimes = list.filter((p) => p.time);
+  if (!currentName && withTimes.length) currentName = withTimes[withTimes.length - 1].name;
   if (currentName) {
     for (let i = 0; i < list.length; i++) list[i].isNext = list[i].name === currentName;
   }
@@ -70,11 +72,10 @@ function getTodayKey(): string {
   return `${y}-${m}-${day}`;
 }
 
-const dates = Object.keys(prayerTimesData) as string[];
 const todayKey = getTodayKey();
-const lookupKey = (prayerTimesData as Record<string, DayData>)[todayKey] ? todayKey : dates[0] ?? todayKey;
-const dayData = (prayerTimesData as Record<string, DayData>)[lookupKey] ?? {};
+const dayData = (prayerTimesData as Record<string, DayData>)[todayKey] ?? {};
 const prayerTimes = dayDataToPrayerTimes(dayData);
+const hasTimes = prayerTimes.some((p) => p.time);
 
 function timeTo12h(t: string) {
   if (!t) return '';
@@ -84,11 +85,11 @@ function timeTo12h(t: string) {
 }
 
 function timeToPeriod(t: string, prayerName?: string) {
+  if (!t) return '';
   if (prayerName) {
     if (['Fajr', 'Sunrise'].includes(prayerName)) return 'AM';
     if (['Dhuhr', 'Asr', 'Maghrib', 'Isha'].includes(prayerName)) return 'PM';
   }
-  if (!t) return '';
   const [h] = t.split(':').map(Number);
   return h >= 12 ? 'PM' : 'AM';
 }
@@ -118,7 +119,7 @@ function timeToPeriod(t: string, prayerName?: string) {
           <p class="bigscreen-gregorian-date daily-times-gregorian-date" id="gregorian-date">—</p>
         </div>
       </div>
-      <section class="daily-times-next-card bigscreen-card bigscreen-next-card">
+      <section class="daily-times-next-card bigscreen-card bigscreen-next-card" style={hasTimes ? undefined : 'display:none'}>
         <h2 class="bigscreen-next-heading">Time remaining till</h2>
         <div class="bigscreen-next-body">
           <div class="bigscreen-next-left">
@@ -197,7 +198,7 @@ function timeToPeriod(t: string, prayerName?: string) {
         function dayDataToPrayerTimes(dayData) {
           return PRAYER_KEYS.map(function (key) {
             var slot = dayData[key];
-            if (!slot) return { name: PRAYER_NAMES[key], time: '00:00', iqamah: null, isNext: false };
+            if (!slot) return { name: PRAYER_NAMES[key], time: '', iqamah: null, isNext: false };
             return {
               name: PRAYER_NAMES[key],
               time: to24h(slot.start, key),
@@ -230,6 +231,7 @@ function timeToPeriod(t: string, prayerName?: string) {
 
         var timeMainEl = document.getElementById('time-main');
         var timePeriodEl = document.getElementById('time-period');
+        var nextCardEl = document.querySelector('.daily-times-next-card');
         var nextPrayerNameEl = document.getElementById('next-prayer-name');
         var nextPrayerTypeEl = document.getElementById('next-prayer-type');
         var countdownMainEl = document.getElementById('countdown-main');
@@ -260,16 +262,25 @@ function timeToPeriod(t: string, prayerName?: string) {
         }
 
         var data = JSON.parse(prayerTimesDataJson || '{}');
-        var dates = Object.keys(data);
         var todayKey = getTodayKey();
-        var lookupKey = data[todayKey] ? todayKey : (dates[0] || todayKey);
-        var dayData = data[lookupKey] || {};
+        var dayData = data[todayKey] || {};
         var prayers = dayDataToPrayerTimes(dayData);
+        function hasAnyTimes() {
+          for (var i = 0; i < prayers.length; i++) {
+            if (prayers[i].time) return true;
+          }
+          return false;
+        }
 
         function getNextTarget(now) {
           var i;
+          var withTimes = [];
           for (i = 0; i < prayers.length; i++) {
-            var p = prayers[i];
+            if (prayers[i].time) withTimes.push(prayers[i]);
+          }
+          if (withTimes.length === 0) return null;
+          for (i = 0; i < withTimes.length; i++) {
+            var p = withTimes[i];
             var adhan = p.time.split(':').map(Number);
             var adhanDate = new Date(now);
             adhanDate.setHours(adhan[0], adhan[1], 0, 0);
@@ -285,22 +296,23 @@ function timeToPeriod(t: string, prayerName?: string) {
               }
             }
           }
-          var first = prayers[0];
-          if (first) {
-            var adhan = first.time.split(':').map(Number);
-            var next = new Date(now);
-            next.setHours(adhan[0], adhan[1], 0, 0);
-            next.setDate(next.getDate() + 1);
-            return { name: first.name, type: 'Adhan', target: next };
-          }
-          return null;
+          var first = withTimes[0];
+          var adhanFirst = first.time.split(':').map(Number);
+          var next = new Date(now);
+          next.setHours(adhanFirst[0], adhanFirst[1], 0, 0);
+          next.setDate(next.getDate() + 1);
+          return { name: first.name, type: 'Adhan', target: next };
         }
 
         function getCurrentPrayer(now) {
-          if (prayers.length === 0) return null;
-          var lastPassed = null;
+          var withTimes = [];
           for (var i = 0; i < prayers.length; i++) {
-            var p = prayers[i];
+            if (prayers[i].time) withTimes.push(prayers[i]);
+          }
+          if (withTimes.length === 0) return null;
+          var lastPassed = null;
+          for (var j = 0; j < withTimes.length; j++) {
+            var p = withTimes[j];
             var adhan = p.time.split(':').map(Number);
             var adhanDate = new Date(now);
             adhanDate.setHours(adhan[0], adhan[1], 0, 0);
@@ -310,7 +322,7 @@ function timeToPeriod(t: string, prayerName?: string) {
               break;
             }
           }
-          if (!lastPassed) lastPassed = prayers[prayers.length - 1];
+          if (!lastPassed) lastPassed = withTimes[withTimes.length - 1];
           return lastPassed ? { name: lastPassed.name } : null;
         }
 
@@ -349,7 +361,7 @@ function timeToPeriod(t: string, prayerName?: string) {
             }
             if (nameEl) nameEl.textContent = prayers[i].name.toUpperCase();
             if (timeEl) timeEl.textContent = formatTime12h(prayers[i].time);
-            if (periodEl) periodEl.textContent = periodForPrayerName(prayers[i].name);
+            if (periodEl) periodEl.textContent = prayers[i].time ? periodForPrayerName(prayers[i].name) : '';
             if (iqamahEl) {
               var iqamahFallbackEl = stripIqamahFallbackEls[i];
               if (prayers[i].iqamah) {
@@ -367,7 +379,7 @@ function timeToPeriod(t: string, prayerName?: string) {
           }
         }
 
-        var lastDateKey = lookupKey;
+        var lastDateKey = todayKey;
         updateStrip();
 
         var tickTimeoutId = null;
@@ -399,7 +411,8 @@ function timeToPeriod(t: string, prayerName?: string) {
           } else {
             updateStrip();
           }
-          var next = getNextTarget(d);
+          var next = hasAnyTimes() ? getNextTarget(d) : null;
+          if (nextCardEl) nextCardEl.style.display = next ? '' : 'none';
           if (next) {
             nextPrayerNameEl.textContent = next.name;
             nextPrayerTypeEl.textContent = next.type;
@@ -416,6 +429,12 @@ function timeToPeriod(t: string, prayerName?: string) {
               countdownMainEl.textContent = pad(hours) + ':' + pad(mins);
               countdownSecondsEl.textContent = pad(secs);
             }
+          } else {
+            nextPrayerNameEl.textContent = '';
+            nextPrayerTypeEl.textContent = '';
+            nextPrayerTypeEl.style.display = 'none';
+            countdownMainEl.textContent = '';
+            countdownSecondsEl.textContent = '';
           }
         }
 
