@@ -1,6 +1,6 @@
 ---
 import { siteDetails } from '@/data/siteDetails';
-import prayerTimesData from '@/data/prayer-times-jul-2026.json';
+import prayerTimesData from '@/data/prayer-times-aug-2026.json';
 
 const PRAYER_KEYS = ['fajr', 'sunrise', 'dhuhr', 'asr', 'maghrib', 'isha'] as const;
 const PRAYER_NAMES: Record<(typeof PRAYER_KEYS)[number], string> = {
@@ -757,11 +757,11 @@ function timeToPeriod(t: string, prayerName?: string) {
 
   .daily-times-next-card .bigscreen-next-name,
   .daily-times-next-card .bigscreen-next-type {
-    font-size: min(4rem, 28cqh);
+    font-size: min(3.5rem, 24cqh);
   }
 
   .daily-times-next-card .bigscreen-next-time-display {
-    font-size: min(7.75rem, 52cqh);
+    font-size: min(6.75rem, 45cqh);
   }
 
   /* Prayer table has highest priority: takes 6 parts of space, doesn't shrink */
@@ -932,10 +932,10 @@ function timeToPeriod(t: string, prayerName?: string) {
   @media (min-width: 1024px), (min-height: 800px) {
     .daily-times-next-card .bigscreen-next-name,
     .daily-times-next-card .bigscreen-next-type {
-      font-size: min(5rem, 36cqh);
+      font-size: min(4.5rem, 32cqh);
     }
     .daily-times-next-card .bigscreen-next-time-display {
-      font-size: min(10rem, 68cqh);
+      font-size: min(9rem, 60cqh);
     }
     .bigscreen-next-heading {
       font-size: clamp(1.5rem, 2.5vw, 2.2rem);
