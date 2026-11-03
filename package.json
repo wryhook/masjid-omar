@@ -7,7 +7,9 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "prayer-times:update": "node scripts/update-prayer-times.mjs",
+    "prayer-times:test": "node --test scripts/update-prayer-times.test.mjs"
   },
   "dependencies": {
     "@astrojs/react": "^3.6.2",
