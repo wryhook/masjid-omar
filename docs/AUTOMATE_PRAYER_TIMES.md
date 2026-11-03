@@ -28,7 +28,7 @@ The site is static, so new data only appears after a rebuild. One rebuild a mont
 
 | Run (UTC) | Purpose |
 | --- | --- |
-| 1st, 00:07 | Main run. This is the evening before the 1st in Ontario, so the new month is live before local midnight. |
+| 1st, 00:07 | Main run. This is 5:07 PM the day before in Vancouver, so the new month is live before local midnight. |
 | 1st, 12:07 | Retry, in case the sheet was filled in late. |
 | 2nd, 00:07 | Final retry. |
 
@@ -47,7 +47,7 @@ Steps 1 and 2 are done. Steps 3 and 4 are still to do.
 
    This repo is public, so keep the real sheet URL out of the code and docs.
 3. **Merge to `main`.** GitHub only runs schedules from the default branch, and the Run workflow button only appears once the file is there.
-4. **Test it.** Follow steps 2 and 4 in [HANDOFF_PRAYER_TIMES.md](HANDOFF_PRAYER_TIMES.md). Don't run November with the mismatch box ticked, as that would overwrite the November data.
+4. **Test it.** Follow steps 2 and 4 in [HANDOFF_PRAYER_TIMES.md](HANDOFF_PRAYER_TIMES.md). Don't leave `month` blank during November, as that would overwrite the November data.
 
 Also check these once it's running, as neither has been tested:
 
@@ -88,7 +88,7 @@ There's no human review before publishing, so the script checks the data first. 
 - A time isn't valid 12-hour format, such as `13:03`.
 - Adhans are out of order for the day.
 - An iqamah is before its adhan, after the next prayer starts, or past midnight.
-- Clocks change that day in `America/Toronto`, but sunrise in the sheet doesn't move by about an hour.
+- Clocks change that day in `America/Vancouver`, but sunrise in the sheet doesn't move by about an hour.
 
 **This only warns:** a blank iqamah with no auto-increment value. The month still publishes and the site shows no iqamah for that prayer.
 
@@ -125,14 +125,14 @@ GitHub sends failure emails for a schedule to whoever last changed it. Every fai
 
 - **Mid-month edits:** changes made to the sheet after the 1st don't reach the site until someone uses Run workflow.
 - **The new year:** the sheet has no year, so last year's January rows look just like this year's. The sheet must be refilled before the January run. The clock-change check can't catch this.
-- **Time zone:** `America/Toronto` is an assumption based on the `.ca` domain and the sunrise times. To change it, edit `TIME_ZONE` in the script.
+- **Time zone:** the script uses `America/Vancouver`, confirmed by the owner. Node's time zone data (2026c) shows no Vancouver clock changes after March 8, 2026, so the clock-change check shouldn't trigger unless those rules change. The workflow uses Node 24, and a test fails if Node's data is too old to include this.
 - **Late or skipped runs:** GitHub can delay scheduled runs. Repeated failures with no commits could also let GitHub disable the schedule on a public repo after 60 days without activity.
 
 ## Open issues
 
 Remaining work is tracked in [HANDOFF_PRAYER_TIMES.md](HANDOFF_PRAYER_TIMES.md).
 
-The questions raised on 2026-11-02 about November's AM/PM values and clock change were reviewed by the owner, who confirmed the sheet's times are correct and November should stay as it is. November still fails the clock-change check, so don't regenerate it.
+The owner has confirmed the sheet's times are correct and that November should stay as it is. A run for November would now pass every check and publish, so don't regenerate it.
 
 ## Work log
 
@@ -141,7 +141,7 @@ The questions raised on 2026-11-02 about November's AM/PM values and clock chang
 **Findings**
 
 - Monthly updates were manual commits. There were no scripts or workflows.
-- The Oct data was correct. The Nov commit introduced the PM values in open issue 1.
+- The Oct data was correct. The Nov commit saved Fajr and Sunrise as PM.
 - The sheet has one tab, with no years and no AM/PM.
 - A direct CSV download returned HTTP 401.
 
@@ -155,7 +155,7 @@ The questions raised on 2026-11-02 about November's AM/PM values and clock chang
 **Tested**
 
 - All 18 unit tests pass.
-- A local copy of the sheet was run through a dry run for every month of 2026. Jan to Oct passed. Feb and Mar warned about a blank Fajr iqamah from Feb 18 to Mar 19. Nov failed the clock-change check and Dec failed as blank, both as described in the open issues.
+- A local copy of the sheet was run through a dry run for every month of 2026. Jan to Oct passed. Feb and Mar warned about a blank Fajr iqamah from Feb 18 to Mar 19. Nov failed the clock-change check, which was a false alarm caused by assuming Toronto (see the 2026-11-03 correction). Dec failed as blank.
 - November was generated with `--allow-dst-mismatch` and compared with the repo. Of 330 values, the only differences were the 90 Fajr and Sunrise values changing from PM to AM.
 
 **Not tested**
@@ -170,3 +170,10 @@ The questions raised on 2026-11-02 about November's AM/PM values and clock chang
 - The live CSV now downloads without a login. Dry runs against it gave the expected results: November stops at the clock-change check and December is reported as blank.
 - The owner confirmed the sheet stays in sync by importing from another sheet, its times are correct, and November stays as it is.
 - Response headers suggest the site runs on DigitalOcean App Platform behind Cloudflare. The deploy path is still untested.
+
+### 2026-11-03: correction to Vancouver time
+
+- The owner confirmed the masjid is on Vancouver time. The first version wrongly assumed Toronto.
+- Toronto's clocks changed on 2026-11-01, but Node's time zone data shows Vancouver staying on UTC-7 after its March 8 change. The warning that November looked an hour late was therefore a false alarm.
+- Changed `TIME_ZONE` to `America/Vancouver`, moved the workflow to Node 24, and updated the tests and docs.
+- A connection test now uses `month` set to `2026-12`, because a November run would publish instead of stopping at the clock-change check.

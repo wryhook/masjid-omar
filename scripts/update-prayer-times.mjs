@@ -14,7 +14,7 @@ import { resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 const DEFAULT_OUT = 'src/data/prayer-times.json';
-const TIME_ZONE = 'America/Toronto';
+const TIME_ZONE = 'America/Vancouver';
 const MONTHS = [
   'January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December',
@@ -126,7 +126,7 @@ export function formatMinutes(total) {
 }
 
 function utcOffsetMinutes(year, month, day) {
-  // 17:00 UTC is around midday in Ontario, safely after a 2 AM clock change.
+  // 17:00 UTC is mid-morning in Vancouver, safely after a 2 AM clock change.
   const part = new Intl.DateTimeFormat('en-US', { timeZone: TIME_ZONE, timeZoneName: 'shortOffset' })
     .formatToParts(new Date(Date.UTC(year, month - 1, day, 17)))
     .find((p) => p.type === 'timeZoneName').value;
@@ -302,7 +302,7 @@ function parseArgs(argv) {
 
 function targetMonth(value) {
   // Defaults to the UTC month, because the schedule runs just after midnight UTC on the 1st,
-  // when it is still the last day of the old month in Ontario.
+  // when it is still the last day of the old month in Vancouver.
   const text = value || new Date().toISOString().slice(0, 7);
   const match = /^(\d{4})-(0[1-9]|1[0-2])$/.exec(text);
   if (!match) throw new Error(`--month must look like 2026-12, got "${text}".`);

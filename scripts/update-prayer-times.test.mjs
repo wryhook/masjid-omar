@@ -114,22 +114,27 @@ test('an auto-increment that passes midnight is rejected', () => {
 });
 
 test('a clock change with no matching jump is an error unless explicitly allowed', () => {
-  const rows = [...monthRows('October', 31), ...monthRows('November', 30)];
-  const blocked = buildMonth(sheetFrom(rows), 2026, 11);
-  assert.ok(blocked.errors.some((e) => /November 1: clocks change/.test(e)));
-  const allowed = buildMonth(sheetFrom(rows), 2026, 11, { allowDstMismatch: true });
+  const rows = [...monthRows('February', 28), ...monthRows('March', 31)];
+  const blocked = buildMonth(sheetFrom(rows), 2026, 3);
+  assert.ok(blocked.errors.some((e) => /March 8: clocks change/.test(e)));
+  const allowed = buildMonth(sheetFrom(rows), 2026, 3, { allowDstMismatch: true });
   assert.deepEqual(allowed.errors, []);
-  assert.ok(allowed.warnings.some((w) => /November 1: clocks change/.test(w)));
+  assert.ok(allowed.warnings.some((w) => /March 8: clocks change/.test(w)));
 });
 
 test('a clock change with the matching jump passes', () => {
-  const after = '5:15,5:30,7:07,,11:23,11:40,1:11,2:00,3:26,3:31,5:11,6:30,,,11:30,,';
+  const after = '6:15,6:30,9:07,,12:23,12:40,2:11,3:00,4:26,4:31,6:11,7:30,,,12:30,,';
   const rows = [
-    ...monthRows('October', 31),
-    ...monthRows('November', 30, after).map((r) => r.replace(/11:(23|40|30)/g, '12:$1')),
+    ...monthRows('March', 31).slice(0, 7),
+    ...monthRows('March', 31, after).slice(7),
   ];
-  const { errors } = buildMonth(sheetFrom(rows), 2026, 11);
+  const { errors } = buildMonth(sheetFrom(rows), 2026, 3);
   assert.deepEqual(errors.filter((e) => /clocks change/.test(e)), []);
+});
+
+test('Vancouver has no clock change in November 2026, so Node needs current time zone data', () => {
+  const rows = [...monthRows('October', 31), ...monthRows('November', 30)];
+  assert.deepEqual(buildMonth(sheetFrom(rows), 2026, 11).errors, []);
 });
 
 test('mergeMonth keeps the previous month, drops older ones and sorts', () => {
