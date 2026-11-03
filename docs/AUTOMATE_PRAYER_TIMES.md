@@ -2,7 +2,7 @@
 
 The site's prayer times live in a Google Sheet. A scheduled GitHub Action copies each new month into [src/data/prayer-times.json](../src/data/prayer-times.json), and the host redeploys from that commit.
 
-**Status (2026-11-02): built and tested locally, but not running yet.** See [Setup](#setup) and [Open issues](#open-issues).
+**Status (2026-11-03): sheet access and the repo secret are in place, but the workflow isn't on `main`, so it isn't running yet.** Remaining work is in [HANDOFF_PRAYER_TIMES.md](HANDOFF_PRAYER_TIMES.md).
 
 The script only reads the sheet. Nothing in this system writes to it.
 
@@ -36,9 +36,9 @@ A run that finds no change makes no commit. The file also keeps the previous mon
 
 ## Setup
 
-Steps 1 to 3 have not been done yet.
+Steps 1 and 2 are done. Steps 3 and 4 are still to do.
 
-1. **Give the Action read access to the sheet.** The sheet currently returns HTTP 401 without a Google login, so the Action can't read it. The simplest fix is to set link sharing to **Anyone with the link: Viewer**. Don't choose Editor. Keeping the sheet fully private would need a Google service account, which the script doesn't support yet.
+1. **Give the Action read access to the sheet.** Set link sharing to **Anyone with the link: Viewer**. Don't choose Editor. Keeping the sheet fully private would need a Google service account, which the script doesn't support yet.
 2. **Add the repo secret.** In GitHub, go to Settings > Secrets and variables > Actions and add `PRAYER_SHEET_CSV_URL`:
 
    ```
@@ -47,7 +47,7 @@ Steps 1 to 3 have not been done yet.
 
    This repo is public, so keep the real sheet URL out of the code and docs.
 3. **Merge to `main`.** GitHub only runs schedules from the default branch, and the Run workflow button only appears once the file is there.
-4. **Test it.** Go to Actions > Update prayer times > Run workflow and set `month` to the current month. Confirm the commit lands and the site redeploys.
+4. **Test it.** Follow steps 2 and 4 in [HANDOFF_PRAYER_TIMES.md](HANDOFF_PRAYER_TIMES.md). Don't run November with the mismatch box ticked, as that would overwrite the November data.
 
 Also check these once it's running, as neither has been tested:
 
@@ -130,12 +130,9 @@ GitHub sends failure emails for a schedule to whoever last changed it. Every fai
 
 ## Open issues
 
-Found on 2026-11-02. None of these have been fixed.
+Remaining work is tracked in [HANDOFF_PRAYER_TIMES.md](HANDOFF_PRAYER_TIMES.md).
 
-1. **November times in the repo have the wrong AM/PM.** All 30 days store Fajr and Sunrise as PM, so the countdown is wrong even though the table shows AM. To fix it, regenerate November with the script.
-2. **November times in the sheet look an hour late.** Clocks went back on 2026-11-01, but sunrise goes from 7:59 on Oct 31 to 8:00 on Nov 1. The March 8 change does show its one-hour jump. Nov 30 has Dhuhr at 1:08, while Jan 1 has 12:23. November therefore fails the clock-change check until the sheet is corrected or `--allow-dst-mismatch` is used.
-3. **December is blank in the sheet.** It needs filling in before the main run on the evening of Nov 30 (Ontario time).
-4. **Possible typo:** the Nov 2 Fajr iqamah is 6:30, while Nov 1 and Nov 3 are 6:45.
+The questions raised on 2026-11-02 about November's AM/PM values and clock change were reviewed by the owner, who confirmed the sheet's times are correct and November should stay as it is. November still fails the clock-change check, so don't regenerate it.
 
 ## Work log
 
@@ -166,3 +163,10 @@ Found on 2026-11-02. None of these have been fixed.
 - A live download from the sheet, which is blocked by the 401.
 - The workflow on GitHub, including the commit, push and schedule.
 - A deploy triggered by the Action's commit.
+
+### 2026-11-03: sheet access and owner review
+
+- The owner shared the sheet by link and added the repo secret.
+- The live CSV now downloads without a login. Dry runs against it gave the expected results: November stops at the clock-change check and December is reported as blank.
+- The owner confirmed the sheet stays in sync by importing from another sheet, its times are correct, and November stays as it is.
+- Response headers suggest the site runs on DigitalOcean App Platform behind Cloudflare. The deploy path is still untested.
