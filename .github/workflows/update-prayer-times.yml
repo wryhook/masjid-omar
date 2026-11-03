@@ -1,0 +1,69 @@
+# Pulls the new month's prayer times from the Google Sheet and commits them to main.
+# Setup and troubleshooting: docs/AUTOMATE_PRAYER_TIMES.md
+name: Update prayer times
+
+on:
+  schedule:
+    # Times are UTC. 00:07 UTC on the 1st is 5:07 PM the day before in Vancouver, so the new
+    # month is live before local midnight. The later runs pick up a sheet that was filled in
+    # late, and do nothing if the data has not changed.
+    - cron: '7 0 1 * *'
+    - cron: '7 12 1 * *'
+    - cron: '7 0 2 * *'
+  workflow_dispatch:
+    inputs:
+      month:
+        description: 'Month to pull, as YYYY-MM. Leave blank for the current month.'
+        required: false
+        type: string
+      allow_dst_mismatch:
+        description: 'Publish even if the sheet does not match a clock change.'
+        required: false
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-prayer-times
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Test the script
+        run: node --test scripts/update-prayer-times.test.mjs
+
+      - name: Build prayer-times.json from the sheet
+        env:
+          PRAYER_SHEET_CSV_URL: ${{ secrets.PRAYER_SHEET_CSV_URL }}
+          MONTH: ${{ inputs.month }}
+          ALLOW_DST_MISMATCH: ${{ inputs.allow_dst_mismatch }}
+        run: |
+          args=()
+          if [ -n "$MONTH" ]; then args+=(--month "$MONTH"); fi
+          if [ "$ALLOW_DST_MISMATCH" = "true" ]; then args+=(--allow-dst-mismatch); fi
+          node scripts/update-prayer-times.mjs "${args[@]}"
+
+      - name: Commit if the times changed
+        run: |
+          if git diff --quiet -- src/data/prayer-times.json; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/prayer-times.json
+          git commit -m "Update prayer times $(date -u +%Y-%m-%d)"
+          git push origin main
