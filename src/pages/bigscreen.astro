@@ -237,9 +237,17 @@ const classes = [
             };
           });
         }
+        // BC has been on UTC-7 all year since March 2026. Don't use the device's time zone:
+        // screens with outdated zone data still fall back an hour in November.
+        var MASJID_UTC_OFFSET_MS = -7 * 60 * 60 * 1000;
+        // The UTC fields of this Date hold the masjid's local time, so read and change it
+        // with getUTC*/setUTC* only and format it with timeZone: 'UTC'.
+        function getMasjidNow() {
+          return new Date(Date.now() + MASJID_UTC_OFFSET_MS);
+        }
         function getTodayKey() {
-          var d = new Date();
-          return d.getFullYear() + '-' + pad(d.getMonth() + 1) + '-' + pad(d.getDate());
+          var d = getMasjidNow();
+          return d.getUTCFullYear() + '-' + pad(d.getUTCMonth() + 1) + '-' + pad(d.getUTCDate());
         }
         function formatTime12h(timeStr) {
           if (!timeStr) return '';
@@ -283,8 +291,8 @@ const classes = [
           }
           return false;
         }
-        var dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
-        var hijriFormatter = new Intl.DateTimeFormat('en-CA', { calendar: 'islamic-umalqura', day: 'numeric', month: 'long', year: 'numeric' });
+        var dateOptions = { timeZone: 'UTC', weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+        var hijriFormatter = new Intl.DateTimeFormat('en-CA', { timeZone: 'UTC', calendar: 'islamic-umalqura', day: 'numeric', month: 'long', year: 'numeric' });
 
         function ordinalDay(n) {
           var v = n % 100;
@@ -317,14 +325,14 @@ const classes = [
             var p = withTimes[i];
             var adhan = p.time.split(':').map(Number);
             var adhanDate = new Date(now);
-            adhanDate.setHours(adhan[0], adhan[1], 0, 0);
+            adhanDate.setUTCHours(adhan[0], adhan[1], 0, 0);
             if (now < adhanDate) {
               return { name: p.name, type: p.name === 'Sunrise' ? '' : 'Adhan', target: adhanDate };
             }
             if (p.iqamah) {
               var iqamah = p.iqamah.split(':').map(Number);
               var iqamahDate = new Date(now);
-              iqamahDate.setHours(iqamah[0], iqamah[1], 0, 0);
+              iqamahDate.setUTCHours(iqamah[0], iqamah[1], 0, 0);
               if (now < iqamahDate) {
                 return { name: p.name, type: 'Iqamah', target: iqamahDate };
               }
@@ -333,8 +341,8 @@ const classes = [
           var first = withTimes[0];
           var adhanFirst = first.time.split(':').map(Number);
           var next = new Date(now);
-          next.setHours(adhanFirst[0], adhanFirst[1], 0, 0);
-          next.setDate(next.getDate() + 1);
+          next.setUTCHours(adhanFirst[0], adhanFirst[1], 0, 0);
+          next.setUTCDate(next.getUTCDate() + 1);
           return { name: first.name, type: 'Adhan', target: next };
         }
 
@@ -349,7 +357,7 @@ const classes = [
             var p = withTimes[j];
             var adhan = p.time.split(':').map(Number);
             var adhanDate = new Date(now);
-            adhanDate.setHours(adhan[0], adhan[1], 0, 0);
+            adhanDate.setUTCHours(adhan[0], adhan[1], 0, 0);
             if (now >= adhanDate) {
               lastPassed = p;
             } else {
@@ -367,7 +375,7 @@ const classes = [
             if (p.name === 'Sunrise' || !p.iqamah) continue;
             var iqamah = p.iqamah.split(':').map(Number);
             var iqamahDate = new Date(now);
-            iqamahDate.setHours(iqamah[0], iqamah[1], 0, 0);
+            iqamahDate.setUTCHours(iqamah[0], iqamah[1], 0, 0);
             var endOngoing = iqamahDate.getTime() + fiveMinMs;
             if (now.getTime() >= iqamahDate.getTime() && now.getTime() < endOngoing) {
               return { name: p.name };
@@ -401,7 +409,7 @@ const classes = [
         }
 
         function updateStrip() {
-          var current = getCurrentPrayer(new Date());
+          var current = getCurrentPrayer(getMasjidNow());
           var currentName = current ? current.name : null;
           for (var i = 0; i < prayers.length; i++) {
             prayers[i].isNext = prayers[i].name === currentName;
@@ -432,8 +440,8 @@ const classes = [
         var lastMinute = -1;
 
         function tick() {
-          var d = new Date();
-          var m = d.getMinutes();
+          var d = getMasjidNow();
+          var m = d.getUTCMinutes();
           if (lastMinute === 40 && m === 41) {
             location.reload();
             return;
@@ -447,7 +455,7 @@ const classes = [
             prayers = dayDataToPrayerTimes(dayData);
             updateStrip();
           }
-          var h = d.getHours();
+          var h = d.getUTCHours();
           var h12 = h % 12 || 12;
           timeMain.textContent = pad(h12) + ':' + pad(m);
           timePeriod.textContent = h >= 12 ? 'PM' : 'AM';
